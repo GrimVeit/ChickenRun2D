@@ -1,0 +1,93 @@
+{
+"skeleton": { "hash": "fMq82Abfw676g+oxmgO/mkm96jw", "spine": "3.8.0", "x": -324.01, "y": 21.64, "width": 571.79, "height": 206.08 },
+"bones": [
+	{ "name": "root", "scaleX": 0.48, "scaleY": 0.48 },
+	{ "name": "car", "parent": "root", "x": 2.02, "y": 189.88 },
+	{ "name": "body", "parent": "car", "length": 260.19, "rotation": 71.47 },
+	{ "name": "tire1", "parent": "car", "length": 105.52, "rotation": 90, "x": -365.06, "y": -37.08 },
+	{ "name": "tire2", "parent": "car", "length": 106.96, "rotation": 89.24, "x": 289.48, "y": -32.8 }
+],
+"slots": [
+	{ "name": "body", "bone": "root", "attachment": "body" },
+	{ "name": "tire", "bone": "root", "attachment": "tire" },
+	{ "name": "tire2", "bone": "root", "attachment": "tire" }
+],
+"skins": [
+	{
+		"name": "default",
+		"attachments": {
+			"tire2": {
+				"tire": {
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 2, 3, 1, 3, 0 ],
+					"vertices": [ 1, 4, -108.5, -111.73, 1, 1, 4, -111.38, 104.25, 1, 1, 4, 104.6, 107.13, 1, 1, 4, 107.48, -108.85, 1 ],
+					"hull": 4
+				}
+			},
+			"body": {
+				"body": {
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 2, 3, 1, 3, 0 ],
+					"vertices": [ 1, 2, 80.06, -502.78, 1, 1, 2, -253.36, 629.13, 1, 1, 2, 58.4, 720.96, 1, 1, 2, 391.82, -410.95, 1 ],
+					"hull": 4
+				}
+			},
+			"tire": {
+				"tire": {
+					"type": "mesh",
+					"uvs": [ 1, 1, 0, 1, 0, 0, 1, 0 ],
+					"triangles": [ 1, 2, 3, 1, 3, 0 ],
+					"vertices": [ 1, 3, -107.71, -107.47, 1, 1, 3, -107.71, 108.53, 1, 1, 3, 108.29, 108.53, 1, 1, 3, 108.29, -107.47, 1 ],
+					"hull": 4
+				}
+			}
+		}
+	}
+],
+"animations": {
+	"car": {
+		"bones": {
+			"tire1": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "angle": -180 }
+				],
+				"translate": [
+					{ "y": 6.07 },
+					{ "time": 0.1667 }
+				],
+				"scale": [
+					{ "x": 1.03, "y": 1.03 },
+					{ "time": 0.1667 }
+				]
+			},
+			"tire2": {
+				"rotate": [
+					{},
+					{ "time": 0.1667, "angle": -179.24 }
+				],
+				"translate": [
+					{ "x": -0.06, "y": -4.55 },
+					{ "time": 0.1667 }
+				],
+				"scale": [
+					{ "x": 0.979, "y": 0.979 },
+					{ "time": 0.1667 }
+				]
+			},
+			"body": {
+				"rotate": [
+					{ "angle": -0.88 },
+					{ "time": 0.1667 }
+				],
+				"translate": [
+					{ "x": 0.92, "y": 2.73 },
+					{ "time": 0.1667 }
+				]
+			}
+		}
+	}
+}
+}

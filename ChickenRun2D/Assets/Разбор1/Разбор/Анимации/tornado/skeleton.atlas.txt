@@ -1,0 +1,62 @@
+
+skeleton.png
+size: 681,1039
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+tornado/tornado
+  rotate: false
+  xy: 586, 13
+  size: 93, 96
+  orig: 93, 96
+  offset: 0, 0
+  index: -1
+tornado/tornado_0
+  rotate: false
+  xy: 2, 470
+  size: 528, 267
+  orig: 528, 267
+  offset: 0, 0
+  index: -1
+tornado/tornado_1
+  rotate: false
+  xy: 453, 2
+  size: 131, 107
+  orig: 131, 107
+  offset: 0, 0
+  index: -1
+tornado/tornado_2
+  rotate: true
+  xy: 532, 502
+  size: 235, 145
+  orig: 235, 145
+  offset: 0, 0
+  index: -1
+tornado/tornado_3
+  rotate: true
+  xy: 518, 111
+  size: 357, 160
+  orig: 357, 160
+  offset: 0, 0
+  index: -1
+tornado/tornado_4
+  rotate: false
+  xy: 2, 33
+  size: 449, 211
+  orig: 449, 211
+  offset: 0, 0
+  index: -1
+tornado/tornado_5
+  rotate: false
+  xy: 2, 246
+  size: 514, 222
+  orig: 514, 222
+  offset: 0, 0
+  index: -1
+tornado/tornado_6
+  rotate: false
+  xy: 2, 739
+  size: 633, 298
+  orig: 633, 298
+  offset: 0, 0
+  index: -1

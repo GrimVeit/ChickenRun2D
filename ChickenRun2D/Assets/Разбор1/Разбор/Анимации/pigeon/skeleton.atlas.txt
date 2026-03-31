@@ -1,0 +1,27 @@
+
+skeleton.png
+size: 361,106
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+pigeon/attack
+  rotate: true
+  xy: 301, 44
+  size: 60, 58
+  orig: 60, 58
+  offset: 0, 0
+  index: -1
+pigeon/body
+  rotate: false
+  xy: 116, 25
+  size: 183, 79
+  orig: 183, 79
+  offset: 0, 0
+  index: -1
+pigeon/wing
+  rotate: true
+  xy: 2, 2
+  size: 102, 112
+  orig: 102, 112
+  offset: 0, 0
+  index: -1
