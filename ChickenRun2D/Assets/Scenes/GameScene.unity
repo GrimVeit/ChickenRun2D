@@ -334,7 +334,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &44210762
 RectTransform:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ MonoBehaviour:
   initialSkinName: chicken_ alien
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: idle
+  startingAnimation: run
   startingLoop: 1
   timeScale: 1
   freeze: 0
@@ -1368,12 +1368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   racePanel: {fileID: 192379521}
-  chickens:
-  - {fileID: 403718499}
-  - {fileID: 481694141}
-  - {fileID: 262442191}
-  - {fileID: 44210762}
-  - {fileID: 196652407}
+  chickens: []
   pointFinish: {fileID: 845403439}
   screenCenterX: 0
   followSpped: 5
@@ -1395,7 +1390,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &196652407
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1487,7 +1482,7 @@ MonoBehaviour:
   initialSkinName: chicken_ alien
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: idle
+  startingAnimation: run
   startingLoop: 1
   timeScale: 1
   freeze: 0
@@ -1758,7 +1753,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &262442191
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2556,7 +2551,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &481694141
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7009,7 +7004,7 @@ MonoBehaviour:
   initialSkinName: chicken_ alien
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: idle
+  startingAnimation: run
   startingLoop: 1
   timeScale: 1
   freeze: 0
@@ -7176,7 +7171,7 @@ MonoBehaviour:
   initialSkinName: chicken_ alien
   initialFlipX: 0
   initialFlipY: 0
-  startingAnimation: idle
+  startingAnimation: run
   startingLoop: 1
   timeScale: 1
   freeze: 0
