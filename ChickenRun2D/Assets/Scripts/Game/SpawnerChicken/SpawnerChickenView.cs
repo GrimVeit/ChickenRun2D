@@ -57,7 +57,7 @@ public class SpawnerChickenView : View
 
             var newChicken = Instantiate(chickenUnitView_Prefab, transformSpawnParent);
             newChicken.transform.localPosition = spawnPoint.localPosition;
-            newChicken.Animation.SetSkin(GetSkinName(type));
+            newChicken.SetSkin(GetSkinName(type));
 
             chickenUnitViews.Add(newChicken);
         }
