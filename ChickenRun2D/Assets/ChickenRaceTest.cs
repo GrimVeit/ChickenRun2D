@@ -26,6 +26,8 @@ public class ChickenRaceTest : MonoBehaviour
 
     private void Update()
     {
+        if(chickens.Count == 0) return;
+
         foreach (var c in chickens)
         {
             float speed = chickenSpeed[c];

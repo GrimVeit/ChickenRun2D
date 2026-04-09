@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class GameSceneEntryPoint : MonoBehaviour
 {
-    [SerializeField] private ViewContainer viewContainer_World;
-    
     [SerializeField] private Sounds sounds;
     [SerializeField] private UIGameRoot menuRootPrefab;
 
@@ -17,6 +15,10 @@ public class GameSceneEntryPoint : MonoBehaviour
     private ParticleEffectPresenter particleEffectPresenter;
     private SoundPresenter soundPresenter;
 
+    private StoreChickenPresenter storeChickenPresenter;
+    private ChooseChickenPresenter chooseChickenPresenter;
+    private SpawnerChickenPresenter spawnerChickenPresenter;
+
     private StateMachine_Game stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -27,7 +29,6 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         viewContainer = sceneRoot.GetComponent<ViewContainer>();
         viewContainer.Initialize();
-        viewContainer_World.Initialize();
 
         soundPresenter = new SoundPresenter
                     (new SoundModel(sounds.sounds, PlayerPrefsKeys.IS_MUTE_SOUNDS, PlayerPrefsKeys.KEY_VOLUME_SOUND, PlayerPrefsKeys.KEY_VOLUME_MUSIC),
@@ -39,6 +40,12 @@ public class GameSceneEntryPoint : MonoBehaviour
             (new ParticleEffectModel(),
             viewContainer.GetView<ParticleEffectView>());
 
+        storeChickenPresenter = new StoreChickenPresenter(new StoreChickenModel());
+        chooseChickenPresenter = new ChooseChickenPresenter(new ChooseChickenModel(storeChickenPresenter), viewContainer.GetView<ChooseChickenView>());
+        spawnerChickenPresenter = new SpawnerChickenPresenter(new SpawnerChickenModel(storeChickenPresenter), viewContainer.GetView<SpawnerChickenView>()); ;
+
+        stateMachine = new StateMachine_Game();
+
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
 
@@ -49,7 +56,9 @@ public class GameSceneEntryPoint : MonoBehaviour
         sceneRoot.Initialize();
         bankPresenter.Initialize();
         
-        stateMachine = new StateMachine_Game();
+        chooseChickenPresenter.Initialize();
+        spawnerChickenPresenter.Initialize();
+
         stateMachine.Initialize();
     }
 
@@ -73,6 +82,14 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            storeChickenPresenter.ChooseChickens();
+        }
+    }
+
     private void Deactivate()
     {
         sceneRoot.Deactivate();
@@ -82,6 +99,9 @@ public class GameSceneEntryPoint : MonoBehaviour
     private void Dispose()
     {
         DeactivateEvents();
+
+        chooseChickenPresenter?.Dispose();
+        spawnerChickenPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

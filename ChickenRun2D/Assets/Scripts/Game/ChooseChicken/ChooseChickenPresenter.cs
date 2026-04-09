@@ -1,0 +1,49 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ChooseChickenPresenter
+{
+    private readonly ChooseChickenModel _model;
+    private readonly ChooseChickenView _view;
+
+    public ChooseChickenPresenter(ChooseChickenModel model, ChooseChickenView view)
+    {
+        _model = model;
+        _view = view;
+    }
+
+    public void Initialize()
+    {
+        ActivateEvents();
+
+        _model.Initialize();
+        _view.Initialize();
+    }
+
+    public void Dispose()
+    {
+        DeactivateEvents();
+
+        _model.Dispose();
+        _view.Dispose();
+    }
+
+    private void ActivateEvents()
+    {
+        _view.OnChooseChicken += _model.Choose;
+
+        _model.OnSetTypes += _view.SetTypes;
+        _model.OnActivate += _view.Activate;
+        _model.OnDeactivate += _view.Deactivate;
+    }
+
+    private void DeactivateEvents()
+    {
+        _view.OnChooseChicken -= _model.Choose;
+
+        _model.OnSetTypes -= _view.SetTypes;
+        _model.OnActivate -= _view.Activate;
+        _model.OnDeactivate -= _view.Deactivate;
+    }
+}
