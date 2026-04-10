@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public class ChickenUnitPresenter : IChickenUnit
 {
@@ -63,6 +64,8 @@ public class ChickenUnitPresenter : IChickenUnit
 
     #region Input
 
+    public Vector3 LocalPosition => _view.LocalPosition;
+
     public void ActivateGoodState() => _stateMachine.ActivateGoodState();
     public void ActivateBadState() => _stateMachine.ActivateBadState();
     public void SetRun() => _stateMachine.SetRun();
@@ -91,6 +94,8 @@ public interface IChickenUnit
     public void ActivateBadState();
     public void SetRun();
     public void SetIdle();
+
+    public Vector3 LocalPosition { get; }
 
     public event Action<IChickenUnit> OnEndMove;
 }

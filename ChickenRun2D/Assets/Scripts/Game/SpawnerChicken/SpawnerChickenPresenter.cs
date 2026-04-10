@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerChickenPresenter
+public class SpawnerChickenPresenter : ISpawnerChickenListener
 {
     private readonly SpawnerChickenModel _model;
     private readonly SpawnerChickenView _view;
@@ -18,6 +19,7 @@ public class SpawnerChickenPresenter
         ActivateEvents();
 
         _model.Initialize();
+        _view.Initialize();
     }
 
     public void Dispose()
@@ -25,6 +27,7 @@ public class SpawnerChickenPresenter
         DeactivateEvents();
 
         _model.Dispose();
+        _view.Dispose();
     }
 
     private void ActivateEvents()
@@ -36,4 +39,19 @@ public class SpawnerChickenPresenter
     {
         _model.OnSpawnChicken -= _view.SetTypes;
     }
+
+    #region Output
+
+    public event Action<List<IChickenUnit>> OnSpawnChickens
+    {
+        add => _view.OnSpawnChickens += value;
+        remove => _view.OnSpawnChickens -= value;
+    }
+
+    #endregion
+}
+
+public interface ISpawnerChickenListener
+{
+    public event Action<List<IChickenUnit>> OnSpawnChickens;
 }

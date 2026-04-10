@@ -7,8 +7,8 @@ public class ChickenStateMachine : IStateMachineProvider
 
     private readonly List<IState> _goodStates = new();
     private readonly List<IState> _badStates = new();
-    private readonly IState _stateIdle;
-    private readonly IState _stateRun;
+    private IState _stateIdle;
+    private IState _stateRun;
 
     private IState _currentState;
 
@@ -23,10 +23,19 @@ public class ChickenStateMachine : IStateMachineProvider
     {
         var stateIdle = new ChickenState_Idle(_model);
         states[typeof(ChickenState_Idle)] = stateIdle;
+        _stateIdle = stateIdle;
 
         var stateRun = new ChickenState_Run(_model);
         states[typeof(ChickenState_Run)] = stateRun;
+        _stateRun = stateRun;
 
+        var stateNitro = new ChickenState_Nitro(this, _model);
+        states[typeof(ChickenState_Nitro)] = stateNitro;
+        _goodStates.Add(stateNitro);
+
+        var stateFall = new ChickenState_Fall(this, _model);
+        states[typeof(ChickenState_Fall)] = stateFall;
+        _badStates.Add(stateFall);
     }
 
     public void Dispose()
@@ -56,7 +65,7 @@ public class ChickenStateMachine : IStateMachineProvider
 
     public void ActivateBadState()
     {
-        EnterState(_goodStates[UnityEngine.Random.Range(0, _badStates.Count)]);
+        EnterState(_badStates[UnityEngine.Random.Range(0, _badStates.Count)]);
     }
 
     public void SetRun()

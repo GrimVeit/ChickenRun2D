@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class ChickenUnit_Move : MonoBehaviour
 {
+    public Vector3 LocalPosition => transform.localPosition;
+
     [SerializeField] private float moveSpeed = 2f;
 
     private Vector3 _target;
-    private float _currentSpeed;
+    public float _currentSpeed;
 
     private Coroutine _moveCoroutine;
     private Coroutine _speedCoroutine;
@@ -41,6 +43,8 @@ public class ChickenUnit_Move : MonoBehaviour
 
     public void StartMove()
     {
+        if (_moveCoroutine != null) return;
+
         StopMove();
         _moveCoroutine = StartCoroutine(MoveRoutine());
     }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SpawnerChickenView : View
@@ -7,6 +9,7 @@ public class SpawnerChickenView : View
     [SerializeField] private ChickenUnitView chickenUnitView_Prefab;
     [SerializeField] private Transform transformSpawnParent;
     [SerializeField] private List<Transform> transformsSpawn = new();
+    [SerializeField] private Transform transformTarget;
 
     private Dictionary<ChickenType, string> chickenSkins = new Dictionary<ChickenType, string>()
     {
@@ -22,7 +25,17 @@ public class SpawnerChickenView : View
         { ChickenType.Zombie, "chicken_zombie" }
     };
 
-    private readonly List<ChickenUnitView> chickenUnitViews = new();
+    private readonly Dictionary<IChickenUnit, ChickenUnitView> _chickenUnits = new();
+
+    public void Initialize()
+    {
+
+    }
+
+    public void Dispose()
+    {
+        Clear();
+    }
 
     private string GetSkinName(ChickenType type)
     {
@@ -38,28 +51,43 @@ public class SpawnerChickenView : View
     {
         Debug.Log("Types: " + string.Join(", ", types));
 
-        if (chickenUnitViews != null)
-        {
-            foreach (var chicken in chickenUnitViews)
-            {
-                if (chicken != null)
-                    Destroy(chicken.gameObject);
-            }
-            chickenUnitViews.Clear();
-        }
+        Clear();
 
         for (int i = 0; i < Mathf.Min(types.Count, transformsSpawn.Count); i++)
         {
             var spawnPoint = transformsSpawn[i];
             var type = types[i];
 
-            Debug.Log("Types: " + string.Join(", ", types));
-
             var newChicken = Instantiate(chickenUnitView_Prefab, transformSpawnParent);
             newChicken.transform.localPosition = spawnPoint.localPosition;
             newChicken.SetSkin(GetSkinName(type));
+            newChicken.SetTarget(transformTarget.localPosition);
 
-            chickenUnitViews.Add(newChicken);
+            var presenter = new ChickenUnitPresenter(new ChickenUnitModel(), newChicken);
+            presenter.Initialize();
+
+            _chickenUnits.Add(presenter, newChicken);
+        }
+
+        OnSpawnChickens?.Invoke(new List<IChickenUnit>(_chickenUnits.Keys.ToList()));
+    }
+
+    private void Clear()
+    {
+        if (_chickenUnits.Count != 0)
+        {
+            foreach (var chicken in _chickenUnits)
+            {
+                chicken.Key.Dispose();
+                Destroy(chicken.Value.gameObject);
+            }
+            _chickenUnits.Clear();
         }
     }
+
+    #region Output
+
+    public event Action<List<IChickenUnit>> OnSpawnChickens;
+
+    #endregion
 }

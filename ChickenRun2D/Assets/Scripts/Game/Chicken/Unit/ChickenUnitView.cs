@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class ChickenUnitView : View
 {
+    public Vector3 LocalPosition => move.LocalPosition;
+
     [SerializeField] private ChickenUnit_Move move;
     [SerializeField] private ChickenUnit_Animations animations;
 

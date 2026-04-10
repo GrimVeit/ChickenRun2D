@@ -83,7 +83,7 @@ MonoBehaviour:
     - key: abduction_take
       animationEnum: 1
       isLoop: 0
-    - key: fail_stand up
+    - key: fall_stand up
       animationEnum: 2
       isLoop: 0
     - key: fright
@@ -126,6 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 2
+  _currentSpeed: 0
 --- !u!1 &1525046235221226517
 GameObject:
   m_ObjectHideFlags: 0

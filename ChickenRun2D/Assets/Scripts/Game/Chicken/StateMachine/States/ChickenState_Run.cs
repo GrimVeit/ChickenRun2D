@@ -13,8 +13,9 @@ public class ChickenState_Run : IState
 
     public void EnterState()
     {
-        _model.SetSpeed(30, 0.1f);
+        _model.SetSpeed(Random.Range(300, 350), 0.1f);
         _model.ActivateAnimation(ChickenAnimationType.Run);
+        _model.StartMove();
     }
 
     public void ExitState()
