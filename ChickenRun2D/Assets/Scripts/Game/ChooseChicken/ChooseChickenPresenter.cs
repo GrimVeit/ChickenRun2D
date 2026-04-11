@@ -34,8 +34,8 @@ public class ChooseChickenPresenter
         _view.OnChooseChicken += _model.Choose;
 
         _model.OnSetTypes += _view.SetTypes;
-        _model.OnActivate += _view.Activate;
-        _model.OnDeactivate += _view.Deactivate;
+        _model.OnChoose += _view.Choose;
+        _model.OnUnchoose += _view.Unchoose;
     }
 
     private void DeactivateEvents()
@@ -43,7 +43,12 @@ public class ChooseChickenPresenter
         _view.OnChooseChicken -= _model.Choose;
 
         _model.OnSetTypes -= _view.SetTypes;
-        _model.OnActivate -= _view.Activate;
-        _model.OnDeactivate -= _view.Deactivate;
+        _model.OnChoose -= _view.Choose;
+        _model.OnUnchoose -= _view.Unchoose;
     }
+}
+
+public interface IChooseChickenProvider
+{
+
 }

@@ -2,6 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
+using Spine.Unity;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +30,17 @@ public class ChooseChickenView : View
         });
     }
 
-    public void Activate(ChickenType type)
+    public void ActivateAll()
+    {
+        chooseChickens.ForEach(cc => cc.Activate());
+    }
+
+    public void DeactivateAll()
+    {
+        chooseChickens.ForEach(cc => cc.Deactivate());
+    }
+
+    public void Choose(ChickenType type)
     {
         var chicken = chooseChickens.FirstOrDefault(ch => ch.Type == type);
 
@@ -38,10 +50,10 @@ public class ChooseChickenView : View
             return;
         }
 
-        chicken.Activate();
+        chicken.Choose();
     }
 
-    public void Deactivate(ChickenType type)
+    public void Unchoose(ChickenType type)
     {
         var chicken = chooseChickens.FirstOrDefault(ch => ch.Type == type);
 
@@ -51,12 +63,12 @@ public class ChooseChickenView : View
             return;
         }
 
-        chicken.Deactivate();
+        chicken.Unchoose();
     }
 
-    public void ActivateAll()
+    public void ChooseAll()
     {
-        chooseChickens.ForEach(cc => cc.Activate());
+        chooseChickens.ForEach(cc => cc.Choose());
     }
 
     public void SetTypes(List<ChickenType> chickenTypes)
@@ -100,18 +112,19 @@ public class ChooseChicken
 
     [SerializeField] private Image imageChicken;
     [SerializeField] private Button buttonChicken;
+    [SerializeField] private SkeletonGraphic skeleton;
 
     private ChooseChickenData _data;
     private bool isActive = true;
 
     public void Initialize()
     {
-        buttonChicken.onClick.AddListener(Choose);
+        buttonChicken.onClick.AddListener(ChooseChick);
     }
 
     public void Dispose()
     {
-        buttonChicken.onClick.RemoveListener(Choose);
+        buttonChicken.onClick.RemoveListener(ChooseChick);
     }
 
     public void SetData(ChooseChickenData data)
@@ -119,24 +132,39 @@ public class ChooseChicken
         _data = data;
     }
 
-
     public void Show()
     {
+        imageChicken.transform.localScale = Vector3.zero;
 
+        imageChicken.transform.DOScale(Vector3.one, 0.2f)
+        .SetEase(Ease.OutBack);
+
+        skeleton.AnimationState.SetAnimation(0, "Avatar", false);
     }
 
     public void Hide()
     {
+        imageChicken.transform.DOScale(Vector3.zero, 0.2f)
+        .SetEase(Ease.InBack);
+    }
 
+    public void Activate()
+    {
+        isActive = true;
+    }
+
+    public void Deactivate()
+    {
+        isActive = false;
     }
 
 
-    public void Activate()
+    public void Choose()
     {
         imageChicken.sprite = _data.SpriteActivate;
     }
 
-    public void Deactivate()
+    public void Unchoose()
     {
         imageChicken.sprite = _data.SpriteDeactivate;
     }
@@ -144,7 +172,7 @@ public class ChooseChicken
     #region Output
 
     public event Action<ChickenType> OnChooseChicken;
-    private void Choose()
+    private void ChooseChick()
     {
         if(!isActive) return;
 

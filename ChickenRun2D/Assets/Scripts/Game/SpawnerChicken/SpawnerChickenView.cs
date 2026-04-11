@@ -11,6 +11,8 @@ public class SpawnerChickenView : View
     [SerializeField] private List<Transform> transformsSpawn = new();
     [SerializeField] private Transform transformTarget;
 
+    private IEnumerator timer;
+
     private Dictionary<ChickenType, string> chickenSkins = new Dictionary<ChickenType, string>()
     {
         { ChickenType.Alien, "chicken_ alien" },
@@ -34,6 +36,8 @@ public class SpawnerChickenView : View
 
     public void Dispose()
     {
+        if (timer != null) Coroutines.Stop(timer);
+
         Clear();
     }
 
@@ -53,6 +57,27 @@ public class SpawnerChickenView : View
 
         Clear();
 
+        if(timer != null) Coroutines.Stop(timer);
+
+        timer = Timer(types);
+        Coroutines.Start(timer);
+    }
+
+    private void Clear()
+    {
+        if (_chickenUnits.Count != 0)
+        {
+            foreach (var chicken in _chickenUnits)
+            {
+                chicken.Key.Dispose();
+                chicken.Value.HideDestroy();
+            }
+            _chickenUnits.Clear();
+        }
+    }
+
+    private IEnumerator Timer(List<ChickenType> types)
+    {
         for (int i = 0; i < Mathf.Min(types.Count, transformsSpawn.Count); i++)
         {
             var spawnPoint = transformsSpawn[i];
@@ -65,24 +90,14 @@ public class SpawnerChickenView : View
 
             var presenter = new ChickenUnitPresenter(new ChickenUnitModel(), newChicken);
             presenter.Initialize();
+            newChicken.Show();
 
             _chickenUnits.Add(presenter, newChicken);
+
+            yield return new WaitForSeconds(0.2f);
         }
 
         OnSpawnChickens?.Invoke(new List<IChickenUnit>(_chickenUnits.Keys.ToList()));
-    }
-
-    private void Clear()
-    {
-        if (_chickenUnits.Count != 0)
-        {
-            foreach (var chicken in _chickenUnits)
-            {
-                chicken.Key.Dispose();
-                Destroy(chicken.Value.gameObject);
-            }
-            _chickenUnits.Clear();
-        }
     }
 
     #region Output

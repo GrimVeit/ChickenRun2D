@@ -13,7 +13,7 @@ public class ChickenUnit_Animations : MonoBehaviour
     {
         transform.localScale = Vector3.zero;
 
-        transform.DOScale(new Vector3(0.5f, 0.5f, 0.5f), 0.25f)
+        transform.DOScale(Vector3.one, 0.25f)
             .SetEase(Ease.OutBack);
     }
 

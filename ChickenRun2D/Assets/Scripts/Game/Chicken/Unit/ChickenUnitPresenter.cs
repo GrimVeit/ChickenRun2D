@@ -38,7 +38,7 @@ public class ChickenUnitPresenter : IChickenUnit
         _model.OnEndMove += EndMove;
 
         _model.OnShow += _view.Show;
-        _model.OnHide += _view.Hide;
+        _model.OnHide += _view.HideDestroy;
         _model.OnActivateAnimation += _view.ActivateAnimation;
 
         _model.OnStartMove += _view.StartMove;
@@ -53,7 +53,7 @@ public class ChickenUnitPresenter : IChickenUnit
         _model.OnEndMove -= EndMove;
 
         _model.OnShow -= _view.Show;
-        _model.OnHide -= _view.Hide;
+        _model.OnHide -= _view.HideDestroy;
         _model.OnActivateAnimation -= _view.ActivateAnimation;
 
         _model.OnStartMove -= _view.StartMove;

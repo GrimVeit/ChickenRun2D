@@ -58,7 +58,7 @@ public class ChickenUnitView : View
         animations.Show();
     }
 
-    public void Hide()
+    public void HideDestroy()
     {
         animations.HideDestroy();
     }

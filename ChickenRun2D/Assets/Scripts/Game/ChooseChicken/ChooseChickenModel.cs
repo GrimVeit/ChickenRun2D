@@ -30,7 +30,7 @@ public class ChooseChickenModel
     {
         if(_currentType == chickenType) return;
 
-        OnDeactivate?.Invoke(_currentType);
+        OnUnchoose?.Invoke(_currentType);
 
         _currentType = chickenType;
 
@@ -38,11 +38,11 @@ public class ChooseChickenModel
         {
             if(_currentType != chickenTypes[i])
             {
-                OnDeactivate?.Invoke(chickenTypes[i]);
+                OnUnchoose?.Invoke(chickenTypes[i]);
             }
             else
             {
-                OnActivate?.Invoke(chickenTypes[i]);
+                OnChoose?.Invoke(chickenTypes[i]);
             }
         }
     }
@@ -55,15 +55,15 @@ public class ChooseChickenModel
 
         OnSetTypes?.Invoke(chickenTypes);
 
-        chickenTypes.ForEach(data => OnActivate?.Invoke(data));
+        chickenTypes.ForEach(data => OnChoose?.Invoke(data));
     }
 
     #region Output
 
     public event Action<List<ChickenType>> OnSetTypes;
 
-    public event Action<ChickenType> OnActivate;
-    public event Action<ChickenType> OnDeactivate;
+    public event Action<ChickenType> OnChoose;
+    public event Action<ChickenType> OnUnchoose;
 
     #endregion
 }
