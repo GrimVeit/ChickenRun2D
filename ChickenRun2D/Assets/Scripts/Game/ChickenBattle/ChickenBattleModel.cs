@@ -28,6 +28,18 @@ public class ChickenBattleModel
         Clear();
     }
 
+    public void StartGame()
+    {
+        for (int i = 0; i < _chickens.Count; i++)
+        {
+            if (_chickens[i] == null) continue;
+
+            _chickens[i].SetRun();
+        }
+
+        StartEventsLoop();
+    }
+
     private void SetChickens(List<IChickenUnit> chickens)
     {
         Clear();
@@ -40,10 +52,7 @@ public class ChickenBattleModel
             if (_chickens[i] == null) continue;
 
             _chickens[i].OnEndMove += EndMove;
-            _chickens[i].SetRun();
         }
-
-        StartEventsLoop();
     }
 
     private void EndMove(IChickenUnit chicken)

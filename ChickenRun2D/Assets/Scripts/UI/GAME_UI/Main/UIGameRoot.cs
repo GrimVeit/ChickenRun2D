@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class UIGameRoot : UIRoot
 {
+    [SerializeField] private ChoosePanel_Game choosePanel;
+
     private ISoundProvider _soundProvider;
 
     public void SetSoundProvider(ISoundProvider soundProvider)
@@ -14,54 +16,60 @@ public class UIGameRoot : UIRoot
 
     public void Initialize()
     {
-        
+        choosePanel.Initialize();
     }
 
     public void Activate()
     {
-
+        choosePanel.OnChoose += ClickToChoose_CHOOSE;
     }
 
     public void Deactivate()
     {
         if (currentPanel != null)
             CloseOtherPanel(currentPanel);
+
+        choosePanel.OnChoose -= ClickToChoose_CHOOSE;
     }
 
     public void Dispose()
     {
-        
+        choosePanel.Dispose();
     }
 
     #region Input
 
-    
+    public void OpenChoosePanel()
+    {
+        if(choosePanel.IsActive) return;
+
+        OpenOtherPanel(choosePanel);
+    }
+
+    public void CloseChoosePanel()
+    {
+        if(!choosePanel.IsActive) return;
+
+        CloseOtherPanel(choosePanel);
+    }
 
     #endregion
 
 
     #region Output
 
-    #region MAIN
+    #region CHOOSE
 
-    public event Action OnCLickToUpgrade_MAIN;
-    public event Action OnClickToHireStaff_MAIN;
+    public event Action OnClickToChoose_CHOOSE;
 
-    private void ClickToUpgrade_MAIN()
+    private void ClickToChoose_CHOOSE()
     {
         _soundProvider.PlayOneShot("PanelOpen");
 
-        OnCLickToUpgrade_MAIN?.Invoke();
-    }
-
-    private void ClickToHireStaff_MAIN()
-    {
-        _soundProvider.PlayOneShot("PanelOpen");
-
-        OnClickToHireStaff_MAIN?.Invoke();
+        OnClickToChoose_CHOOSE?.Invoke();
     }
 
     #endregion
-    
+
     #endregion
 }

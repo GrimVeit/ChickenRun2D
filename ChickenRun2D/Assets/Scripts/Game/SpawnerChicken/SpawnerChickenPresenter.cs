@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnerChickenPresenter : ISpawnerChickenListener
+public class SpawnerChickenPresenter : ISpawnerChickenListener, ISpawnerChickenProvider
 {
     private readonly SpawnerChickenModel _model;
     private readonly SpawnerChickenView _view;
@@ -49,9 +49,20 @@ public class SpawnerChickenPresenter : ISpawnerChickenListener
     }
 
     #endregion
+
+    #region Input
+
+    public void SpawnChickens() => _model.SpawnChickens();
+
+    #endregion
 }
 
 public interface ISpawnerChickenListener
 {
     public event Action<List<IChickenUnit>> OnSpawnChickens;
+}
+
+public interface ISpawnerChickenProvider
+{
+    public void SpawnChickens();
 }

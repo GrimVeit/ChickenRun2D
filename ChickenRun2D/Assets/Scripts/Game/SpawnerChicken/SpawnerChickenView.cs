@@ -94,7 +94,7 @@ public class SpawnerChickenView : View
 
             _chickenUnits.Add(presenter, newChicken);
 
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.4f);
         }
 
         OnSpawnChickens?.Invoke(new List<IChickenUnit>(_chickenUnits.Keys.ToList()));

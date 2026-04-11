@@ -48,7 +48,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         chickenBattlePresenter = new ChickenBattlePresenter(new ChickenBattleModel(spawnerChickenPresenter));
         cameraFollowPresenter = new CameraFollowPresenter(new CameraFollowModel(spawnerChickenPresenter), viewContainer.GetView<CameraFollowView>());
 
-        stateMachine = new StateMachine_Game();
+        stateMachine = new StateMachine_Game(storeChickenPresenter, spawnerChickenPresenter, chooseChickenPresenter, sceneRoot, chickenBattlePresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -93,6 +93,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             storeChickenPresenter.ChooseChickens();
+            chooseChickenPresenter.ShowAll();
         }
     }
 
