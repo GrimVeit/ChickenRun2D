@@ -11,6 +11,7 @@ public class UIGameRoot : UIRoot
     [SerializeField] private ChoosePanel_Game choosePanel;
 
     [SerializeField] private LosePanel_Game losePanel;
+    [SerializeField] private WinPanel_Game winPanel;
 
     private ISoundProvider _soundProvider;
 
@@ -26,6 +27,7 @@ public class UIGameRoot : UIRoot
         choosePanel.Initialize();
 
         losePanel.Initialize();
+        winPanel.Initialize();
     }
 
     public void Activate()
@@ -33,6 +35,7 @@ public class UIGameRoot : UIRoot
         choosePanel.OnChoose += ClickToChoose_CHOOSE;
 
         losePanel.OnClickToRestart += ClickToRestart_LOSE;
+        winPanel.OnClickToRestart += ClickToRestart_WIN;
     }
 
     public void Deactivate()
@@ -43,6 +46,7 @@ public class UIGameRoot : UIRoot
         choosePanel.OnChoose -= ClickToChoose_CHOOSE;
 
         losePanel.OnClickToRestart -= ClickToRestart_LOSE;
+        winPanel.OnClickToRestart -= ClickToRestart_WIN;
     }
 
     public void Dispose()
@@ -52,6 +56,7 @@ public class UIGameRoot : UIRoot
         choosePanel.Dispose();
 
         losePanel.Dispose();
+        winPanel.Dispose();
     }
 
     #region Input
@@ -116,6 +121,20 @@ public class UIGameRoot : UIRoot
         if(!losePanel.IsActive) return;
 
         CloseOtherPanel(losePanel);
+    }
+
+    public void OpenWinPanel()
+    {
+        if(winPanel.IsActive) return;
+
+        OpenOtherPanel(winPanel);
+    }
+
+    public void CloseWinPanel()
+    {
+        if(!winPanel.IsActive) return;
+
+        CloseOtherPanel(winPanel);
     }
 
     #endregion

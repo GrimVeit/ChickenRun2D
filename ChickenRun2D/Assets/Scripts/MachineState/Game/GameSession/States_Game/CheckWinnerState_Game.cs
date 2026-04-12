@@ -51,7 +51,7 @@ public class CheckWinnerState_Game : IState
 
     private void ChangeStateToWin()
     {
-        Debug.Log("WINNER");
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<WinState_Game>());
     }
 
     private void ChangeStateToLose()

@@ -26,6 +26,7 @@ public class StateMachine_Game : IStateMachineProvider
         states[typeof(CheckWinnerState_Game)] = new CheckWinnerState_Game(this, chickenBattleListener, chickenBattleProvider, chooseChickenProvider);
 
         states[typeof(LoseState_Game)] = new LoseState_Game(this, _sceneRoot);
+        states[typeof(WinState_Game)] = new WinState_Game(this, _sceneRoot);
     }
 
     public void Initialize()
