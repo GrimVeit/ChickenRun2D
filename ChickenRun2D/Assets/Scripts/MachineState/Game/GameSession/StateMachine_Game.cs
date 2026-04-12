@@ -15,12 +15,17 @@ public class StateMachine_Game : IStateMachineProvider
         ISpawnerChickenProvider spawnerChickenProvider,
         IChooseChickenProvider chooseChickenProvider,
         UIGameRoot _sceneRoot,
-        IChickenBattleProvider chickenBattleProvider
+        IChickenBattleProvider chickenBattleProvider,
+        IChickenBattleListener chickenBattleListener
+        
     )
     {
         states[typeof(ChickenSpawnState_Game)] = new ChickenSpawnState_Game(this, spawnerChickenProvider, chooseChickenProvider, storeChickenProvider);
         states[typeof(ChooseChickenState_Game)] = new ChooseChickenState_Game(this, chooseChickenProvider, _sceneRoot);
-        states[typeof(GameRunState_Game)] = new GameRunState_Game(this, chickenBattleProvider);
+        states[typeof(GameRunState_Game)] = new GameRunState_Game(this, chickenBattleProvider, chickenBattleListener);
+        states[typeof(CheckWinnerState_Game)] = new CheckWinnerState_Game(this, chickenBattleListener, chickenBattleProvider, chooseChickenProvider);
+
+        states[typeof(LoseState_Game)] = new LoseState_Game(this, _sceneRoot);
     }
 
     public void Initialize()

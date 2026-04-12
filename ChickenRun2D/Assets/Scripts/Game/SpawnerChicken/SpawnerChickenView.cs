@@ -88,7 +88,7 @@ public class SpawnerChickenView : View
             newChicken.SetSkin(GetSkinName(type));
             newChicken.SetTarget(transformTarget.localPosition);
 
-            var presenter = new ChickenUnitPresenter(new ChickenUnitModel(), newChicken);
+            var presenter = new ChickenUnitPresenter(new ChickenUnitModel(type), newChicken);
             presenter.Initialize();
             newChicken.Show();
 

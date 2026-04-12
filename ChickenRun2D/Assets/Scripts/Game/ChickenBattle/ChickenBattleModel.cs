@@ -1,31 +1,55 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Threading;
 using UnityEngine;
-using Unity.VisualScripting;
 
 public class ChickenBattleModel
 {
     private readonly ISpawnerChickenListener _spawnerChickenListener;
+    private readonly IChooseChickenListener _chooseChickenListener;
     private List<IChickenUnit> _chickens = new();
 
     private readonly System.Random _random = new();
 
     private IEnumerator _eventsCoroutine;
 
+    private ChickenType _chickenTypeChoose;
+    private ChickenType _chickenTypeWinner;
+
     private readonly HashSet<IChickenUnit> _finished = new();
 
-    public ChickenBattleModel(ISpawnerChickenListener spawnerChickenListener)
+    private bool _hasWinner = false;
+
+    public ChickenBattleModel(ISpawnerChickenListener spawnerChickenListener, IChooseChickenListener chooseChickenListener)
     {
         _spawnerChickenListener = spawnerChickenListener;
+        _chooseChickenListener = chooseChickenListener;
+
         _spawnerChickenListener.OnSpawnChickens += SetChickens;
+        _chooseChickenListener.OnChoose += SetChooseChicken;
     }
 
     public void Dispose()
     {
         _spawnerChickenListener.OnSpawnChickens -= SetChickens;
+        _chooseChickenListener.OnChoose -= SetChooseChicken;
+
         Clear();
+    }
+
+    public void CheckWinner()
+    {
+        if (_finished.Count != _chickens.Count)
+            return;
+
+        if (_chickenTypeChoose == _chickenTypeWinner)
+        {
+            OnWin?.Invoke();
+        }
+        else
+        {
+            OnLose?.Invoke();
+        }
     }
 
     public void StartGame()
@@ -38,6 +62,11 @@ public class ChickenBattleModel
         }
 
         StartEventsLoop();
+    }
+
+    private void SetChooseChicken(ChickenType chickenType)
+    {
+        _chickenTypeChoose = chickenType;
     }
 
     private void SetChickens(List<IChickenUnit> chickens)
@@ -66,8 +95,20 @@ public class ChickenBattleModel
 
         _finished.Add(chicken);
 
+        if (!_hasWinner)
+        {
+            _hasWinner = true;
+            _chickenTypeWinner = chicken.Type;
+        }
+
         chicken.OnEndMove -= EndMove;
         chicken.SetIdle();
+
+        if (_finished.Count == _chickens.Count)
+        {
+            StopEventsLoop();
+            OnEndGame?.Invoke();
+        }
     }
 
     private void StartEventsLoop()
@@ -77,6 +118,11 @@ public class ChickenBattleModel
 
         _eventsCoroutine = EventsLoop();
         Coroutines.Start(_eventsCoroutine);
+    }
+
+    private void StopEventsLoop()
+    {
+        if (_eventsCoroutine != null) Coroutines.Stop(_eventsCoroutine);
     }
 
     private IEnumerator EventsLoop()
@@ -90,7 +136,6 @@ public class ChickenBattleModel
 
             var chicken = _chickens[_random.Next(_chickens.Count)];
 
-            // 🔥 КЛЮЧЕВОЕ ИСПРАВЛЕНИЕ
             if (chicken == null)
                 continue;
 
@@ -103,7 +148,6 @@ public class ChickenBattleModel
 
     private void TriggerRandomEvent(IChickenUnit chicken)
     {
-        // 🔥 двойная защита (важно)
         if (_finished.Contains(chicken))
             return;
 
@@ -127,7 +171,20 @@ public class ChickenBattleModel
                 _chickens[i].OnEndMove -= EndMove;
         }
 
+        _hasWinner = false;
+        _chickenTypeChoose = ChickenType.None;
+        _chickenTypeWinner = ChickenType.None;
+
         _chickens.Clear();
         _finished.Clear();
     }
+
+    #region Output
+
+    public event Action OnWin;
+    public event Action OnLose;
+
+    public event Action OnEndGame;
+
+    #endregion
 }

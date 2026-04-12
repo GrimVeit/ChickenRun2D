@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChooseChickenPresenter : IChooseChickenProvider
+public class ChooseChickenPresenter : IChooseChickenProvider, IChooseChickenListener
 {
     private readonly ChooseChickenModel _model;
     private readonly ChooseChickenView _view;
@@ -47,6 +48,21 @@ public class ChooseChickenPresenter : IChooseChickenProvider
         _model.OnUnchoose -= _view.Unchoose;
     }
 
+    #region Output
+
+    public event Action<ChickenType> OnChoose
+    {
+        add => _model.OnChoose += value;
+        remove => _model.OnChoose -= value;
+    }
+    public event Action<ChickenType> OnUnchoose
+    {
+        add => _model.OnUnchoose += value;
+        remove => _model.OnUnchoose -= value;
+    }
+
+    #endregion
+
     #region Input
 
     public void ActivateAll() => _view.ActivateAll();
@@ -56,6 +72,12 @@ public class ChooseChickenPresenter : IChooseChickenProvider
     public void HideAll() => _view.HideAll();
 
     #endregion
+}
+
+public interface IChooseChickenListener
+{
+    public event Action<ChickenType> OnChoose;
+    public event Action<ChickenType> OnUnchoose;
 }
 
 public interface IChooseChickenProvider

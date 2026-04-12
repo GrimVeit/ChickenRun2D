@@ -5,11 +5,24 @@ using UnityEngine;
 
 public class ChickenUnitModel
 {
+    public ChickenType Type => _type;
+
+    private readonly ChickenType _type;
+
+    public ChickenUnitModel(ChickenType type)
+    {
+        _type = type;
+    }
+
+    #region Output
+
     public event Action OnEndMove;
     public void EndMove()
     {
         OnEndMove?.Invoke();
     }
+
+    #endregion
 
     #region Move
 

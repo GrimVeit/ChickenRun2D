@@ -1,0 +1,61 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CheckWinnerState_Game : IState
+{
+    private readonly IStateMachineProvider _stateMachineProvider;
+    private readonly IChickenBattleListener _chickenBattleListener;
+    private readonly IChickenBattleProvider _chickenBattleProvider;
+
+    private readonly IChooseChickenProvider _chooseChickenProvider;
+
+    private IEnumerator timer;
+
+    public CheckWinnerState_Game(IStateMachineProvider stateMachineProvider, IChickenBattleListener chickenBattleListener, IChickenBattleProvider chickenBattleProvider, IChooseChickenProvider chooseChickenProvider)
+    {
+        _stateMachineProvider = stateMachineProvider;
+        _chickenBattleListener = chickenBattleListener;
+        _chickenBattleProvider = chickenBattleProvider;
+
+        _chooseChickenProvider = chooseChickenProvider;
+    }
+
+    public void EnterState()
+    {
+        if (timer != null) Coroutines.Stop(timer);
+
+        _chickenBattleListener.OnWin += ChangeStateToWin;
+        _chickenBattleListener.OnLose += ChangeStateToLose;
+
+        timer = Timer();
+        Coroutines.Start(timer);
+    }
+
+    public void ExitState()
+    {
+        if (timer != null) Coroutines.Stop(timer);
+
+        _chickenBattleListener.OnWin -= ChangeStateToWin;
+        _chickenBattleListener.OnLose -= ChangeStateToLose;
+    }
+
+    private IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(1f);
+
+        _chickenBattleProvider.CheckWinner();
+
+        _chooseChickenProvider.HideAll();
+    }
+
+    private void ChangeStateToWin()
+    {
+        Debug.Log("WINNER");
+    }
+
+    private void ChangeStateToLose()
+    {
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<LoseState_Game>());
+    }
+}

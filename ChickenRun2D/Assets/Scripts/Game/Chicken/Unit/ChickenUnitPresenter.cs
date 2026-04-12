@@ -64,6 +64,7 @@ public class ChickenUnitPresenter : IChickenUnit
 
     #region Input
 
+    public ChickenType Type => _model.Type;
     public Vector3 LocalPosition => _view.LocalPosition;
 
     public void ActivateGoodState() => _stateMachine.ActivateGoodState();
@@ -87,6 +88,8 @@ public class ChickenUnitPresenter : IChickenUnit
 
 public interface IChickenUnit
 {
+    public ChickenType Type { get; }
+
     public void Initialize();
     public void Dispose();
 

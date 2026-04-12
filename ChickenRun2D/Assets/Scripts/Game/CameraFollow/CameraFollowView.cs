@@ -30,8 +30,7 @@ public class CameraFollowView : View
 
     private void Update()
     {
-        if (_chickens.Count == 0)
-            return;
+        if (_chickens.Count == 0) return;
 
         RecalculateLeader();
 
@@ -77,6 +76,8 @@ public class CameraFollowView : View
         {
             var c = _chickens[i];
             float x = c.LocalPosition.x;
+
+            if(c == null) continue;
 
             if (x > bestX)
             {

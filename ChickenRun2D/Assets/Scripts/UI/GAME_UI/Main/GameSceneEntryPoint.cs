@@ -45,10 +45,10 @@ public class GameSceneEntryPoint : MonoBehaviour
         storeChickenPresenter = new StoreChickenPresenter(new StoreChickenModel());
         chooseChickenPresenter = new ChooseChickenPresenter(new ChooseChickenModel(storeChickenPresenter), viewContainer.GetView<ChooseChickenView>());
         spawnerChickenPresenter = new SpawnerChickenPresenter(new SpawnerChickenModel(storeChickenPresenter), viewContainer.GetView<SpawnerChickenView>()); ;
-        chickenBattlePresenter = new ChickenBattlePresenter(new ChickenBattleModel(spawnerChickenPresenter));
+        chickenBattlePresenter = new ChickenBattlePresenter(new ChickenBattleModel(spawnerChickenPresenter, chooseChickenPresenter));
         cameraFollowPresenter = new CameraFollowPresenter(new CameraFollowModel(spawnerChickenPresenter), viewContainer.GetView<CameraFollowView>());
 
-        stateMachine = new StateMachine_Game(storeChickenPresenter, spawnerChickenPresenter, chooseChickenPresenter, sceneRoot, chickenBattlePresenter);
+        stateMachine = new StateMachine_Game(storeChickenPresenter, spawnerChickenPresenter, chooseChickenPresenter, sceneRoot, chickenBattlePresenter, chickenBattlePresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();

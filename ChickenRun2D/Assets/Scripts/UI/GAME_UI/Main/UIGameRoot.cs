@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class UIGameRoot : UIRoot
 {
+    [SerializeField] private MovePanel backgroundBrownPanel;
+    [SerializeField] private MovePanel backgroundBarnPanel;
+
     [SerializeField] private ChoosePanel_Game choosePanel;
+
+    [SerializeField] private LosePanel_Game losePanel;
 
     private ISoundProvider _soundProvider;
 
@@ -16,12 +21,18 @@ public class UIGameRoot : UIRoot
 
     public void Initialize()
     {
+        backgroundBarnPanel.Initialize();
+        backgroundBrownPanel.Initialize();
         choosePanel.Initialize();
+
+        losePanel.Initialize();
     }
 
     public void Activate()
     {
         choosePanel.OnChoose += ClickToChoose_CHOOSE;
+
+        losePanel.OnClickToRestart += ClickToRestart_LOSE;
     }
 
     public void Deactivate()
@@ -30,14 +41,51 @@ public class UIGameRoot : UIRoot
             CloseOtherPanel(currentPanel);
 
         choosePanel.OnChoose -= ClickToChoose_CHOOSE;
+
+        losePanel.OnClickToRestart -= ClickToRestart_LOSE;
     }
 
     public void Dispose()
     {
+        backgroundBarnPanel.Dispose();
+        backgroundBrownPanel.Dispose();
         choosePanel.Dispose();
+
+        losePanel.Dispose();
     }
 
     #region Input
+
+    public void OpenBackgroundBrownPanel()
+    {
+        if(backgroundBrownPanel.IsActive) return;
+
+        OpenOtherPanel(backgroundBrownPanel);
+    }
+
+    public void CloseBackgroundBrownPanel()
+    {
+        if(!backgroundBrownPanel.IsActive) return;
+
+        CloseOtherPanel(backgroundBrownPanel);
+    }
+
+
+    public void OpenBackgroundBarnPanel()
+    {
+        if(backgroundBarnPanel.IsActive) return;
+
+        OpenOtherPanel(backgroundBarnPanel);
+    }
+
+    public void CloseBackgroundBarnPanel()
+    {
+        if(!backgroundBarnPanel.IsActive) return;
+
+        CloseOtherPanel(backgroundBarnPanel);
+    }
+
+
 
     public void OpenChoosePanel()
     {
@@ -51,6 +99,23 @@ public class UIGameRoot : UIRoot
         if(!choosePanel.IsActive) return;
 
         CloseOtherPanel(choosePanel);
+    }
+
+
+
+
+    public void OpenLosePanel()
+    {
+        if(losePanel.IsActive) return;
+
+        OpenOtherPanel(losePanel);
+    }
+
+    public void CloseLosePanel()
+    {
+        if(!losePanel.IsActive) return;
+
+        CloseOtherPanel(losePanel);
     }
 
     #endregion
@@ -67,6 +132,32 @@ public class UIGameRoot : UIRoot
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToChoose_CHOOSE?.Invoke();
+    }
+
+    #endregion
+
+    #region LOSE
+
+    public event Action OnClickToRestart_LOSE;
+
+    private void ClickToRestart_LOSE()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToRestart_LOSE?.Invoke();
+    }
+
+    #endregion
+
+    #region WIN
+
+    public event Action OnClickToRestart_WIN;
+
+    private void ClickToRestart_WIN()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToRestart_WIN?.Invoke();
     }
 
     #endregion

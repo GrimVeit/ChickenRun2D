@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ChickenBattlePresenter : IChickenBattleProvider
+public class ChickenBattlePresenter : IChickenBattleProvider, IChickenBattleListener
 {
     private readonly ChickenBattleModel _model;
 
@@ -21,14 +22,46 @@ public class ChickenBattlePresenter : IChickenBattleProvider
         _model.Dispose();
     }
 
+    #region Output
+
+    public event Action OnWin
+    {
+        add => _model.OnWin += value;
+        remove => _model.OnWin -= value;
+    }
+
+    public event Action OnLose
+    {
+        add => _model.OnLose += value;
+        remove => _model.OnLose -= value;
+    }
+
+    public event Action OnEndGame
+    {
+        add => _model.OnEndGame += value;
+        remove => _model.OnEndGame -= value;
+    }
+
+    #endregion
+
     #region Input
 
     public void StartGame() => _model.StartGame();
+    public void CheckWinner() => _model.CheckWinner();
 
     #endregion
+}
+
+public interface IChickenBattleListener
+{
+    public event Action OnWin;
+    public event Action OnLose;
+
+    public event Action OnEndGame;
 }
 
 public interface IChickenBattleProvider
 {
     void StartGame();
+    void CheckWinner();
 }
