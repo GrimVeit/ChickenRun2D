@@ -16,7 +16,8 @@ public class StateMachine_Game : IStateMachineProvider
         IChooseChickenProvider chooseChickenProvider,
         UIGameRoot _sceneRoot,
         IChickenBattleProvider chickenBattleProvider,
-        IChickenBattleListener chickenBattleListener
+        IChickenBattleListener chickenBattleListener,
+        IChooseBuyBoxProvider chooseBuyBoxProvider
         
     )
     {
@@ -27,6 +28,8 @@ public class StateMachine_Game : IStateMachineProvider
 
         states[typeof(LoseState_Game)] = new LoseState_Game(this, _sceneRoot);
         states[typeof(WinState_Game)] = new WinState_Game(this, _sceneRoot);
+
+        states[typeof(ChooseBuyBoxState_Game)] = new ChooseBuyBoxState_Game(this, chooseBuyBoxProvider, _sceneRoot);
     }
 
     public void Initialize()

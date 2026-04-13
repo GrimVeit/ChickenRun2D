@@ -15,6 +15,7 @@ public class WinState_Game : IState
 
     public void EnterState()
     {
+        _sceneRoot.OnClickToBuy_WIN += ChangeStateToChooseBuyBox;
         _sceneRoot.OnClickToRestart_WIN += ChangeStateToRestart;
 
         _sceneRoot.OpenBackgroundBrownPanel();
@@ -23,14 +24,20 @@ public class WinState_Game : IState
 
     public void ExitState()
     {
+        _sceneRoot.OnClickToBuy_WIN -= ChangeStateToChooseBuyBox;
         _sceneRoot.OnClickToRestart_WIN -= ChangeStateToRestart;
 
         _sceneRoot.CloseBackgroundBrownPanel();
         _sceneRoot.CloseWinPanel();
     }
 
-    public void ChangeStateToRestart()
+    private void ChangeStateToRestart()
     {
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChickenSpawnState_Game>());
+    }
+
+    private void ChangeStateToChooseBuyBox()
+    {
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChooseBuyBoxState_Game>());
     }
 }

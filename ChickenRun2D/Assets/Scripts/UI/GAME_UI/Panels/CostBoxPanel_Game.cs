@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class WinPanel_Game : MovePanel
+public class CostBoxPanel_Game : MovePanel
 {
     [SerializeField] private UIEffectCombination combination;
-    [SerializeField] private Button buttonRestart;
     [SerializeField] private Button buttonBuy;
 
     public override void Initialize()
@@ -16,8 +15,7 @@ public class WinPanel_Game : MovePanel
 
         combination.Initialize();
 
-        buttonRestart.onClick.AddListener(ClickRestart);
-        buttonBuy.onClick.AddListener(ClickBuy);
+        buttonBuy.onClick.AddListener(ClickToBuy);
     }
 
     public override void Dispose()
@@ -26,8 +24,7 @@ public class WinPanel_Game : MovePanel
 
         combination.Dispose();
 
-        buttonRestart.onClick.RemoveListener(ClickRestart);
-        buttonBuy.onClick.RemoveListener(ClickBuy);
+        buttonBuy.onClick.RemoveListener(ClickToBuy);
     }
 
     public override void ActivatePanel()
@@ -46,15 +43,9 @@ public class WinPanel_Game : MovePanel
 
     #region Output
 
-    public event Action OnClickToRestart;
     public event Action OnClickToBuy;
 
-    private void ClickRestart()
-    {
-        OnClickToRestart?.Invoke();
-    }
-
-    private void ClickBuy()
+    private void ClickToBuy()
     {
         OnClickToBuy?.Invoke();
     }

@@ -21,6 +21,8 @@ public class GameSceneEntryPoint : MonoBehaviour
     private ChickenBattlePresenter chickenBattlePresenter;
     private CameraFollowPresenter cameraFollowPresenter;
 
+    private ChooseBuyBoxPresenter chooseBuyBoxPresenter;
+
     private StateMachine_Game stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -48,7 +50,9 @@ public class GameSceneEntryPoint : MonoBehaviour
         chickenBattlePresenter = new ChickenBattlePresenter(new ChickenBattleModel(spawnerChickenPresenter, chooseChickenPresenter));
         cameraFollowPresenter = new CameraFollowPresenter(new CameraFollowModel(spawnerChickenPresenter), viewContainer.GetView<CameraFollowView>());
 
-        stateMachine = new StateMachine_Game(storeChickenPresenter, spawnerChickenPresenter, chooseChickenPresenter, sceneRoot, chickenBattlePresenter, chickenBattlePresenter);
+        chooseBuyBoxPresenter = new ChooseBuyBoxPresenter(new ChooseBuyBoxModel(), viewContainer.GetView<ChooseBuyBoxView>());
+
+        stateMachine = new StateMachine_Game(storeChickenPresenter, spawnerChickenPresenter, chooseChickenPresenter, sceneRoot, chickenBattlePresenter, chickenBattlePresenter, chooseBuyBoxPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -64,6 +68,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         chickenBattlePresenter.Initialize();
         cameraFollowPresenter.Initialize();
         spawnerChickenPresenter.Initialize();
+
+        chooseBuyBoxPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -111,6 +117,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         chickenBattlePresenter?.Dispose();
         cameraFollowPresenter?.Dispose();
         spawnerChickenPresenter?.Dispose();
+
+        chooseBuyBoxPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

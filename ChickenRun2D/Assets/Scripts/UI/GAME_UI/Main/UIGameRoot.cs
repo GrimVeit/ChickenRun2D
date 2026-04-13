@@ -13,6 +13,8 @@ public class UIGameRoot : UIRoot
     [SerializeField] private LosePanel_Game losePanel;
     [SerializeField] private WinPanel_Game winPanel;
 
+    [SerializeField] private CostBoxPanel_Game costBoxPanel;
+
     private ISoundProvider _soundProvider;
 
     public void SetSoundProvider(ISoundProvider soundProvider)
@@ -28,6 +30,8 @@ public class UIGameRoot : UIRoot
 
         losePanel.Initialize();
         winPanel.Initialize();
+
+        costBoxPanel.Initialize();
     }
 
     public void Activate()
@@ -36,6 +40,9 @@ public class UIGameRoot : UIRoot
 
         losePanel.OnClickToRestart += ClickToRestart_LOSE;
         winPanel.OnClickToRestart += ClickToRestart_WIN;
+        winPanel.OnClickToBuy += ClickToBuy_WIN;
+
+        costBoxPanel.OnClickToBuy += ClickToBox_COSTBOX;
     }
 
     public void Deactivate()
@@ -47,6 +54,9 @@ public class UIGameRoot : UIRoot
 
         losePanel.OnClickToRestart -= ClickToRestart_LOSE;
         winPanel.OnClickToRestart -= ClickToRestart_WIN;
+        winPanel.OnClickToBuy -= ClickToBuy_WIN;
+
+        costBoxPanel.OnClickToBuy -= ClickToBox_COSTBOX;
     }
 
     public void Dispose()
@@ -57,6 +67,8 @@ public class UIGameRoot : UIRoot
 
         losePanel.Dispose();
         winPanel.Dispose();
+
+        costBoxPanel.Dispose();
     }
 
     #region Input
@@ -137,6 +149,22 @@ public class UIGameRoot : UIRoot
         CloseOtherPanel(winPanel);
     }
 
+
+
+    public void OpenCostBoxPanel()
+    {
+        if(costBoxPanel.IsActive) return;
+
+        OpenOtherPanel(costBoxPanel);
+    }
+
+    public void CloseCostBoxPanel()
+    {
+        if(!costBoxPanel.IsActive) return;
+
+        CloseOtherPanel(costBoxPanel);
+    }
+
     #endregion
 
 
@@ -171,12 +199,34 @@ public class UIGameRoot : UIRoot
     #region WIN
 
     public event Action OnClickToRestart_WIN;
+    public event Action OnClickToBuy_WIN;
 
     private void ClickToRestart_WIN()
     {
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToRestart_WIN?.Invoke();
+    }
+
+    private void ClickToBuy_WIN()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToBuy_WIN?.Invoke();
+    }
+
+    #endregion
+
+
+    #region COST_BOX
+
+    public event Action OnClickToBox_COSTBOX;
+
+    private void ClickToBox_COSTBOX()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToBox_COSTBOX?.Invoke();
     }
 
     #endregion
