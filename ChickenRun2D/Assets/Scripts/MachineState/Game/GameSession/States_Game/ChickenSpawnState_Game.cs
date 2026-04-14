@@ -8,22 +8,21 @@ public class ChickenSpawnState_Game : IState
     private readonly ISpawnerChickenProvider _spawnerChickenProvider;
     private readonly IChooseChickenProvider _chooseChickenProvider;
     private readonly IStoreChickenProvider _storeChickenProvider;
+    private readonly UIGameRoot _sceneRoot;
 
     private IEnumerator timer;
 
-    public ChickenSpawnState_Game(IStateMachineProvider machineProvider, ISpawnerChickenProvider spawnerChickenProvider, IChooseChickenProvider chooseChickenProvider, IStoreChickenProvider storeChickenProvider)
+    public ChickenSpawnState_Game(IStateMachineProvider machineProvider, ISpawnerChickenProvider spawnerChickenProvider, IChooseChickenProvider chooseChickenProvider, IStoreChickenProvider storeChickenProvider, UIGameRoot sceneRoot)
     {
         _machineProvider = machineProvider;
         _spawnerChickenProvider = spawnerChickenProvider;
         _chooseChickenProvider = chooseChickenProvider;
         _storeChickenProvider = storeChickenProvider;
+        _sceneRoot = sceneRoot;
     }
 
     public void EnterState()
     {
-        _storeChickenProvider.ChooseChickens();
-        _spawnerChickenProvider.SpawnChickens();
-
         if(timer != null) Coroutines.Stop(timer);
 
         timer = Timer();
@@ -37,6 +36,13 @@ public class ChickenSpawnState_Game : IState
 
     private IEnumerator Timer()
     {
+        _sceneRoot.OpenMainPanel();
+
+        yield return new WaitForSeconds(1f);
+
+        _storeChickenProvider.ChooseChickens();
+        _spawnerChickenProvider.SpawnChickens();
+
         yield return new WaitForSeconds(1.5f);
 
         _chooseChickenProvider.ShowAll();

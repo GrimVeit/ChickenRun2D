@@ -10,6 +10,11 @@ public class VideoView : View
 {
     [SerializeField] private VideoPlayers videoPlayers;
 
+    public void Initialize()
+    {
+        videoPlayers.Initialize();
+    }
+
     public void Prepare(string id)
     {
         var videoPlay = videoPlayers.GetVideoPlayById(id);
@@ -38,6 +43,7 @@ public class VideoView : View
 
         StartCoroutine(WaitForVideoEndByFrame(videoPlay.VideoPlayer, onComplete));
 
+        videoPlay.VideoPlayer.frame = 1;
         videoPlay.VideoPlayer.Play();
 
         void OnVideoEnd(VideoPlayer vp)
@@ -59,10 +65,24 @@ public class VideoView : View
     }
 }
 
-[System.Serializable]
+[Serializable]
 public class VideoPlayers
 {
     [SerializeField] private List<VideoPlay> videoPlays = new();
+
+    public void Initialize()
+    {
+        for (int i = 0; i < videoPlays.Count; i++)
+        {
+            if (videoPlays[i].IsAwakePrepare)
+            {
+                videoPlays[i].Image.texture = videoPlays[i].Texture;
+
+                videoPlays[i].VideoPlayer.time = 0;
+                videoPlays[i].VideoPlayer.Prepare();
+            }
+        }
+    }
 
     public VideoPlay GetVideoPlayById(string id) => videoPlays.FirstOrDefault(data => data.Id == id);
 }
@@ -74,9 +94,11 @@ public class VideoPlay
     [SerializeField] private RawImage image;
     [SerializeField] private Texture texture;
     [SerializeField] private VideoPlayer videoPlayer;
+    [SerializeField] private bool isAwakePrepare;
 
     public string Id => id;
     public VideoPlayer VideoPlayer => videoPlayer;
     public RawImage Image => image;
     public Texture Texture => texture;
+    public bool IsAwakePrepare => isAwakePrepare;
 }

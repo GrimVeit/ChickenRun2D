@@ -4,35 +4,42 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainPanel_Game : MovePanel
+public class PlayVideoPanel_Game : MovePanel
 {
-    [SerializeField] private UIEffectCombination effectCombination;
+    [SerializeField] private Button buttonPlay;
 
     public override void Initialize()
     {
         base.Initialize();
 
-        effectCombination.Initialize();
+        buttonPlay.onClick.AddListener(ClickPlay);
     }
 
     public override void Dispose()
     {
         base.Dispose();
 
-        effectCombination.Dispose();
+        buttonPlay.onClick.RemoveListener(ClickPlay);
     }
 
     public override void ActivatePanel()
     {
         base.ActivatePanel();
-
-        effectCombination.ActivateEffect();
     }
 
     public override void DeactivatePanel()
     {
         base.DeactivatePanel();
-
-        effectCombination.DeactivateEffect();
     }
+
+    #region Output
+
+    public event Action OnClickPlay;
+
+    private void ClickPlay()
+    {
+        OnClickPlay?.Invoke();
+    }
+
+    #endregion
 }

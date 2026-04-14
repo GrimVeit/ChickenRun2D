@@ -14,6 +14,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private ParticleEffectPresenter particleEffectPresenter;
     private SoundPresenter soundPresenter;
+    private VideoPresenter videoPresenter;
 
     private StoreChickenPresenter storeChickenPresenter;
     private ChooseChickenPresenter chooseChickenPresenter;
@@ -38,6 +39,8 @@ public class GameSceneEntryPoint : MonoBehaviour
                     (new SoundModel(sounds.sounds, PlayerPrefsKeys.IS_MUTE_SOUNDS, PlayerPrefsKeys.KEY_VOLUME_SOUND, PlayerPrefsKeys.KEY_VOLUME_MUSIC),
                     viewContainer.GetView<SoundView>());
 
+        videoPresenter = new VideoPresenter(new VideoModel(), viewContainer.GetView<VideoView>());
+
         bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
         
         particleEffectPresenter = new ParticleEffectPresenter
@@ -52,7 +55,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         chooseBuyBoxPresenter = new ChooseBuyBoxPresenter(new ChooseBuyBoxModel(), viewContainer.GetView<ChooseBuyBoxView>());
 
-        stateMachine = new StateMachine_Game(storeChickenPresenter, spawnerChickenPresenter, chooseChickenPresenter, sceneRoot, chickenBattlePresenter, chickenBattlePresenter, chooseBuyBoxPresenter);
+        stateMachine = new StateMachine_Game(storeChickenPresenter, spawnerChickenPresenter, chooseChickenPresenter, sceneRoot, chickenBattlePresenter, chickenBattlePresenter, chooseBuyBoxPresenter, videoPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -60,6 +63,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         ActivateEvents();
 
         soundPresenter.Initialize();
+        videoPresenter.Initialize();
         particleEffectPresenter.Initialize();
         sceneRoot.Initialize();
         bankPresenter.Initialize();
@@ -113,6 +117,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     {
         DeactivateEvents();
 
+        videoPresenter?.Dispose();
         chooseChickenPresenter?.Dispose();
         chickenBattlePresenter?.Dispose();
         cameraFollowPresenter?.Dispose();

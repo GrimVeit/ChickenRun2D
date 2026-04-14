@@ -14,27 +14,31 @@ public class StateMachine_Game : IStateMachineProvider
         IStoreChickenProvider storeChickenProvider,
         ISpawnerChickenProvider spawnerChickenProvider,
         IChooseChickenProvider chooseChickenProvider,
-        UIGameRoot _sceneRoot,
+        UIGameRoot sceneRoot,
         IChickenBattleProvider chickenBattleProvider,
         IChickenBattleListener chickenBattleListener,
-        IChooseBuyBoxProvider chooseBuyBoxProvider
+        IChooseBuyBoxProvider chooseBuyBoxProvider,
+        IVideoProvider videoProvider
         
     )
     {
-        states[typeof(ChickenSpawnState_Game)] = new ChickenSpawnState_Game(this, spawnerChickenProvider, chooseChickenProvider, storeChickenProvider);
-        states[typeof(ChooseChickenState_Game)] = new ChooseChickenState_Game(this, chooseChickenProvider, _sceneRoot);
+        states[typeof(IntroVideoState_Game)] = new IntroVideoState_Game(this, sceneRoot, videoProvider);
+        states[typeof(PlayVideoState_Game)] = new PlayVideoState_Game(this, sceneRoot, videoProvider);
+
+        states[typeof(ChickenSpawnState_Game)] = new ChickenSpawnState_Game(this, spawnerChickenProvider, chooseChickenProvider, storeChickenProvider, sceneRoot);
+        states[typeof(ChooseChickenState_Game)] = new ChooseChickenState_Game(this, chooseChickenProvider, sceneRoot);
         states[typeof(GameRunState_Game)] = new GameRunState_Game(this, chickenBattleProvider, chickenBattleListener);
         states[typeof(CheckWinnerState_Game)] = new CheckWinnerState_Game(this, chickenBattleListener, chickenBattleProvider, chooseChickenProvider);
 
-        states[typeof(LoseState_Game)] = new LoseState_Game(this, _sceneRoot);
-        states[typeof(WinState_Game)] = new WinState_Game(this, _sceneRoot);
+        states[typeof(LoseState_Game)] = new LoseState_Game(this, sceneRoot);
+        states[typeof(WinState_Game)] = new WinState_Game(this, sceneRoot);
 
-        states[typeof(ChooseBuyBoxState_Game)] = new ChooseBuyBoxState_Game(this, chooseBuyBoxProvider, _sceneRoot);
+        states[typeof(ChooseBuyBoxState_Game)] = new ChooseBuyBoxState_Game(this, chooseBuyBoxProvider, sceneRoot);
     }
 
     public void Initialize()
     {
-        EnterState(GetState<ChickenSpawnState_Game>());
+        EnterState(GetState<IntroVideoState_Game>());
     }
 
     public void Dispose()
