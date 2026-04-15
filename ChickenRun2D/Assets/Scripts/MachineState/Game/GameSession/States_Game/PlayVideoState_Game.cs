@@ -21,13 +21,14 @@ public class PlayVideoState_Game : IState
     {
         _sceneRoot.OnClickToPlay_PLAY += ChangeStateToChooseLocation;
 
+        _videoProvider.Play("Play");
+        _sceneRoot.OpenPlayVideoPanel();
+
         _maskEffectProvider.Play("Play", () =>
         {
             _maskEffectProvider.Stop("Intro");
             _sceneRoot.CloseIntroVideoPanel();
         });
-        _videoProvider.Play("Play");
-        _sceneRoot.OpenPlayVideoPanel();
     }
 
     public void ExitState()

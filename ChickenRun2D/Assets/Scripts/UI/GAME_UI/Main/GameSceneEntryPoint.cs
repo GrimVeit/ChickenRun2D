@@ -26,6 +26,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private MaskEffectPresenter maskEffectPresenter;
 
     private ChooseBuyBoxPresenter chooseBuyBoxPresenter;
+    private RaceDesignPresenter raceDesignPresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -61,6 +62,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         maskEffectPresenter = new MaskEffectPresenter(new MaskEffectModel(), viewContainer.GetView<MaskEffectView>());
 
         chooseBuyBoxPresenter = new ChooseBuyBoxPresenter(new ChooseBuyBoxModel(), viewContainer.GetView<ChooseBuyBoxView>());
+        raceDesignPresenter = new RaceDesignPresenter(new RaceDesignModel(slotMachinePresenter), viewContainer.GetView<RaceDesignView>());
 
         stateMachine = new StateMachine_Game(storeChickenPresenter, spawnerChickenPresenter, chooseChickenPresenter, sceneRoot, chickenBattlePresenter, chickenBattlePresenter, chooseBuyBoxPresenter, videoPresenter, maskEffectPresenter, slotMachinePresenter, slotMachinePresenter);
 
@@ -83,6 +85,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         spawnerChickenPresenter.Initialize();
 
         chooseBuyBoxPresenter.Initialize();
+        raceDesignPresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -135,6 +138,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         spawnerChickenPresenter?.Dispose();
 
         chooseBuyBoxPresenter?.Dispose();
+        raceDesignPresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

@@ -21,7 +21,7 @@ public class ChooseLocationState_Game : IState
 
     public void EnterState()
     {
-        _slotMachineListener.OnEnd += ChangeStateToSpawnChickens;
+        _slotMachineListener.OnEnd += ChangeStateToStartGameRun;
 
         _maskEffectProvider.Play("Location", () =>
         {
@@ -35,15 +35,13 @@ public class ChooseLocationState_Game : IState
 
     public void ExitState()
     {
-        _slotMachineListener.OnEnd -= ChangeStateToSpawnChickens;
+        _slotMachineListener.OnEnd -= ChangeStateToStartGameRun;
 
         _maskEffectProvider.Stop("Location");
-
-        _sceneRoot.CloseChooseLocationPanel();
     }
 
-    private void ChangeStateToSpawnChickens()
+    private void ChangeStateToStartGameRun()
     {
-        _machineProvider.EnterState(_machineProvider.GetState<ChickenSpawnState_Game>());
+        _machineProvider.EnterState(_machineProvider.GetState<StartGameRunState_Game>());
     }
 }

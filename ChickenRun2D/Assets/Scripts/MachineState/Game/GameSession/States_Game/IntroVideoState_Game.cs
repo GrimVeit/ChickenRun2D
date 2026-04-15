@@ -38,13 +38,13 @@ public class IntroVideoState_Game : IState
 
         yield return new WaitForSeconds(0.3f);
 
+        _videoProvider.Play("Intro");
+        _sceneRoot.OpenIntroVideoPanel();
+
         _maskEffectProvider.Play("Intro", () =>
         {
             _sceneRoot.CloseBackgroundBlackPanel();
         });
-
-        _videoProvider.Play("Intro");
-        _sceneRoot.OpenIntroVideoPanel();
 
         yield return new WaitForSeconds(2f);
 
