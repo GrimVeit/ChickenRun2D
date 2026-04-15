@@ -7,6 +7,7 @@ public class UIGameRoot : UIRoot
     [SerializeField] private PlayVideoPanel_Game playVideoPanel;
     [SerializeField] private MovePanel winVideoPanel;
     [SerializeField] private MovePanel loseVideoPanel;
+    [SerializeField] private ChooseLocationPanel_Game chooseLocationPanel;
 
     [SerializeField] private MovePanel backgroundBrownPanel;
     [SerializeField] private MovePanel backgroundBarnPanel;
@@ -33,6 +34,7 @@ public class UIGameRoot : UIRoot
         playVideoPanel.Initialize();
         winVideoPanel.Initialize();
         loseVideoPanel.Initialize();
+        chooseLocationPanel.Initialize();
 
         backgroundBarnPanel.Initialize();
         backgroundBrownPanel.Initialize();
@@ -80,6 +82,7 @@ public class UIGameRoot : UIRoot
         playVideoPanel.Dispose();
         winVideoPanel.Dispose();
         loseVideoPanel.Dispose();
+        chooseLocationPanel.Dispose();
 
         backgroundBarnPanel.Dispose();
         backgroundBrownPanel.Dispose();
@@ -267,6 +270,22 @@ public class UIGameRoot : UIRoot
         if(!costBoxPanel.IsActive) return;
 
         CloseOtherPanel(costBoxPanel);
+    }
+
+
+
+    public void OpenChooseLocationPanel()
+    {
+        if(chooseLocationPanel.IsActive) return;
+
+        OpenOtherPanel(chooseLocationPanel);
+    }
+
+    public void CloseChooseLocationPanel()
+    {
+        if(!chooseLocationPanel.IsActive) return;
+
+        CloseOtherPanel(chooseLocationPanel);
     }
 
     #endregion

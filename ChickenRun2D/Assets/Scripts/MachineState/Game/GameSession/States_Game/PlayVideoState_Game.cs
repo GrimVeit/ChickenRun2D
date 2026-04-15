@@ -17,7 +17,7 @@ public class PlayVideoState_Game : IState
 
     public void EnterState()
     {
-        _sceneRoot.OnClickToPlay_PLAY += ChangeStateToSpawnChickens;
+        _sceneRoot.OnClickToPlay_PLAY += ChangeStateToChooseLocation;
 
         _videoProvider.Play("Play");
         _sceneRoot.OpenPlayVideoPanel();
@@ -25,13 +25,13 @@ public class PlayVideoState_Game : IState
 
     public void ExitState()
     {
-        _sceneRoot.OnClickToPlay_PLAY -= ChangeStateToSpawnChickens;
+        _sceneRoot.OnClickToPlay_PLAY -= ChangeStateToChooseLocation;
 
         _sceneRoot.ClosePlayVideoPanel();
     }
 
-    private void ChangeStateToSpawnChickens()
+    private void ChangeStateToChooseLocation()
     {
-        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChickenSpawnState_Game>());
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChooseLocationState_Game>());
     }
 }

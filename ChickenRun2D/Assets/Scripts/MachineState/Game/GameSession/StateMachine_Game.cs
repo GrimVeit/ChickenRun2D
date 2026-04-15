@@ -24,6 +24,7 @@ public class StateMachine_Game : IStateMachineProvider
     {
         states[typeof(IntroVideoState_Game)] = new IntroVideoState_Game(this, sceneRoot, videoProvider);
         states[typeof(PlayVideoState_Game)] = new PlayVideoState_Game(this, sceneRoot, videoProvider);
+        states[typeof(ChooseLocationState_Game)] = new ChooseLocationState_Game(this, sceneRoot);
 
         states[typeof(ChickenSpawnState_Game)] = new ChickenSpawnState_Game(this, spawnerChickenProvider, chooseChickenProvider, storeChickenProvider, sceneRoot);
         states[typeof(ChooseChickenState_Game)] = new ChooseChickenState_Game(this, chooseChickenProvider, sceneRoot);

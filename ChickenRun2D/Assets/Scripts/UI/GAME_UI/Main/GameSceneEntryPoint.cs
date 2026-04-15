@@ -21,6 +21,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private SpawnerChickenPresenter spawnerChickenPresenter;
     private ChickenBattlePresenter chickenBattlePresenter;
     private CameraFollowPresenter cameraFollowPresenter;
+    private SlotMachinePresenter slotMachinePresenter;
 
     private ChooseBuyBoxPresenter chooseBuyBoxPresenter;
 
@@ -53,6 +54,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         chickenBattlePresenter = new ChickenBattlePresenter(new ChickenBattleModel(spawnerChickenPresenter, chooseChickenPresenter));
         cameraFollowPresenter = new CameraFollowPresenter(new CameraFollowModel(spawnerChickenPresenter), viewContainer.GetView<CameraFollowView>());
 
+        slotMachinePresenter = new SlotMachinePresenter(new SlotMachineModel(), viewContainer.GetView<SlotMachineView>());
+
         chooseBuyBoxPresenter = new ChooseBuyBoxPresenter(new ChooseBuyBoxModel(), viewContainer.GetView<ChooseBuyBoxView>());
 
         stateMachine = new StateMachine_Game(storeChickenPresenter, spawnerChickenPresenter, chooseChickenPresenter, sceneRoot, chickenBattlePresenter, chickenBattlePresenter, chooseBuyBoxPresenter, videoPresenter);
@@ -71,6 +74,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseChickenPresenter.Initialize();
         chickenBattlePresenter.Initialize();
         cameraFollowPresenter.Initialize();
+        slotMachinePresenter.Initialize();
         spawnerChickenPresenter.Initialize();
 
         chooseBuyBoxPresenter.Initialize();
@@ -121,6 +125,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseChickenPresenter?.Dispose();
         chickenBattlePresenter?.Dispose();
         cameraFollowPresenter?.Dispose();
+        slotMachinePresenter?.Dispose();
         spawnerChickenPresenter?.Dispose();
 
         chooseBuyBoxPresenter?.Dispose();
