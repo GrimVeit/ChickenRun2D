@@ -11,7 +11,6 @@ public class MaskEffectFigure : MonoBehaviour
     [SerializeField] private Image figureImage;
     [SerializeField] private Sprite circleSprite;
     [SerializeField] private Sprite SquareSprite;
-    [SerializeField] private float maxScale;
 
     private Tween tweenScale;
 
@@ -28,6 +27,16 @@ public class MaskEffectFigure : MonoBehaviour
         }
     }
 
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
+    }
+
+    public void Activate()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void SetParent(Transform parent)
     {
         transform.SetParent(parent);
@@ -38,11 +47,16 @@ public class MaskEffectFigure : MonoBehaviour
         transform.localPosition = vector;
     }
 
-    public void Show(float duration, Action OnComplete = null)
+    public void SetPosition(Vector3 vector, float duration)
+    {
+        transform.DOLocalMove(vector, duration);
+    }
+
+    public void Show(float duration, float scale, Action OnComplete = null)
     {
         tweenScale?.Kill();
 
-        tweenScale = figureImage.transform.DOScale(maxScale, duration).OnComplete(() => { OnComplete?.Invoke(); });
+        tweenScale = figureImage.transform.DOScale(scale, duration).OnComplete(() => { OnComplete?.Invoke(); });
     }
 
     public void Hide(float duration, Action OnComplete = null)

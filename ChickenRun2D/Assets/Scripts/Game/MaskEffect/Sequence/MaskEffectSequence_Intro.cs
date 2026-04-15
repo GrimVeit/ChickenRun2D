@@ -24,7 +24,7 @@ public class MaskEffectSequence_Intro : MonoBehaviour, IMaskEffectSequence
         _effectFigure.SetPosition(transformPosFigure.transform.localPosition);
 
         transformBlackPanel.material = _matPanel;
-        _effectFigure.Show(1f, OnComplete);
+        _effectFigure.Show(1f, 4, OnComplete);
     }
 
     public void Exit()

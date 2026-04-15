@@ -21,7 +21,8 @@ public class StateMachine_Game : IStateMachineProvider
         IVideoProvider videoProvider,
         IMaskEffectProvider maskEffectProvider,
         ISlotMachineListener slotMachineListener,
-        ISlotMachineProvider slotMachineProvider
+        ISlotMachineProvider slotMachineProvider,
+        IVisualChickenEffectProvider visualChickenEffectProvider
     )
     {
         states[typeof(IntroVideoState_Game)] = new IntroVideoState_Game(this, sceneRoot, videoProvider, maskEffectProvider);
@@ -30,7 +31,7 @@ public class StateMachine_Game : IStateMachineProvider
         states[typeof(StartGameRunState_Game)] = new StartGameRunState_Game(this, sceneRoot, maskEffectProvider);
 
         states[typeof(ChickenSpawnState_Game)] = new ChickenSpawnState_Game(this, spawnerChickenProvider, chooseChickenProvider, storeChickenProvider, sceneRoot);
-        states[typeof(ChooseChickenState_Game)] = new ChooseChickenState_Game(this, chooseChickenProvider, sceneRoot);
+        states[typeof(ChooseChickenState_Game)] = new ChooseChickenState_Game(this, chooseChickenProvider, sceneRoot, visualChickenEffectProvider);
         states[typeof(GameRunState_Game)] = new GameRunState_Game(this, chickenBattleProvider, chickenBattleListener);
         states[typeof(CheckWinnerState_Game)] = new CheckWinnerState_Game(this, chickenBattleListener, chickenBattleProvider, chooseChickenProvider);
 

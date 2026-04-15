@@ -26,7 +26,7 @@ public class MaskEffectSequence_ChooseLocation : MonoBehaviour, IMaskEffectSeque
 
         transformPlayPanel.material = _matPanel;
         transformPlayPanel.DOColor(Color.black, 1f);
-        _effectFigure.Show(2f, OnComplete);
+        _effectFigure.Show(2f, 4, OnComplete);
     }
 
     public void Exit()

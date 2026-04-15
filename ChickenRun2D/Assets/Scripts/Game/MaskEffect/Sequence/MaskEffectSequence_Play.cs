@@ -26,7 +26,7 @@ public class MaskEffectSequence_Play : MonoBehaviour, IMaskEffectSequence
 
         transformIntroPanel.material = _matPanel;
         transformIntroPanel.DOColor(Color.black, 0.5f);
-        _effectFigure.Show(1f, OnComplete);
+        _effectFigure.Show(1f, 4, OnComplete);
     }
 
     public void Exit()

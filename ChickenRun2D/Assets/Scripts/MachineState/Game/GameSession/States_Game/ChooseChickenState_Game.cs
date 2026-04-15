@@ -7,12 +7,14 @@ public class ChooseChickenState_Game : IState
     private readonly IStateMachineProvider _machineProvider;
     private readonly IChooseChickenProvider _chooseChickenProvider;
     private readonly UIGameRoot _sceneRoot;
+    private readonly IVisualChickenEffectProvider _visualChickenEffectProvider;
 
-    public ChooseChickenState_Game(IStateMachineProvider machineProvider, IChooseChickenProvider chooseChickenProvider, UIGameRoot sceneRoot)
+    public ChooseChickenState_Game(IStateMachineProvider machineProvider, IChooseChickenProvider chooseChickenProvider, UIGameRoot sceneRoot, IVisualChickenEffectProvider visualChickenEffectProvider)
     {
         _machineProvider = machineProvider;
         _chooseChickenProvider = chooseChickenProvider;
         _sceneRoot = sceneRoot;
+        _visualChickenEffectProvider = visualChickenEffectProvider;
     }
 
     public void EnterState()
@@ -29,6 +31,7 @@ public class ChooseChickenState_Game : IState
 
         _sceneRoot.CloseChoosePanel();
         _chooseChickenProvider.DeactivateAll();
+        _visualChickenEffectProvider.DeactivateVisual();
     }
 
     private void ChangeStateToGame()
