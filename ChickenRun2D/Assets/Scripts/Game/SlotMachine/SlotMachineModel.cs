@@ -74,11 +74,7 @@ public class SlotMachineModel
 
     public void ActivateMachine()
     {
-        if (IsActiveMachine)
-        {
-            //soundProvider.PlayOneShot("Error");
-            return;
-        }
+        if (IsActiveMachine) return;
 
         IsActiveMachine = true;
         PlayWheelSounds();
@@ -88,16 +84,26 @@ public class SlotMachineModel
     public void StopSpinSlot(int Id)
     {
         OnStopSpinnedSlot?.Invoke(Id);
-        
+        OnGetLocation?.Invoke(Id);
+
+
         DeactivateMachine();
     }
 
     public void DeactivateMachine()
     {
         OnDeactivateMachine?.Invoke();
+        OnEnd?.Invoke();
         IsActiveMachine = false;
 
         StopWheelSounds();
 
     }
+
+    #region Output
+
+    public event Action<int> OnGetLocation;
+    public event Action OnEnd;
+
+    #endregion
 }

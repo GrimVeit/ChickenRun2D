@@ -7,18 +7,25 @@ public class PlayVideoState_Game : IState
     private readonly IStateMachineProvider _stateMachineProvider;
     private readonly UIGameRoot _sceneRoot;
     private readonly IVideoProvider _videoProvider;
+    private readonly IMaskEffectProvider _maskEffectProvider;
 
-    public PlayVideoState_Game(IStateMachineProvider stateMachineProvider, UIGameRoot sceneRoot, IVideoProvider videoProvider)
+    public PlayVideoState_Game(IStateMachineProvider stateMachineProvider, UIGameRoot sceneRoot, IVideoProvider videoProvider, IMaskEffectProvider maskEffectProvider)
     {
         _stateMachineProvider = stateMachineProvider;
         _sceneRoot = sceneRoot;
         _videoProvider = videoProvider;
+        _maskEffectProvider = maskEffectProvider;
     }
 
     public void EnterState()
     {
         _sceneRoot.OnClickToPlay_PLAY += ChangeStateToChooseLocation;
 
+        _maskEffectProvider.Play("Play", () =>
+        {
+            _maskEffectProvider.Stop("Intro");
+            _sceneRoot.CloseIntroVideoPanel();
+        });
         _videoProvider.Play("Play");
         _sceneRoot.OpenPlayVideoPanel();
     }
@@ -26,8 +33,6 @@ public class PlayVideoState_Game : IState
     public void ExitState()
     {
         _sceneRoot.OnClickToPlay_PLAY -= ChangeStateToChooseLocation;
-
-        _sceneRoot.ClosePlayVideoPanel();
     }
 
     private void ChangeStateToChooseLocation()

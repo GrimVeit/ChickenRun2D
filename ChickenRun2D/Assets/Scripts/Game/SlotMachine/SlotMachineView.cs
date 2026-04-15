@@ -14,6 +14,7 @@ public class SlotMachineView : View
     public event Action<float> OnWheelSpeed;
     public event Action<int> OnStopSpinSlot;
 
+    [SerializeField] private UIEffect effectButton;
     [SerializeField] private Button spinButton;
     [SerializeField] private Slot slot;
 
@@ -23,17 +24,33 @@ public class SlotMachineView : View
         slot.OnStartSpin += StartSpinSlot;
         slot.OnWheelSpeed += WheelSpeed;
 
+        effectButton.Initialize();
+
         spinButton.onClick.AddListener(HandlerSpinClick);
 
     }
 
-    public void OnDestroy()
+    public void Dispose()
     {
         slot.OnStopSpin -= EndSpinSlot;
         slot.OnStartSpin -= StartSpinSlot;
         slot.OnWheelSpeed -= WheelSpeed;
 
+        effectButton.Dispose();
+
         spinButton.onClick.RemoveListener(HandlerSpinClick);
+    }
+
+    public void ActivateEffectButton()
+    {
+        spinButton.enabled = true;
+        effectButton.ActivateEffect();
+    }
+
+    public void DeactivateEffectButton()
+    {
+        spinButton.enabled = false;
+        effectButton.DeactivateEffect();
     }
 
     public void ActivateMachine()

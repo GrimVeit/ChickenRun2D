@@ -11,6 +11,7 @@ public class UIGameRoot : UIRoot
 
     [SerializeField] private MovePanel backgroundBrownPanel;
     [SerializeField] private MovePanel backgroundBarnPanel;
+    [SerializeField] private MovePanel backgroundBlackPanel;
 
     [SerializeField] private MainPanel_Game mainPanel;
 
@@ -38,6 +39,7 @@ public class UIGameRoot : UIRoot
 
         backgroundBarnPanel.Initialize();
         backgroundBrownPanel.Initialize();
+        backgroundBlackPanel.Initialize();
         mainPanel.Initialize();
         choosePanel.Initialize();
 
@@ -86,6 +88,7 @@ public class UIGameRoot : UIRoot
 
         backgroundBarnPanel.Dispose();
         backgroundBrownPanel.Dispose();
+        backgroundBlackPanel.Dispose();
         mainPanel.Dispose();
         choosePanel.Dispose();
 
@@ -207,6 +210,21 @@ public class UIGameRoot : UIRoot
         if(!backgroundBarnPanel.IsActive) return;
 
         CloseOtherPanel(backgroundBarnPanel);
+    }
+
+
+    public void OpenBackgroundBlackPanel()
+    {
+        if(backgroundBlackPanel.IsActive) return;
+
+        OpenOtherPanel(backgroundBlackPanel);
+    }
+
+    public void CloseBackgroundBlackPanel()
+    {
+        if(!backgroundBlackPanel.IsActive) return;
+
+        CloseOtherPanel(backgroundBlackPanel);
     }
 
 

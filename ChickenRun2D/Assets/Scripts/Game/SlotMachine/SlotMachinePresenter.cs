@@ -1,50 +1,84 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
-public class SlotMachinePresenter
+public class SlotMachinePresenter : ISlotMachineListener, ISlotMachineProvider
 {
-    private SlotMachineModel slotMachineModel;
-    private SlotMachineView slotMachineView;
+    private readonly SlotMachineModel _model;
+    private readonly SlotMachineView _view;
 
-    public SlotMachinePresenter(SlotMachineModel slotMachineModel, SlotMachineView slotMachineView)
+    public SlotMachinePresenter(SlotMachineModel model, SlotMachineView view)
     {
-        this.slotMachineModel = slotMachineModel;
-        this.slotMachineView = slotMachineView;
+        _model = model;
+        _view = view;
     }
 
     public void Initialize()
     {
-        slotMachineView.Initialize();
+        _view.Initialize();
 
         ActivateInputEvents();
-        slotMachineModel.OnActivateMachine += slotMachineView.ActivateMachine;
     }
 
     public void Dispose()
     {
         DeactivateInputEvents();
-        slotMachineModel.OnActivateMachine -= slotMachineView.ActivateMachine;
+
+        _view.Dispose();
     }
 
     private void ActivateInputEvents()
     {
-        slotMachineView.OnStopSpinSlot += slotMachineModel.StopSpinSlot;
-        slotMachineView.OnClickSpin += slotMachineModel.ActivateMachine;
-        slotMachineView.OnWheelSpeed += slotMachineModel.WheelSpeed;
+        _view.OnStopSpinSlot += _model.StopSpinSlot;
+        _view.OnClickSpin += _model.ActivateMachine;
+        _view.OnWheelSpeed += _model.WheelSpeed;
+
+        _model.OnActivateMachine += _view.ActivateMachine;
+        _model.OnActivateMachine += _view.DeactivateEffectButton;
     }
 
     private void DeactivateInputEvents()
     {
-        slotMachineView.OnStopSpinSlot -= slotMachineModel.StopSpinSlot;
-        slotMachineView.OnClickSpin -= slotMachineModel.ActivateMachine;
-        slotMachineView.OnWheelSpeed -= slotMachineModel.WheelSpeed;
+        _view.OnStopSpinSlot -= _model.StopSpinSlot;
+        _view.OnClickSpin -= _model.ActivateMachine;
+        _view.OnWheelSpeed -= _model.WheelSpeed;
+
+        _model.OnActivateMachine -= _view.ActivateMachine;
+        _model.OnActivateMachine -= _view.DeactivateEffectButton;
     }
 
-    #region PublicEvents
+    #region Output
 
+    public event Action<int> OnGetLocation
+    {
+        add => _model.OnGetLocation += value;
+        remove => _model.OnGetLocation -= value;
+    }
 
+    public event Action OnEnd
+    {
+        add => _model.OnEnd += value;
+        remove => _model.OnEnd -= value;
+    }
 
     #endregion
+
+    #region Input
+
+    public void ActivateSpinButton()
+    {
+        _view.ActivateEffectButton();
+    }
+
+    #endregion
+}
+
+public interface ISlotMachineListener
+{
+    public event Action<int> OnGetLocation;
+
+    public event Action OnEnd;
+}
+
+public interface ISlotMachineProvider
+{
+    public void ActivateSpinButton();
 }

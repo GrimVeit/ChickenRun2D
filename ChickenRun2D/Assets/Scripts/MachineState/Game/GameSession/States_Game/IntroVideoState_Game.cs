@@ -7,14 +7,16 @@ public class IntroVideoState_Game : IState
     private readonly IStateMachineProvider _stateMachineProvider;
     private readonly UIGameRoot _sceneRoot;
     private readonly IVideoProvider _videoProvider;
+    private readonly IMaskEffectProvider _maskEffectProvider;
 
     private IEnumerator timer;
 
-    public IntroVideoState_Game(IStateMachineProvider stateMachineProvider, UIGameRoot sceneRoot, IVideoProvider videoProvider)
+    public IntroVideoState_Game(IStateMachineProvider stateMachineProvider, UIGameRoot sceneRoot, IVideoProvider videoProvider, IMaskEffectProvider maskEffectProvider)
     {
         _stateMachineProvider = stateMachineProvider;
         _sceneRoot = sceneRoot;
         _videoProvider = videoProvider;
+        _maskEffectProvider = maskEffectProvider;
     }
 
     public void EnterState()
@@ -28,18 +30,23 @@ public class IntroVideoState_Game : IState
     public void ExitState()
     {
         if (timer != null) Coroutines.Stop(timer);
-
-        _sceneRoot.CloseIntroVideoPanel();
     }
 
     private IEnumerator Timer()
     {
+        _sceneRoot.OpenBackgroundBlackPanel();
+
         yield return new WaitForSeconds(0.3f);
+
+        _maskEffectProvider.Play("Intro", () =>
+        {
+            _sceneRoot.CloseBackgroundBlackPanel();
+        });
 
         _videoProvider.Play("Intro");
         _sceneRoot.OpenIntroVideoPanel();
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
 
         ChangeStateToPlayVideo();
     }

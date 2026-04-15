@@ -38,6 +38,8 @@ public class PlayVideoPanel_Game : MovePanel
 
     private void ClickPlay()
     {
+        Debug.Log("CLICK");
+
         OnClickPlay?.Invoke();
     }
 

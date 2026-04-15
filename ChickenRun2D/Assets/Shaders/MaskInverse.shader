@@ -2,14 +2,24 @@ Shader "UI/MaskInverseTexture"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        _MainTex ("Sprite", 2D) = "white" {}
         _Color ("Tint", Color) = (1,1,1,1)
     }
 
     SubShader
     {
-        Tags { "Queue"="Transparent" }
+        Tags
+        {
+            "Queue"="Transparent"
+            "IgnoreProjector"="True"
+            "RenderType"="Transparent"
+            "PreviewType"="Plane"
+            "CanUseSpriteAtlas"="True"
+        }
+
         Blend SrcAlpha OneMinusSrcAlpha
+        Cull Off
+        ZWrite Off
 
         Stencil
         {
@@ -24,33 +34,38 @@ Shader "UI/MaskInverseTexture"
             #pragma fragment frag
             #include "UnityCG.cginc"
 
-            sampler2D _MainTex;
-            float4 _Color;
-
-            struct appdata
+            struct appdata_t
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                float4 color : COLOR;
             };
 
             struct v2f
             {
-                float4 pos : SV_POSITION;
+                float4 vertex : SV_POSITION;
                 float2 uv : TEXCOORD0;
+                float4 color : COLOR;
             };
 
-            v2f vert (appdata v)
+            sampler2D _MainTex;
+            float4 _Color;
+
+            v2f vert (appdata_t v)
             {
                 v2f o;
-                o.pos = UnityObjectToClipPos(v.vertex);
+                o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = v.uv;
+                o.color = v.color * _Color;
                 return o;
             }
 
             fixed4 frag (v2f i) : SV_Target
             {
                 fixed4 tex = tex2D(_MainTex, i.uv);
-                return tex * _Color;
+
+                // UI стандарт: vertex color * texture
+                return tex * i.color;
             }
             ENDCG
         }
