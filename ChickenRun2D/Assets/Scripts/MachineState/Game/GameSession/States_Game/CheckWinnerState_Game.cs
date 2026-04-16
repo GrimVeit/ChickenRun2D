@@ -25,8 +25,8 @@ public class CheckWinnerState_Game : IState
     {
         if (timer != null) Coroutines.Stop(timer);
 
-        _chickenBattleListener.OnWin += ChangeStateToWin;
-        _chickenBattleListener.OnLose += ChangeStateToLose;
+        _chickenBattleListener.OnWin += ChangeStateToStartWin;
+        _chickenBattleListener.OnLose += ChangeStateToStartLose;
 
         timer = Timer();
         Coroutines.Start(timer);
@@ -36,8 +36,8 @@ public class CheckWinnerState_Game : IState
     {
         if (timer != null) Coroutines.Stop(timer);
 
-        _chickenBattleListener.OnWin -= ChangeStateToWin;
-        _chickenBattleListener.OnLose -= ChangeStateToLose;
+        _chickenBattleListener.OnWin -= ChangeStateToStartWin;
+        _chickenBattleListener.OnLose -= ChangeStateToStartLose;
     }
 
     private IEnumerator Timer()
@@ -49,13 +49,13 @@ public class CheckWinnerState_Game : IState
         _chooseChickenProvider.HideAll();
     }
 
-    private void ChangeStateToWin()
+    private void ChangeStateToStartWin()
     {
-        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<WinState_Game>());
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<StartWinState_Game>());
     }
 
-    private void ChangeStateToLose()
+    private void ChangeStateToStartLose()
     {
-        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<LoseState_Game>());
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<StartLoseState_Game>());
     }
 }

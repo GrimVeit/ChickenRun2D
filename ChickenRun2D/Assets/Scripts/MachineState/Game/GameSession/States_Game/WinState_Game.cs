@@ -18,7 +18,6 @@ public class WinState_Game : IState
         _sceneRoot.OnClickToBuy_WIN += ChangeStateToChooseBuyBox;
         _sceneRoot.OnClickToRestart_WIN += ChangeStateToRestart;
 
-        _sceneRoot.OpenBackgroundBrownPanel();
         _sceneRoot.OpenWinPanel();
     }
 
@@ -27,8 +26,8 @@ public class WinState_Game : IState
         _sceneRoot.OnClickToBuy_WIN -= ChangeStateToChooseBuyBox;
         _sceneRoot.OnClickToRestart_WIN -= ChangeStateToRestart;
 
-        _sceneRoot.CloseBackgroundBrownPanel();
         _sceneRoot.CloseWinPanel();
+        _sceneRoot.CloseWinVideoPanel();
     }
 
     private void ChangeStateToRestart()

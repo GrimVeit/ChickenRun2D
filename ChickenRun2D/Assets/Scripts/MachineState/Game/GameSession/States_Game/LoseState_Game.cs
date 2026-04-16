@@ -17,7 +17,6 @@ public class LoseState_Game : IState
     {
         _sceneRoot.OnClickToRestart_LOSE += ChangeStateToRestart;
 
-        _sceneRoot.OpenBackgroundBrownPanel();
         _sceneRoot.OpenLosePanel();
     }
 
@@ -25,8 +24,8 @@ public class LoseState_Game : IState
     {
         _sceneRoot.OnClickToRestart_LOSE -= ChangeStateToRestart;
 
-        _sceneRoot.CloseBackgroundBrownPanel();
         _sceneRoot.CloseLosePanel();
+        _sceneRoot.CloseLoseVideoPanel();
     }
 
     public void ChangeStateToRestart()
