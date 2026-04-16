@@ -22,6 +22,13 @@ public class UIGameRoot : UIRoot
 
     [SerializeField] private CostBoxPanel_Game costBoxPanel;
 
+
+
+
+    [SerializeField] private CardsHeaderPanel_Game cardsHeaderPanel;
+    [SerializeField] private CardsPanel_Game cardsPanel;
+    [SerializeField] private CardsTypePanel_Game cardsTypePanel;
+
     private ISoundProvider _soundProvider;
 
     public void SetSoundProvider(ISoundProvider soundProvider)
@@ -47,6 +54,12 @@ public class UIGameRoot : UIRoot
         winPanel.Initialize();
 
         costBoxPanel.Initialize();
+
+
+
+        cardsHeaderPanel.Initialize();
+        cardsTypePanel.Initialize();
+        cardsPanel.Initialize();
     }
 
     public void Activate()
@@ -60,6 +73,9 @@ public class UIGameRoot : UIRoot
         winPanel.OnClickToBuy += ClickToBuy_WIN;
 
         costBoxPanel.OnClickToBuy += ClickToBox_COSTBOX;
+
+
+        cardsHeaderPanel.OnClickToExit += ClickToExit_CARDSHEADER;
     }
 
     public void Deactivate()
@@ -76,6 +92,9 @@ public class UIGameRoot : UIRoot
         winPanel.OnClickToBuy -= ClickToBuy_WIN;
 
         costBoxPanel.OnClickToBuy -= ClickToBox_COSTBOX;
+
+
+        cardsHeaderPanel.OnClickToExit -= ClickToExit_CARDSHEADER;
     }
 
     public void Dispose()
@@ -96,6 +115,13 @@ public class UIGameRoot : UIRoot
         winPanel.Dispose();
 
         costBoxPanel.Dispose();
+
+
+
+
+        cardsHeaderPanel.Dispose();
+        cardsTypePanel.Dispose();
+        cardsPanel.Dispose();
     }
 
     #region Input
@@ -306,6 +332,56 @@ public class UIGameRoot : UIRoot
         CloseOtherPanel(chooseLocationPanel);
     }
 
+
+
+    #region CARDS
+
+    public void OpenCardsHeaderPanel()
+    {
+        if(cardsHeaderPanel.IsActive) return;
+
+        OpenOtherPanel(cardsHeaderPanel);
+    }
+
+    public void CloseCardsHeaderPanel()
+    {
+        if(!cardsHeaderPanel.IsActive) return;
+
+        CloseOtherPanel(cardsHeaderPanel);
+    }
+
+
+    public void OpenCardsPanel()
+    {
+        if(cardsPanel.IsActive) return;
+
+        OpenOtherPanel(cardsPanel);
+    }
+
+    public void CloseCardsPanel()
+    {
+        if(!cardsPanel.IsActive) return;
+
+        CloseOtherPanel(cardsPanel);
+    }
+
+
+    public void OpenCardsTypePanel()
+    {
+        if(cardsTypePanel.IsActive) return;
+
+        OpenOtherPanel(cardsTypePanel);
+    } 
+
+    public void CloseCardsTypePanel()
+    {
+        if(!cardsTypePanel.IsActive) return;
+
+        CloseOtherPanel(cardsTypePanel);
+    }
+
+    #endregion
+
     #endregion
 
 
@@ -382,6 +458,19 @@ public class UIGameRoot : UIRoot
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToBox_COSTBOX?.Invoke();
+    }
+
+    #endregion
+
+    #region COST_BOX
+
+    public event Action OnClickToExit_CARDSHEADER;
+
+    private void ClickToExit_CARDSHEADER()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToExit_CARDSHEADER?.Invoke();
     }
 
     #endregion

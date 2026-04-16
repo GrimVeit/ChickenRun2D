@@ -28,7 +28,7 @@ public class LoseState_Game : IState
         _sceneRoot.CloseLoseVideoPanel();
     }
 
-    public void ChangeStateToRestart()
+    private void ChangeStateToRestart()
     {
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChickenSpawnState_Game>());
     }

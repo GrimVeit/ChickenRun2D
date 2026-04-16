@@ -42,6 +42,8 @@ public class StateMachine_Game : IStateMachineProvider
         states[typeof(WinState_Game)] = new WinState_Game(this, sceneRoot);
 
         states[typeof(ChooseBuyBoxState_Game)] = new ChooseBuyBoxState_Game(this, chooseBuyBoxProvider, sceneRoot);
+
+        states[typeof(CardsState_Game)] = new CardsState_Game(this, sceneRoot);
     }
 
     public void Initialize()
