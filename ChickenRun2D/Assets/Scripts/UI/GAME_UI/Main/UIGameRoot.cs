@@ -13,6 +13,7 @@ public class UIGameRoot : UIRoot
     [SerializeField] private MovePanel backgroundBarnPanel;
     [SerializeField] private MovePanel backgroundBlackPanel;
 
+    [SerializeField] private MainHeaderPanel_Game mainHeaderPanel;
     [SerializeField] private MainPanel_Game mainPanel;
 
     [SerializeField] private ChoosePanel_Game choosePanel;
@@ -47,6 +48,8 @@ public class UIGameRoot : UIRoot
         backgroundBarnPanel.Initialize();
         backgroundBrownPanel.Initialize();
         backgroundBlackPanel.Initialize();
+
+        mainHeaderPanel.Initialize();
         mainPanel.Initialize();
         choosePanel.Initialize();
 
@@ -66,6 +69,8 @@ public class UIGameRoot : UIRoot
     {
         playVideoPanel.OnClickPlay += ClickToPlay_PLAY;
 
+        mainHeaderPanel.OnClickToMenu += ClickToMenu_MainHeader;
+
         choosePanel.OnChoose += ClickToChoose_CHOOSE;
 
         losePanel.OnClickToRestart += ClickToRestart_LOSE;
@@ -84,6 +89,8 @@ public class UIGameRoot : UIRoot
             CloseOtherPanel(currentPanel);
 
         playVideoPanel.OnClickPlay -= ClickToPlay_PLAY;
+
+        mainHeaderPanel.OnClickToMenu -= ClickToMenu_MainHeader;
 
         choosePanel.OnChoose -= ClickToChoose_CHOOSE;
 
@@ -108,6 +115,8 @@ public class UIGameRoot : UIRoot
         backgroundBarnPanel.Dispose();
         backgroundBrownPanel.Dispose();
         backgroundBlackPanel.Dispose();
+
+        mainHeaderPanel.Dispose();
         mainPanel.Dispose();
         choosePanel.Dispose();
 
@@ -205,6 +214,21 @@ public class UIGameRoot : UIRoot
         if(!mainPanel.IsActive) return;
 
         CloseOtherPanel(mainPanel);
+    }
+
+
+    public void OpenMainHeaderPanel()
+    {
+        if(mainHeaderPanel.IsActive) return;
+
+        OpenOtherPanel(mainHeaderPanel);
+    }
+
+    public void CloseMainHeaderPanel()
+    {
+        if(!mainHeaderPanel.IsActive) return;
+
+        CloseOtherPanel(mainHeaderPanel);
     }
 
 
@@ -386,6 +410,19 @@ public class UIGameRoot : UIRoot
 
 
     #region Output
+
+    #region MAIN_HEADER
+
+    public event Action OnClickToMenu_MAINHEADER;
+
+    private void ClickToMenu_MainHeader()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToMenu_MAINHEADER?.Invoke();
+    }
+
+    #endregion
 
     #region PLAY_VIDEO
 

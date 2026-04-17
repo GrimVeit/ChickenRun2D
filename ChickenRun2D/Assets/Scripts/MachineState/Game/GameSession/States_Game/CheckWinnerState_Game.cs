@@ -42,11 +42,11 @@ public class CheckWinnerState_Game : IState
 
     private IEnumerator Timer()
     {
+        _chooseChickenProvider.HideAll();
+
         yield return new WaitForSeconds(1f);
 
         _chickenBattleProvider.CheckWinner();
-
-        _chooseChickenProvider.HideAll();
     }
 
     private void ChangeStateToStartWin()

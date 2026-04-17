@@ -10,6 +10,9 @@ public class TimerView_Formatted : View, ITimerView, IIdentify
 
     public string GetID() => id;
 
+    public void Initialize() { }
+    public void Dispose() { }
+
     public void ChangeTime(int sec)
     {
         int minutes = sec / 60;
@@ -18,13 +21,7 @@ public class TimerView_Formatted : View, ITimerView, IIdentify
         text.text = $"{minutes:00}:{seconds:00}";
     }
 
-    public void ActivateTimer()
-    {
-        text.gameObject.SetActive(true);
-    }
+    public void ActivateTimer() { }
 
-    public void DeactivateTimer()
-    {
-        text.gameObject.SetActive(false);
-    }
+    public void DeactivateTimer() { }
 }

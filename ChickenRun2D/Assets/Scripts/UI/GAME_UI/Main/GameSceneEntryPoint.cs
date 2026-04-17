@@ -29,6 +29,9 @@ public class GameSceneEntryPoint : MonoBehaviour
     private ChooseBuyBoxPresenter chooseBuyBoxPresenter;
     private RaceDesignPresenter raceDesignPresenter;
 
+    private TimerPresenter timerPresenter_Start;
+    private TimerPresenter timerPresenter_Game;
+
     private StateMachine_Game stateMachine;
 
     public void Run(UIRootView uIRootView)
@@ -66,6 +69,9 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseBuyBoxPresenter = new ChooseBuyBoxPresenter(new ChooseBuyBoxModel(), viewContainer.GetView<ChooseBuyBoxView>());
         raceDesignPresenter = new RaceDesignPresenter(new RaceDesignModel(slotMachinePresenter), viewContainer.GetView<RaceDesignView>());
 
+        timerPresenter_Start = new TimerPresenter(new TimerModel(), viewContainer.GetView<TimerView_Mapped>("Start"));
+        timerPresenter_Game = new TimerPresenter(new TimerModel(), viewContainer.GetView<TimerView_Formatted>("Game"));
+
         stateMachine = new StateMachine_Game(
             storeChickenPresenter, 
             spawnerChickenPresenter, 
@@ -78,7 +84,10 @@ public class GameSceneEntryPoint : MonoBehaviour
             maskEffectPresenter, 
             slotMachinePresenter, 
             slotMachinePresenter,
-            visualChickenEffectPresenter);
+            visualChickenEffectPresenter,
+            timerPresenter_Start,
+            timerPresenter_Start,
+            timerPresenter_Game);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -101,6 +110,9 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         chooseBuyBoxPresenter.Initialize();
         raceDesignPresenter.Initialize();
+
+        timerPresenter_Start.Initialize();
+        timerPresenter_Game.Initialize();
 
         stateMachine.Initialize();
     }
@@ -155,6 +167,9 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         chooseBuyBoxPresenter?.Dispose();
         raceDesignPresenter?.Dispose();
+
+        timerPresenter_Start?.Dispose();
+        timerPresenter_Game?.Dispose();
 
         stateMachine?.Dispose();
     }

@@ -1,15 +1,26 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
-public class TimerView_NumericAnimated : View, ITimerView, IIdentify
+public class TimerView_Mapped : View, ITimerView, IIdentify
 {
     [SerializeField] private string id;
     [SerializeField] private TextMeshProUGUI text;
     [SerializeField] private RectTransform target;
     [SerializeField] private UIEffect effectText;
+    [SerializeField] private List<TimerLabel> labels;
+
+    [Serializable]
+    private class TimerLabel
+    {
+        public int value;
+        public string text;
+    }
+
+    public string GetID() => id;
 
     public void Initialize()
     {
@@ -21,11 +32,21 @@ public class TimerView_NumericAnimated : View, ITimerView, IIdentify
         effectText.Dispose();
     }
 
-    public string GetID() => id;
-
     public void ChangeTime(int sec)
     {
-        text.text = sec.ToString();
+        string result = null;
+
+        for (int i = 0; i < labels.Count; i++)
+        {
+            if (labels[i].value == sec)
+            {
+                result = labels[i].text;
+                break;
+            }
+        }
+
+        text.text = result ?? sec.ToString();
+
         Animate();
     }
 
@@ -46,6 +67,11 @@ public class TimerView_NumericAnimated : View, ITimerView, IIdentify
     }
 
     public void DeactivateTimer()
+    {
+        Invoke(nameof(Deactivate), 0.2f);
+    }
+
+    private void Deactivate()
     {
         target.DOKill();
 

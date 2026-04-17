@@ -19,7 +19,7 @@ public class ChooseChickenState_Game : IState
 
     public void EnterState()
     {
-        _sceneRoot.OnClickToChoose_CHOOSE += ChangeStateToGame;
+        _sceneRoot.OnClickToChoose_CHOOSE += ChangeStateToWaitStartGame;
 
         _sceneRoot.OpenChoosePanel();
         _chooseChickenProvider.ActivateAll();
@@ -27,15 +27,15 @@ public class ChooseChickenState_Game : IState
 
     public void ExitState()
     {
-        _sceneRoot.OnClickToChoose_CHOOSE -= ChangeStateToGame;
+        _sceneRoot.OnClickToChoose_CHOOSE -= ChangeStateToWaitStartGame;
 
         _sceneRoot.CloseChoosePanel();
         _chooseChickenProvider.DeactivateAll();
         _visualChickenEffectProvider.DeactivateVisual();
     }
 
-    private void ChangeStateToGame()
+    private void ChangeStateToWaitStartGame()
     {
-        _machineProvider.EnterState(_machineProvider.GetState<GameRunState_Game>());
+        _machineProvider.EnterState(_machineProvider.GetState<WaitGameRunState_Game>());
     }
 }

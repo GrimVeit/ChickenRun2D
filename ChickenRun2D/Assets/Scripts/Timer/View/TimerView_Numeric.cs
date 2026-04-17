@@ -5,8 +5,19 @@ public class TimerView_Numeric : View, ITimerView, IIdentify
 {
     [SerializeField] private string id;
     [SerializeField] private TextMeshProUGUI textCount;
+    [SerializeField] private UIEffect effectText;
 
     public string GetID() => id;
+
+    public void Initialize()
+    {
+
+    }
+
+    public void Dispose()
+    {
+
+    }
 
     public void ChangeTime(int sec)
     {

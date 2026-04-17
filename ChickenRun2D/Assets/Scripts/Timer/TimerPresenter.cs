@@ -2,65 +2,72 @@ using System;
 
 public class TimerPresenter : ITimerProvider, ITimerListener
 {
-    private readonly TimerModel timerModel;
-    private readonly ITimerView timerView;
+    private readonly TimerModel _model;
+    private readonly ITimerView _view;
 
-    public TimerPresenter(TimerModel timerModel, ITimerView timerView)
+    public TimerPresenter(TimerModel model, ITimerView view)
     {
-        this.timerModel = timerModel;
-        this.timerView = timerView;
+        _model = model;
+        _view = view;
     }
 
     public void Initialize()
     {
         ActivateEvents();
+
+        _view.Initialize();
     }
 
     public void Dispose()
     {
         DeactivateEvents();
+
+        _view.Dispose();
     }
 
     private void ActivateEvents()
     {
-        timerModel.OnActivateTimer += timerView.ActivateTimer;
-        timerModel.OnDeactivateTimer += timerView.DeactivateTimer;
+        _model.OnActivateTimer += _view.ActivateTimer;
+        _model.OnDeactivateTimer += _view.DeactivateTimer;
 
-        timerModel.OnTimeChanged += timerView.ChangeTime;
+        _model.OnTimeChanged += _view.ChangeTime;
     }
 
     private void DeactivateEvents()
     {
-        timerModel.OnActivateTimer -= timerView.ActivateTimer;
-        timerModel.OnDeactivateTimer -= timerView.DeactivateTimer;
+        _model.OnActivateTimer -= _view.ActivateTimer;
+        _model.OnDeactivateTimer -= _view.DeactivateTimer;
 
-        timerModel.OnTimeChanged -= timerView.ChangeTime;
+        _model.OnTimeChanged -= _view.ChangeTime;
     }
 
     public void ActivateTimer(int seconds, TimerDirection direction)
     {
-        timerModel.ActivateTimer(seconds, direction);
+        _model.ActivateTimer(seconds, direction);
     }
 
     public void DeactivateTimer()
     {
-        timerModel.DeactivateTimer();
+        _model.DeactivateTimer();
     }
 
     public void ResetTimer()
     {
-        timerModel.ResetTimer();
+        _model.ResetTimer();
     }
 
     public event Action OnStopTimer
     {
-        add { timerModel.OnStopTimer += value; }
-        remove { timerModel.OnStopTimer -= value; }
+        add { _model.OnStopTimer += value; }
+        remove { _model.OnStopTimer -= value; }
     }
 }
 
 public interface ITimerView
 {
+    void Initialize();
+    void Dispose();
+
     void ChangeTime(int sec);
     void ActivateTimer();
     void DeactivateTimer();
