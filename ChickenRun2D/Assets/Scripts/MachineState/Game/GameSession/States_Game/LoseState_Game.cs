@@ -30,6 +30,6 @@ public class LoseState_Game : IState
 
     private void ChangeStateToRestart()
     {
-        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChickenSpawnState_Game>());
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChooseLocationState_Game>());
     }
 }

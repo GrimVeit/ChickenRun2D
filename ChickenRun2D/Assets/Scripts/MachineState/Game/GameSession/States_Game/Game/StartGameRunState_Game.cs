@@ -34,15 +34,13 @@ public class StartGameRunState_Game : IState
 
     private IEnumerator Timer()
     {
-        _maskEffectProvider.Play("StartGame", () =>
-        {
-            _sceneRoot.CloseChooseLocationPanel();
-        });
+        _maskEffectProvider.Play("StartGame");
 
         _sceneRoot.OpenMainPanel();
 
         yield return new WaitForSeconds(0.2f);
 
+        _sceneRoot.CloseBackgroundBrownPanel();
         _sceneRoot.CloseChooseLocationPanel();
 
         yield return new WaitForSeconds(0.2f);

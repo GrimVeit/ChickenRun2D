@@ -38,7 +38,7 @@ public class ChickenSpawnState_Game : IState
     {
         _sceneRoot.OpenMainPanel();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
 
         _storeChickenProvider.ChooseChickens();
         _spawnerChickenProvider.SpawnChickens();

@@ -18,7 +18,8 @@ public class VisualChickenEffectView : View
     {
         figure.SetParent(transformParent);
         figure.SetPosition(chickenEffectTransforms.Point(id).localPosition + offsetPos, durationShowHide);
-        figure.Show(durationShowHide, 0.22f);
+        figure.Show(durationShowHide / 2, 0.1f, () => { figure.Show(durationShowHide/2, 0.22f); } );
+        
     }
 
     public void Deactivate()

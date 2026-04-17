@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
 using Spine.Unity;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -167,23 +168,31 @@ public class ChooseChicken
     [SerializeField] private Image imageChicken;
     [SerializeField] private Button buttonChicken;
     [SerializeField] private SkeletonGraphic skeleton;
+    [SerializeField] private TextMeshProUGUI textName;
+    [SerializeField] private UIEffect effectName;
 
     private ChooseChickenData _data;
     private bool isActive = false;
 
     public void Initialize()
     {
+        effectName.Initialize();
+
         buttonChicken.onClick.AddListener(ChooseChick);
     }
 
     public void Dispose()
     {
+        effectName.Dispose();
+
         buttonChicken.onClick.RemoveListener(ChooseChick);
     }
 
     public void SetData(ChooseChickenData data)
     {
         _data = data;
+
+        textName.text = data.Name;
     }
 
     public void Show()
@@ -216,11 +225,15 @@ public class ChooseChicken
 
     public void Choose()
     {
+        effectName.ActivateEffect();
+
         imageChicken.sprite = _data.SpriteActivate;
     }
 
     public void Unchoose()
     {
+        effectName.DeactivateEffect();
+
         imageChicken.sprite = _data.SpriteDeactivate;
     }
 
@@ -254,8 +267,10 @@ public class ChooseChickenData
     public ChickenType ChickenType => chickenType;
     public Sprite SpriteActivate => spriteActivate;
     public Sprite SpriteDeactivate => spriteDeactivate;
+    public string Name => name;
 
     [SerializeField] private ChickenType chickenType;
     [SerializeField] private Sprite spriteActivate;
     [SerializeField] private Sprite spriteDeactivate;
+    [SerializeField] private string name;
 }

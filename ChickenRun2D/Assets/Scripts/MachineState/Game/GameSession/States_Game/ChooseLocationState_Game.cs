@@ -29,6 +29,7 @@ public class ChooseLocationState_Game : IState
             _sceneRoot.ClosePlayVideoPanel();
         });
 
+        _sceneRoot.OpenBackgroundBrownPanel();
         _sceneRoot.OpenChooseLocationPanel();
         _slotMachineProvider.ActivateSpinButton();
     }
