@@ -137,15 +137,6 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            storeChickenPresenter.ChooseChickens();
-            chooseChickenPresenter.ShowAll();
-        }
-    }
-
     private void Deactivate()
     {
         sceneRoot.Deactivate();
