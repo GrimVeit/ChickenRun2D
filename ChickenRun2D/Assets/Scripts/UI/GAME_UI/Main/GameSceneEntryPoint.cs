@@ -34,6 +34,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private TimerPresenter timerPresenter_Game;
 
     private VisualChickenPicturePresenter visualChickenPicturePresenter;
+    private StoreChickenPicturePiecePresenter storeChickenPicturePiecePresenter;
     private StoreChickenPicturePresenter storeChickenPicturePresenter;
 
     private StateMachine_Game stateMachine;
@@ -77,6 +78,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         timerPresenter_Game = new TimerPresenter(new TimerModel(), viewContainer.GetView<TimerView_Formatted>("Game"));
 
         storeChickenPicturePresenter = new StoreChickenPicturePresenter(new StoreChickenPictureModel("CHICKEN_PICTURES", chickenAllPicturesSO));
+        storeChickenPicturePiecePresenter = new StoreChickenPicturePiecePresenter(new StoreChickenPicturePieceModel(storeChickenPicturePresenter));
         visualChickenPicturePresenter = new VisualChickenPicturePresenter(new VisualChickenPictureModel(storeChickenPicturePresenter, storeChickenPicturePresenter), viewContainer.GetView<VisualChickenPictureView>());
 
         stateMachine = new StateMachine_Game(
@@ -123,9 +125,20 @@ public class GameSceneEntryPoint : MonoBehaviour
         timerPresenter_Game.Initialize();
 
         visualChickenPicturePresenter.Initialize();
+        storeChickenPicturePiecePresenter.Initialize();
         storeChickenPicturePresenter.Initialize();
 
         stateMachine.Initialize();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            var data = storeChickenPicturePresenter.GetRandomAvailablePiece();
+
+            if(data != null) storeChickenPicturePresenter.OwnedPiece(data.Type, data.IdPicture, data.IdPiece);
+        }
     }
 
     private void ActivateEvents()
@@ -174,6 +187,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         timerPresenter_Game?.Dispose();
 
         visualChickenPicturePresenter?.Dispose();
+        storeChickenPicturePiecePresenter?.Dispose();
         storeChickenPicturePresenter?.Dispose();
 
         stateMachine?.Dispose();

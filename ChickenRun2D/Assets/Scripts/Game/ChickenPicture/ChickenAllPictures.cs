@@ -18,7 +18,7 @@ public class ChickenAllPictures
 
                 for (int k = 0; k < chickenAllPicturesSO.TypePictures[i].Pictures[j].Pieces.Count; k++)
                 {
-                    ChickenPicturePiece piece = new(k, chickenAllPicturesSO.TypePictures[i].Pictures[j].Pieces[k]);
+                    ChickenPicturePiece piece = new(chickenAllPicturesSO.TypePictures[i].Type, j, k, chickenAllPicturesSO.TypePictures[i].Pictures[j].Pieces[k]);
                     listPieces.Add(piece);
                 }
 
@@ -62,13 +62,18 @@ public class ChickenPictures
 
 public class ChickenPicturePiece
 {
-    private readonly int _id;
+    private readonly ChickenType _type;
+    private readonly int _idPicture;
+    private readonly int _idPiece;
     private readonly Sprite _piece;
     private bool isOpen = false;
+    private bool isOwned = false;
 
-    public ChickenPicturePiece(int id, Sprite piece)
+    public ChickenPicturePiece(ChickenType type, int idPicture, int idPiece, Sprite piece)
     {
-        _id = id;
+        _type = type;
+        _idPicture = idPicture;
+        _idPiece = idPiece;
         _piece = piece;
     }
 
@@ -77,7 +82,15 @@ public class ChickenPicturePiece
         isOpen = true;
     }
 
-    public int IdPiece => _id;
+    public void Owned()
+    {
+        isOwned = true;
+    }
+
+    public ChickenType Type => _type;
+    public int IdPicture => _idPicture;
+    public int IdPiece => _idPiece;
     public Sprite Sprite => _piece;
     public bool IsOpen => isOpen;
+    public bool IsOwned => isOwned;
 }

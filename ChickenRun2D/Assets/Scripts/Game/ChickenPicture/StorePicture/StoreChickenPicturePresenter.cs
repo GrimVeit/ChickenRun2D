@@ -21,7 +21,13 @@ public class StoreChickenPicturePresenter : IStoreChickenPictureListener, IStore
 
     #region Output
 
-    public event Action<ChickenPieceDTO> OnPieceOpened
+    public event Action<ChickenPicturePiece> OnPieceOwned
+    {
+        add => _model.OnPieceOwned += value;
+        remove => _model.OnPieceOwned -= value;
+    }
+
+    public event Action<ChickenPicturePiece> OnPieceOpened
     {
         add => _model.OnPieceOpened += value;
         remove => _model.OnPieceOpened -= value;
@@ -37,23 +43,28 @@ public class StoreChickenPicturePresenter : IStoreChickenPictureListener, IStore
 
     #region Input
 
-    public ChickenPicturesDTO GetPicturesDTOByType(ChickenType type) => _model.GetPicturesDTOByType(type);
-    public ChickenPieceDTO GetRandomAvailablePiece() => _model.GetRandomAvailablePiece();
+    public AllChickenPictures GetPicturesByType(ChickenType type) => _model.GetPicturesByType(type);
+    public ChickenPicturePiece GetRandomAvailablePiece() => _model.GetRandomAvailablePiece();
+
     public void OpenPiece(ChickenType type, int pictureId, int pieceId) => _model.OpenPiece(type, pictureId, pieceId);
+    public void OwnedPiece(ChickenType type, int pictureId, int pieceId) => _model.OwnedPiece(type, pictureId, pieceId);
 
     #endregion
 }
 
 public interface IStoreChickenPictureListener
 {
-    public event Action<ChickenPieceDTO> OnPieceOpened;
+    public event Action<ChickenPicturePiece> OnPieceOwned;
+    public event Action<ChickenPicturePiece> OnPieceOpened;
 
     public event Action OnAllOpened;
 }
 
 public interface IStoreChickenPictureProvider
 {
-    public ChickenPicturesDTO GetPicturesDTOByType(ChickenType type);
-    public ChickenPieceDTO GetRandomAvailablePiece();
+    public AllChickenPictures GetPicturesByType(ChickenType type);
+    public ChickenPicturePiece GetRandomAvailablePiece();
+
     public void OpenPiece(ChickenType type, int pictureId, int pieceId);
+    public void OwnedPiece(ChickenType type, int pictureId, int pieceId);
 }

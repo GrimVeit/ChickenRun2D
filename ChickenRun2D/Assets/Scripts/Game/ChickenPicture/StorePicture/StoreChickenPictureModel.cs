@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
 public class StoreChickenPictureModel
 {
-    public event Action<ChickenPieceDTO> OnPieceOpened;
+    public event Action<ChickenPicturePiece> OnPieceOwned;
+    public event Action<ChickenPicturePiece> OnPieceOpened;
     public event Action OnAllOpened;
 
     private readonly ChickenAllPicturesSO _so;
@@ -51,7 +51,15 @@ public class StoreChickenPictureModel
                     if (pictureSave.Pieces[i].IsOpen)
                     {
                         pictureRuntime.Pieces[i].Open();
-                        OnPieceOpened?.Invoke(new ChickenPieceDTO(typeRuntime.Type, pictureRuntime.Id, pictureRuntime.Pieces[i].IdPiece, pictureRuntime.Pieces[i].Sprite, pictureRuntime.Pieces[i].IsOpen));
+                        OnPieceOpened?.Invoke(pictureRuntime.Pieces[i]);
+                    }
+                    else
+                    {
+                        if (pictureSave.Pieces[i].IsOwned)
+                        {
+                            pictureRuntime.Pieces[i].Owned();
+                            OnPieceOwned?.Invoke(pictureRuntime.Pieces[i]);
+                        }
                     }
                 }
             }
@@ -69,43 +77,19 @@ public class StoreChickenPictureModel
 
     #region Input
 
-    public ChickenPicturesDTO GetPicturesDTOByType(ChickenType type)
+    public AllChickenPictures GetPicturesByType(ChickenType type)
     {
-        var typeData = _runtime.chickenTypePictures
-            .Find(t => t.Type == type);
+        var typeData = _runtime.chickenTypePictures.Find(t => t.Type == type);
 
-        if (typeData == null)
-            return null;
+        if (typeData == null) return null;
 
-        var picturesDTO = new List<ChickenPictureDTO>();
 
-        foreach (var picture in typeData.Pictures)
-        {
-            var piecesDTO = new List<ChickenPieceDTO>();
-
-            foreach (var piece in picture.Pieces)
-            {
-                piecesDTO.Add(new ChickenPieceDTO(
-                    type,
-                    picture.Id,
-                    piece.IdPiece,
-                    piece.Sprite,
-                    piece.IsOpen
-                ));
-            }
-
-            picturesDTO.Add(new ChickenPictureDTO(
-                picture.Id,
-                piecesDTO
-            ));
-        }
-
-        return new ChickenPicturesDTO(type, picturesDTO);
+        return typeData;
     }
 
-    public ChickenPieceDTO GetRandomAvailablePiece()
+    public ChickenPicturePiece GetRandomAvailablePiece()
     {
-        List<ChickenPieceDTO> available = new();
+        List<ChickenPicturePiece> available = new();
 
         foreach (var type in _runtime.chickenTypePictures)
         {
@@ -115,7 +99,7 @@ public class StoreChickenPictureModel
                 {
                     if (!piece.IsOpen)
                     {
-                        available.Add(new ChickenPieceDTO(type.Type, picture.Id, piece.IdPiece, piece.Sprite, piece.IsOpen));
+                        available.Add(piece);
                     }
                 }
             }
@@ -142,7 +126,27 @@ public class StoreChickenPictureModel
             return;
 
         piece.Open();
-        OnPieceOpened?.Invoke(new ChickenPieceDTO(type, pictureId, pieceId, piece.Sprite, piece.IsOpen));
+        OnPieceOpened?.Invoke(piece);
+
+        CheckAllOpened();
+    }
+
+    public void OwnedPiece(ChickenType type, int pictureId, int pieceId)
+    {
+        var typeData = _runtime.chickenTypePictures.Find(t => t.Type == type);
+        if (typeData == null) return;
+
+        var picture = typeData.Pictures.Find(p => p.Id == pictureId);
+        if (picture == null) return;
+
+        var piece = picture.Pieces.Find(p => p.IdPiece == pieceId);
+        if (piece == null) return;
+
+        if (piece.IsOpen)
+            return;
+
+        piece.Owned();
+        OnPieceOwned?.Invoke(piece);
 
         CheckAllOpened();
     }
@@ -162,7 +166,7 @@ public class StoreChickenPictureModel
                 var pieces = new PicturePieceData[pic.Pieces.Count];
 
                 for (int i = 0; i < pieces.Length; i++)
-                    pieces[i] = new PicturePieceData(true);
+                    pieces[i] = new PicturePieceData(false, false);
 
                 pictures.Add(new PictureData(pieces));
             }
@@ -205,6 +209,7 @@ public class StoreChickenPictureModel
                 for (int i = 0; i < pictureRuntime.Pieces.Count; i++)
                 {
                     pictureSave.Pieces[i].IsOpen = pictureRuntime.Pieces[i].IsOpen;
+                    pictureSave.Pieces[i].IsOwned = pictureRuntime.Pieces[i].IsOwned;
                 }
             }
         }
@@ -244,14 +249,16 @@ public class ChickenPieceDTO
     public readonly int IdPiece;
     public readonly Sprite Sprite;
     public readonly bool IsOpen;
+    public readonly bool IsOwned;
 
-    public ChickenPieceDTO(ChickenType type, int idPicture, int idPiece, Sprite sprite, bool isOpen)
+    public ChickenPieceDTO(ChickenType type, int idPicture, int idPiece, Sprite sprite, bool isOpen, bool isOwned)
     {
         Type = type;
         IdPicture = idPicture;
         IdPiece = idPiece;
         Sprite = sprite;
         IsOpen = isOpen;
+        IsOwned = isOwned;
     }
 }
 
@@ -294,9 +301,11 @@ public class PictureData
 public class PicturePieceData
 {
     public bool IsOpen;
+    public bool IsOwned;
 
-    public PicturePieceData(bool isOpen)
+    public PicturePieceData(bool isOpen, bool isOwned)
     {
         IsOpen = isOpen;
+        IsOwned = isOwned;
     }
 }

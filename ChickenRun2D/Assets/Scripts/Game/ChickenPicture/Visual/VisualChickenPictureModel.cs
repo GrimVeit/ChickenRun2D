@@ -29,18 +29,21 @@ public class VisualChickenPictureModel
     {
         _currentType = type;
 
-        var snapshot = _store.GetPicturesDTOByType(type);
+        var snapshot = _store.GetPicturesByType(type);
 
         OnClear?.Invoke();
 
         foreach (var pic in snapshot.Pictures)
             foreach (var piece in pic.Pieces)
-                OnPieceUpdate?.Invoke(piece);
+            {
+                if(piece.IsOpen)
+                    OnPieceUpdate?.Invoke(piece);
+            }
 
         OnSelectType?.Invoke();
     }
 
-    private void HandlePiece(ChickenPieceDTO dto)
+    private void HandlePiece(ChickenPicturePiece dto)
     {
         if (dto.Type != _currentType) return;
 
@@ -50,7 +53,7 @@ public class VisualChickenPictureModel
     #region Output
 
     public event Action OnClear;
-    public event Action<ChickenPieceDTO> OnPieceUpdate;
+    public event Action<ChickenPicturePiece> OnPieceUpdate;
     public event Action OnSelectType;
 
     #endregion

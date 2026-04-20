@@ -26,7 +26,7 @@ public class VisualChickenPictureView : View
         chickenPictureList.ForEach(cp => cp.Clear());
     }
 
-    public void UpdatePiece(ChickenPieceDTO dto)
+    public void UpdatePiece(ChickenPicturePiece dto)
     {
         var index = dto.IdPicture;
 
@@ -50,7 +50,7 @@ public class VisualChickenPictureView : View
 #region Visual
 
 [Serializable]
-public class VisualChickenPicture // сама картина
+public class VisualChickenPicture
 {
     [SerializeField] private string name;
     [SerializeField] private List<VisualChickenPicturePiece> picturePieces = new();
@@ -61,7 +61,7 @@ public class VisualChickenPicture // сама картина
         picturePieces.ForEach(pp => pp.Clear());
     }
 
-    public void UpdatePiece(ChickenPieceDTO dto)
+    public void UpdatePiece(ChickenPicturePiece dto)
     {
         var layout = pieceLayout.GetLayoutByTypeId(dto.Type, dto.IdPiece);
 
