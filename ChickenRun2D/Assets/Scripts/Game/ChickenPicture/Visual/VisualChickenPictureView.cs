@@ -21,6 +21,11 @@ public class VisualChickenPictureView : View
         chickenPictureButtons.Dispose();
     }
 
+    public void Clear()
+    {
+        chickenPictureList.ForEach(cp => cp.Clear());
+    }
+
     public void UpdatePiece(ChickenPieceDTO dto)
     {
         var index = dto.IdPicture;
@@ -50,6 +55,11 @@ public class VisualChickenPicture // сама картина
     [SerializeField] private string name;
     [SerializeField] private List<VisualChickenPicturePiece> picturePieces = new();
     [SerializeField] private PieceLayout pieceLayout;
+
+    public void Clear()
+    {
+        picturePieces.ForEach(pp => pp.Clear());
+    }
 
     public void UpdatePiece(ChickenPieceDTO dto)
     {
@@ -104,6 +114,12 @@ public class VisualChickenPicture // сама картина
 public class VisualChickenPicturePiece
 {
     [SerializeField] private Image imagePiece;
+
+    public void Clear()
+    {
+        imagePiece.sprite = null;
+        imagePiece.rectTransform.sizeDelta = Vector2.zero;
+    }
 
     public void SetSprite(Sprite sprite)
     {
