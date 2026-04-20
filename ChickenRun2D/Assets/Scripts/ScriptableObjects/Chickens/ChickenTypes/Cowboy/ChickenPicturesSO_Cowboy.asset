@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e722ab108ce0614485730c544ba69a5, type: 3}
+  m_Name: ChickenPicturesSO_Cowboy
+  m_EditorClassIdentifier: 
+  type: 5
+  pictures:
+  - pieces:
+    - {fileID: 21300000, guid: 339a3dc9e2b0d6c40b4ccab59fb7795c, type: 3}
+    - {fileID: 21300000, guid: 63fdeb022b93c5544a3c84f47d6833d9, type: 3}
+    - {fileID: 21300000, guid: 82b637c350e408c45a64df493e1c2e89, type: 3}
+    - {fileID: 21300000, guid: c238d4edee782094b84e9164997ba44d, type: 3}
+    - {fileID: 21300000, guid: a48f61ae8f9b75b42a3a3541e5e94d5f, type: 3}
+    - {fileID: 21300000, guid: a29073c382aec984a97a9c901d76befa, type: 3}
+    - {fileID: 21300000, guid: 0371d9592d21e4e4f8bd9f814798e1fa, type: 3}
+    - {fileID: 21300000, guid: 556c347b9f60c664aa535bbca1bd5082, type: 3}
+    - {fileID: 21300000, guid: 3df4ab8b5da427e41b0b561b59bf6b80, type: 3}
+    - {fileID: 21300000, guid: fbd3b3f56af178a4fa508f5433512c18, type: 3}

@@ -39,7 +39,7 @@ public class StoreChickenPicturePresenter : IStoreChickenPictureListener, IStore
 
     public ChickenPicturesDTO GetPicturesDTOByType(ChickenType type) => _model.GetPicturesDTOByType(type);
     public ChickenPieceDTO GetRandomAvailablePiece() => _model.GetRandomAvailablePiece();
-    public void OpenPiece(ChickenType type, string pictureId, int pieceId) => _model.OpenPiece(type, pictureId, pieceId);
+    public void OpenPiece(ChickenType type, int pictureId, int pieceId) => _model.OpenPiece(type, pictureId, pieceId);
 
     #endregion
 }
@@ -55,5 +55,5 @@ public interface IStoreChickenPictureProvider
 {
     public ChickenPicturesDTO GetPicturesDTOByType(ChickenType type);
     public ChickenPieceDTO GetRandomAvailablePiece();
-    public void OpenPiece(ChickenType type, string pictureId, int pieceId);
+    public void OpenPiece(ChickenType type, int pictureId, int pieceId);
 }

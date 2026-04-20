@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameSceneEntryPoint : MonoBehaviour
 {
     [SerializeField] private Sounds sounds;
+    [SerializeField] private ChickenAllPicturesSO chickenAllPicturesSO;
     [SerializeField] private UIGameRoot menuRootPrefab;
 
     private UIGameRoot sceneRoot;
@@ -31,6 +32,9 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private TimerPresenter timerPresenter_Start;
     private TimerPresenter timerPresenter_Game;
+
+    private VisualChickenPicturePresenter visualChickenPicturePresenter;
+    private StoreChickenPicturePresenter storeChickenPicturePresenter;
 
     private StateMachine_Game stateMachine;
 
@@ -72,6 +76,9 @@ public class GameSceneEntryPoint : MonoBehaviour
         timerPresenter_Start = new TimerPresenter(new TimerModel(), viewContainer.GetView<TimerView_Mapped>("Start"));
         timerPresenter_Game = new TimerPresenter(new TimerModel(), viewContainer.GetView<TimerView_Formatted>("Game"));
 
+        storeChickenPicturePresenter = new StoreChickenPicturePresenter(new StoreChickenPictureModel("CHICKEN_PICTURES", chickenAllPicturesSO));
+        visualChickenPicturePresenter = new VisualChickenPicturePresenter(new VisualChickenPictureModel(storeChickenPicturePresenter, storeChickenPicturePresenter), viewContainer.GetView<VisualChickenPictureView>());
+
         stateMachine = new StateMachine_Game(
             storeChickenPresenter, 
             spawnerChickenPresenter, 
@@ -87,7 +94,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             visualChickenEffectPresenter,
             timerPresenter_Start,
             timerPresenter_Start,
-            timerPresenter_Game);
+            timerPresenter_Game,
+            visualChickenPicturePresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -113,6 +121,9 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         timerPresenter_Start.Initialize();
         timerPresenter_Game.Initialize();
+
+        visualChickenPicturePresenter.Initialize();
+        storeChickenPicturePresenter.Initialize();
 
         stateMachine.Initialize();
     }
@@ -161,6 +172,9 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         timerPresenter_Start?.Dispose();
         timerPresenter_Game?.Dispose();
+
+        visualChickenPicturePresenter?.Dispose();
+        storeChickenPicturePresenter?.Dispose();
 
         stateMachine?.Dispose();
     }

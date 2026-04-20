@@ -127,7 +127,7 @@ public class StoreChickenPictureModel
         return available[UnityEngine.Random.Range(0, available.Count)];
     }
 
-    public void OpenPiece(ChickenType type, string pictureId, int pieceId)
+    public void OpenPiece(ChickenType type, int pictureId, int pieceId)
     {
         var typeData = _runtime.chickenTypePictures.Find(t => t.Type == type);
         if (typeData == null) return;
@@ -162,7 +162,7 @@ public class StoreChickenPictureModel
                 var pieces = new PicturePieceData[pic.Pieces.Count];
 
                 for (int i = 0; i < pieces.Length; i++)
-                    pieces[i] = new PicturePieceData(false);
+                    pieces[i] = new PicturePieceData(true);
 
                 pictures.Add(new PictureData(pieces));
             }
@@ -227,10 +227,10 @@ public class ChickenPicturesDTO
 
 public class ChickenPictureDTO
 {
-    public readonly string Id;
+    public readonly int Id;
     public readonly List<ChickenPieceDTO> Pieces;
 
-    public ChickenPictureDTO(string id, List<ChickenPieceDTO> pieces)
+    public ChickenPictureDTO(int id, List<ChickenPieceDTO> pieces)
     {
         Id = id;
         Pieces = pieces;
@@ -240,12 +240,12 @@ public class ChickenPictureDTO
 public class ChickenPieceDTO
 {
     public readonly ChickenType Type;
-    public readonly string IdPicture;
+    public readonly int IdPicture;
     public readonly int IdPiece;
     public readonly Sprite Sprite;
     public readonly bool IsOpen;
 
-    public ChickenPieceDTO(ChickenType type, string idPicture, int idPiece, Sprite sprite, bool isOpen)
+    public ChickenPieceDTO(ChickenType type, int idPicture, int idPiece, Sprite sprite, bool isOpen)
     {
         Type = type;
         IdPicture = idPicture;

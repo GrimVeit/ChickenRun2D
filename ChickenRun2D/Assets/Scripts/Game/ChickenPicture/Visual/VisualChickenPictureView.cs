@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class VisualChickenPictureView : View
 {
     [SerializeField] private ChickenPictureButtons chickenPictureButtons;
+    [SerializeField] private List<VisualChickenPicture> chickenPictureList;
 
     public void Initialize()
     {
@@ -18,6 +19,15 @@ public class VisualChickenPictureView : View
     {
         chickenPictureButtons.OnChooseType -= ChooseType;
         chickenPictureButtons.Dispose();
+    }
+
+    public void UpdatePiece(ChickenPieceDTO dto)
+    {
+        var index = dto.IdPicture;
+
+        Debug.Log("ID Picture - " + dto.IdPicture);
+
+        chickenPictureList[index].UpdatePiece(dto);
     }
 
     #region Output
@@ -34,14 +44,77 @@ public class VisualChickenPictureView : View
 
 #region Visual
 
+[Serializable]
 public class VisualChickenPicture // сама картина
 {
+    [SerializeField] private string name;
     [SerializeField] private List<VisualChickenPicturePiece> picturePieces = new();
+    [SerializeField] private PieceLayout pieceLayout;
+
+    public void UpdatePiece(ChickenPieceDTO dto)
+    {
+        var layout = pieceLayout.GetLayoutByTypeId(dto.Type, dto.IdPiece);
+
+        if(layout == null)
+        {
+            Debug.LogError("Not found PieceLayout with Type - " + dto.Type);
+            return;
+        }
+
+        picturePieces[dto.IdPiece].SetSprite(dto.Sprite);
+        picturePieces[dto.IdPiece].SetPosSize(layout.Position, layout.Size);
+    }
+
+    [Serializable]
+    private class PieceLayout
+    {
+        [SerializeField] List<TypeLayout> layouts = new();
+
+        public Layout GetLayoutByTypeId(ChickenType type, int index)
+        {
+            return layouts.Find(l => l.Type == type).Layouts[index];
+        }
+
+        [Serializable]
+        private class TypeLayout
+        {
+            public ChickenType Type => type;
+            public List<Layout> Layouts => layouts;
+
+            [SerializeField] private string name;
+            [SerializeField] private ChickenType type;
+            [SerializeField] private List<Layout> layouts;
+
+
+        }
+
+        [Serializable]
+        public class Layout
+        {
+            [SerializeField] private Vector2 position;
+            [SerializeField] private Vector2 size;
+
+            public Vector2 Position => position;
+            public Vector2 Size => size;
+        }
+    }
 }
 
+[Serializable]
 public class VisualChickenPicturePiece
 {
     [SerializeField] private Image imagePiece;
+
+    public void SetSprite(Sprite sprite)
+    {
+        imagePiece.sprite = sprite;
+    }
+
+    public void SetPosSize(Vector3 localPos, Vector3 size)
+    {
+        imagePiece.rectTransform.localPosition = localPos;
+        imagePiece.rectTransform.sizeDelta = size;
+    }
 }
 
 #endregion

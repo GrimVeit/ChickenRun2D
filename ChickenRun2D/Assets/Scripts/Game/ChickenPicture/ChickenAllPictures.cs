@@ -22,7 +22,7 @@ public class ChickenAllPictures
                     listPieces.Add(piece);
                 }
 
-                listPictures.Add(new ChickenPictures(chickenAllPicturesSO.TypePictures[i].Pictures[j].Id, listPieces));
+                listPictures.Add(new ChickenPictures(j, listPieces));
             }
 
             chickenTypePictures.Add(new AllChickenPictures(chickenAllPicturesSO.TypePictures[i].Type, listPictures));
@@ -47,16 +47,16 @@ public class AllChickenPictures
 
 public class ChickenPictures
 {
-    [SerializeField] private string _id;
+    [SerializeField] private int _id;
     [SerializeField] private List<ChickenPicturePiece> _pieces;
 
-    public ChickenPictures(string id, List<ChickenPicturePiece> pieces)
+    public ChickenPictures(int id, List<ChickenPicturePiece> pieces)
     {
         _id = id;
         _pieces = pieces;
     }
 
-    public string Id => _id;
+    public int Id => _id;
     public List<ChickenPicturePiece> Pieces => _pieces;
 }
 

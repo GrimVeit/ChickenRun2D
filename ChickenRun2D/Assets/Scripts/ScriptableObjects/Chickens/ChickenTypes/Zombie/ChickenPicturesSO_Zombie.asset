@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e722ab108ce0614485730c544ba69a5, type: 3}
+  m_Name: ChickenPicturesSO_Zombie
+  m_EditorClassIdentifier: 
+  type: 10
+  pictures:
+  - pieces:
+    - {fileID: 21300000, guid: dbceb46929403a54a8566e92d049adfe, type: 3}
+    - {fileID: 21300000, guid: 00f8c933ae742b34c8ed8d7cbe59404e, type: 3}
+    - {fileID: 21300000, guid: f8b0c5d06442f714489cac19006666b6, type: 3}
+    - {fileID: 21300000, guid: 123d7932b9e1eda42b5f4a1f1f504000, type: 3}
+    - {fileID: 21300000, guid: 664aeeba50319ec4d81d7667dc30f53d, type: 3}
+    - {fileID: 21300000, guid: 064cc736d85373f4cbc9689a1973eced, type: 3}
+    - {fileID: 21300000, guid: 1e96103ac141ae641a73a53bb4ab5ff5, type: 3}
+    - {fileID: 21300000, guid: be46ddfe48c9abb418bd0ffab3c3ea1a, type: 3}
+    - {fileID: 21300000, guid: 864017515ec51724899b2cc15a479016, type: 3}
+    - {fileID: 21300000, guid: bacd1856c42e13c4ab1dec2c03e5c937, type: 3}

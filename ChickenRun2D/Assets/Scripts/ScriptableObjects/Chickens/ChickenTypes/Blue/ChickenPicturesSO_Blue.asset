@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e722ab108ce0614485730c544ba69a5, type: 3}
+  m_Name: ChickenPicturesSO_Blue
+  m_EditorClassIdentifier: 
+  type: 3
+  pictures:
+  - pieces:
+    - {fileID: 21300000, guid: ff34a2ebc98cfc0479bb19ddc048beb3, type: 3}
+    - {fileID: 21300000, guid: 705270e7ada6dd24f8af57c9da90a62c, type: 3}
+    - {fileID: 21300000, guid: f3836ca091eb4484e89ba0076565f92c, type: 3}
+    - {fileID: 21300000, guid: be612d7ee9ca78340bab64b6cce6d0d2, type: 3}
+    - {fileID: 21300000, guid: 4f441734638e90f47aaf172055b8573b, type: 3}
+    - {fileID: 21300000, guid: 4bd05383e45f14b4684778432607deca, type: 3}
+    - {fileID: 21300000, guid: 37e65f24858bf03438f87f533f793c40, type: 3}
+    - {fileID: 21300000, guid: cdc523760c90b324185c6d84cfcd8a4e, type: 3}
+    - {fileID: 21300000, guid: 7b7affb7a1b62a14b8c6c648fd2b33fd, type: 3}
+    - {fileID: 21300000, guid: d8e45b139262f0b489e4d2fd315a7057, type: 3}

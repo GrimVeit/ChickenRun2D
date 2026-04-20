@@ -6,15 +6,18 @@ public class CardsState_Game : IState
 {
     private readonly IStateMachineProvider _machineProvider;
     private readonly UIGameRoot _sceneRoot;
+    private readonly IVisualChickenPictureListener _visualChickenPictureListener;
 
-    public CardsState_Game(IStateMachineProvider machineProvider, UIGameRoot sceneRoot)
+    public CardsState_Game(IStateMachineProvider machineProvider, UIGameRoot sceneRoot, IVisualChickenPictureListener visualChickenPictureListener)
     {
         _machineProvider = machineProvider;
         _sceneRoot = sceneRoot;
+        _visualChickenPictureListener = visualChickenPictureListener;
     }
 
     public void EnterState()
     {
+        _visualChickenPictureListener.OnSelectType += ChangeStateToCardsType;
         _sceneRoot.OnClickToExit_CARDSHEADER += ChangeStateToRestart;
 
         _sceneRoot.OpenCardsHeaderPanel();
@@ -23,6 +26,7 @@ public class CardsState_Game : IState
 
     public void ExitState()
     {
+        _visualChickenPictureListener.OnSelectType -= ChangeStateToCardsType;
         _sceneRoot.OnClickToExit_CARDSHEADER -= ChangeStateToRestart;
 
         _sceneRoot.CloseCardsPanel();
@@ -38,6 +42,6 @@ public class CardsState_Game : IState
 
     private void ChangeStateToCardsType()
     {
-
+        _machineProvider.EnterState(_machineProvider.GetState<CardsTypeState_Game>());
     }
 }
