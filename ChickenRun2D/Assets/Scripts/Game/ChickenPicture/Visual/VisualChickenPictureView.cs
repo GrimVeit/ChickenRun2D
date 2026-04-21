@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,16 +11,30 @@ public class VisualChickenPictureView : View
     [SerializeField] private List<VisualChickenPicture> chickenPictureList;
     [SerializeField] private List<PictureDropZone> dropZones;
 
+    private ChickenType _type;
+
     public void Initialize()
     {
         chickenPictureButtons.OnChooseType += ChooseType;
         chickenPictureButtons.Initialize();
+
+        for (int i = 0; i < chickenPictureList.Count; i++)
+        {
+            chickenPictureList[i].OnClickPicture += ClickPicture;
+            chickenPictureList[i].Initialize(i);
+        }
     }
 
     public void Dispose()
     {
         chickenPictureButtons.OnChooseType -= ChooseType;
         chickenPictureButtons.Dispose();
+
+        for (int i = 0; i < chickenPictureList.Count; i++)
+        {
+            chickenPictureList[i].OnClickPicture -= ClickPicture;
+            chickenPictureList[i].Dispose();
+        }
     }
 
     public void Clear()
@@ -29,6 +44,8 @@ public class VisualChickenPictureView : View
 
     public void SetType(ChickenType Type)
     {
+        _type = Type;
+
         dropZones.ForEach(cp => cp.SetType(Type));
     }
 
@@ -44,6 +61,12 @@ public class VisualChickenPictureView : View
     #region Output
 
     public event Action<ChickenType> OnChooseType;
+    public event Action<ChickenType, int, int, int> OnClickPicture;
+
+    private void ClickPicture(int idPicture, int countHave, int allCount)
+    {
+        OnClickPicture?.Invoke(_type, idPicture, countHave, allCount);
+    }
 
     private void ChooseType(ChickenType type)
     {
@@ -61,6 +84,26 @@ public class VisualChickenPicture
     [SerializeField] private string name;
     [SerializeField] private List<VisualChickenPicturePiece> picturePieces = new();
     [SerializeField] private PieceLayout pieceLayout;
+    [SerializeField] private Button buttonPicture;
+
+    private int _idPicture;
+
+    public void Initialize(int id)
+    {
+        _idPicture = id;
+
+        buttonPicture.onClick.AddListener(ClickPicture);
+    }
+
+    public void Dispose()
+    {
+        buttonPicture.onClick.RemoveListener(ClickPicture);
+    }
+
+    private int CountHave()
+    {
+        return picturePieces.Where(data => data.IsHave).Count();
+    }
 
     
 
@@ -116,21 +159,40 @@ public class VisualChickenPicture
             public Vector2 Size => size;
         }
     }
+
+    #region Output
+
+    public event Action<int, int, int> OnClickPicture;
+
+    private void ClickPicture()
+    {
+        OnClickPicture?.Invoke(_idPicture, CountHave(), picturePieces.Count);
+    }
+
+    #endregion
 }
 
 [Serializable]
 public class VisualChickenPicturePiece
 {
+    public bool IsHave => isHave;
+
     [SerializeField] private Image imagePiece;
+
+    private bool isHave;
 
     public void Clear()
     {
+        isHave = false;
+
         imagePiece.sprite = null;
         imagePiece.rectTransform.sizeDelta = Vector2.zero;
     }
 
     public void SetSprite(Sprite sprite)
     {
+        isHave = true;
+
         imagePiece.sprite = sprite;
     }
 

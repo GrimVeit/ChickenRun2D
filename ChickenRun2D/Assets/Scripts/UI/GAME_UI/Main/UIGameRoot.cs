@@ -30,6 +30,10 @@ public class UIGameRoot : UIRoot
     [SerializeField] private CardsPanel_Game cardsPanel;
     [SerializeField] private CardsTypePanel_Game cardsTypePanel;
 
+
+    [SerializeField] private NotFullPicturePanel_Game notFullPicturePanel;
+    [SerializeField] private FullPicturePanel_Game fullPicturePanel;
+
     private ISoundProvider _soundProvider;
 
     public void SetSoundProvider(ISoundProvider soundProvider)
@@ -63,6 +67,9 @@ public class UIGameRoot : UIRoot
         cardsHeaderPanel.Initialize();
         cardsTypePanel.Initialize();
         cardsPanel.Initialize();
+
+        notFullPicturePanel.Initialize();
+        fullPicturePanel.Initialize();
     }
 
     public void Activate()
@@ -81,6 +88,8 @@ public class UIGameRoot : UIRoot
 
 
         cardsHeaderPanel.OnClickToExit += ClickToExit_CARDSHEADER;
+
+        fullPicturePanel.OnClickExit += ClickToExit_FullPicture;
     }
 
     public void Deactivate()
@@ -102,6 +111,8 @@ public class UIGameRoot : UIRoot
 
 
         cardsHeaderPanel.OnClickToExit -= ClickToExit_CARDSHEADER;
+
+        fullPicturePanel.OnClickExit -= ClickToExit_FullPicture;
     }
 
     public void Dispose()
@@ -131,6 +142,9 @@ public class UIGameRoot : UIRoot
         cardsHeaderPanel.Dispose();
         cardsTypePanel.Dispose();
         cardsPanel.Dispose();
+
+        notFullPicturePanel.Dispose();
+        fullPicturePanel.Dispose();
     }
 
     #region Input
@@ -406,6 +420,42 @@ public class UIGameRoot : UIRoot
 
     #endregion
 
+
+
+    #region SHOW PICTURE
+
+    public void OpenNotFullPicturePanel()
+    {
+        if(notFullPicturePanel.IsActive) return;
+
+        OpenOtherPanel(notFullPicturePanel);
+    }
+
+    public void CloseNotFullPicturePanel()
+    {
+        if(!notFullPicturePanel.IsActive) return;
+
+        CloseOtherPanel(notFullPicturePanel);
+    }
+
+
+
+    public void OpenFullPicturePanel()
+    {
+        if(fullPicturePanel.IsActive) return;
+
+        OpenOtherPanel(fullPicturePanel);
+    }
+
+    public void CloseFullPicturePanel()
+    {
+        if(!fullPicturePanel.IsActive) return;
+
+        CloseOtherPanel(fullPicturePanel);
+    }
+
+    #endregion
+
     #endregion
 
 
@@ -508,6 +558,19 @@ public class UIGameRoot : UIRoot
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToExit_CARDSHEADER?.Invoke();
+    }
+
+    #endregion
+
+    #region FULL_PICTURE
+
+    public event Action OnClickToExit_FULLPICTURE;
+
+    private void ClickToExit_FullPicture()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToExit_FULLPICTURE?.Invoke();
     }
 
     #endregion

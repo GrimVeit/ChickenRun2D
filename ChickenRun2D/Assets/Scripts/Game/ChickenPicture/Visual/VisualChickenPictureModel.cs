@@ -25,6 +25,8 @@ public class VisualChickenPictureModel
         _listener.OnPieceOpened -= HandlePiece;
     }
 
+    #region VISUAL
+
     public void GetPicturesByType(ChickenType type)
     {
         _currentType = type;
@@ -52,12 +54,25 @@ public class VisualChickenPictureModel
         OnPieceUpdate?.Invoke(dto);
     }
 
+    #endregion
+
+    #region PICTURE
+
+    public void ClickPicture(ChickenType type, int idPicture, int countHave, int countAll)
+    {
+        OnClickPicture?.Invoke(type, idPicture, countHave, countAll);
+    }
+
+    #endregion
+
     #region Output
 
     public event Action<ChickenType> OnSetType;
     public event Action OnClear;
     public event Action<ChickenPicturePiece> OnPieceUpdate;
     public event Action OnSelectType;
+
+    public event Action<ChickenType, int, int, int> OnClickPicture;
 
     #endregion
 }

@@ -37,6 +37,7 @@ public class VisualChickenPicturePresenter : IVisualChickenPictureListener
         _model.OnClear += _view.Clear;
 
         _view.OnChooseType += _model.GetPicturesByType;
+        _view.OnClickPicture += _model.ClickPicture;
     }
 
     private void DeactivateEvents()
@@ -56,10 +57,18 @@ public class VisualChickenPicturePresenter : IVisualChickenPictureListener
         remove => _model.OnSelectType -= value;
     }
 
+    public event Action<ChickenType, int, int, int> OnClickPicture
+    {
+        add => _model.OnClickPicture += value;
+        remove => _model.OnClickPicture -= value;
+    }
+
     #endregion
 }
 
 public interface IVisualChickenPictureListener
 {
     public event Action OnSelectType;
+
+    public event Action<ChickenType, int, int, int> OnClickPicture;
 }

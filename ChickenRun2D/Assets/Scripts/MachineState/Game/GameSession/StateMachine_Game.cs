@@ -28,7 +28,8 @@ public class StateMachine_Game : IStateMachineProvider
         ITimerListener timerListener_Start,
         ITimerProvider timerProvider_Game,
 
-        IVisualChickenPictureListener visualChickenPictureListener
+        IVisualChickenPictureListener visualChickenPictureListener,
+        IShowChickenPictureListener showChickenPictureListener
     )
     {
         states[typeof(IntroVideoState_Game)] = new IntroVideoState_Game(this, sceneRoot, videoProvider, maskEffectProvider);
@@ -51,7 +52,9 @@ public class StateMachine_Game : IStateMachineProvider
         states[typeof(ChooseBuyBoxState_Game)] = new ChooseBuyBoxState_Game(this, chooseBuyBoxProvider, sceneRoot);
 
         states[typeof(CardsState_Game)] = new CardsState_Game(this, sceneRoot, visualChickenPictureListener);
-        states[typeof(CardsTypeState_Game)] = new CardsTypeState_Game(this, sceneRoot);
+        states[typeof(CardsTypeState_Game)] = new CardsTypeState_Game(this, sceneRoot, showChickenPictureListener);
+        states[typeof(ShowFullPictureState_Game)] = new ShowFullPictureState_Game(this, sceneRoot);
+        states[typeof(ShowNotFullPictureState_Game)] = new ShowNotFullPictureState_Game(this, sceneRoot);
     }
 
     public void Initialize()
