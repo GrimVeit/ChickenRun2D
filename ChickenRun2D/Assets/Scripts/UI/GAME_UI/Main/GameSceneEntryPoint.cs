@@ -34,6 +34,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private TimerPresenter timerPresenter_Game;
 
     private VisualChickenPicturePresenter visualChickenPicturePresenter;
+    private VisualPseudoPicturePiecePresenter visualPseudoPicturePiecePresenter;
     private StoreChickenPicturePiecePresenter storeChickenPicturePiecePresenter;
     private StoreChickenPicturePresenter storeChickenPicturePresenter;
 
@@ -79,6 +80,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         storeChickenPicturePresenter = new StoreChickenPicturePresenter(new StoreChickenPictureModel("CHICKEN_PICTURES", chickenAllPicturesSO));
         storeChickenPicturePiecePresenter = new StoreChickenPicturePiecePresenter(new StoreChickenPicturePieceModel(storeChickenPicturePresenter));
+        visualPseudoPicturePiecePresenter = new VisualPseudoPicturePiecePresenter(new VisualPseudoPicturePieceModel(storeChickenPicturePiecePresenter), viewContainer.GetView<VisualPseudoPicturePieceView>());
         visualChickenPicturePresenter = new VisualChickenPicturePresenter(new VisualChickenPictureModel(storeChickenPicturePresenter, storeChickenPicturePresenter), viewContainer.GetView<VisualChickenPictureView>());
 
         stateMachine = new StateMachine_Game(
@@ -125,6 +127,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         timerPresenter_Game.Initialize();
 
         visualChickenPicturePresenter.Initialize();
+        visualPseudoPicturePiecePresenter.Initialize();
         storeChickenPicturePiecePresenter.Initialize();
         storeChickenPicturePresenter.Initialize();
 
@@ -187,6 +190,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         timerPresenter_Game?.Dispose();
 
         visualChickenPicturePresenter?.Dispose();
+        visualPseudoPicturePiecePresenter?.Dispose();
         storeChickenPicturePiecePresenter?.Dispose();
         storeChickenPicturePresenter?.Dispose();
 

@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class StoreChickenPicturePieceModel
@@ -31,13 +29,17 @@ public class StoreChickenPicturePieceModel
     {
         Debug.Log($"ADD PIECE INVENTORY - TYPE: {piece.Type}, ID_PICTURE: {piece.IdPicture}, ID_PIECE: {piece.IdPiece}");
 
+        OnAddPiece?.Invoke(piece);
         _ownedPieces.Add(piece);
     }
 
     private void RemoveOwnedPiece(ChickenPicturePiece piece)
     {
-        if(_ownedPieces.Contains(piece))
-           _ownedPieces.Remove(piece);
+        if (_ownedPieces.Contains(piece))
+        {
+            OnRemovePiece?.Invoke(piece);
+            _ownedPieces.Remove(piece);
+        }
     }
 
     #region OUTPUT
