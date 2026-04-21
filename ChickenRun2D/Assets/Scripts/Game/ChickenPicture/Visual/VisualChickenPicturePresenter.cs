@@ -32,6 +32,7 @@ public class VisualChickenPicturePresenter : IVisualChickenPictureListener
 
     private void ActivateEvents()
     {
+        _model.OnSetType += _view.SetType;
         _model.OnPieceUpdate += _view.UpdatePiece;
         _model.OnClear += _view.Clear;
 
@@ -40,6 +41,7 @@ public class VisualChickenPicturePresenter : IVisualChickenPictureListener
 
     private void DeactivateEvents()
     {
+        _model.OnSetType -= _view.SetType;
         _model.OnPieceUpdate -= _view.UpdatePiece;
         _model.OnClear -= _view.Clear;
 

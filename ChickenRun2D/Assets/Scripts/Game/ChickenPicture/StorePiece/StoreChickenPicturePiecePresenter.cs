@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StoreChickenPicturePiecePresenter : IStoreChickenPicturePieceListener
+public class StoreChickenPicturePiecePresenter : IStoreChickenPicturePieceListener, IStoreChickenPicturePieceProvider
 {
     private readonly StoreChickenPicturePieceModel _model;
 
@@ -37,6 +37,17 @@ public class StoreChickenPicturePiecePresenter : IStoreChickenPicturePieceListen
     }
 
     #endregion
+
+    #region Input
+
+    public void OpenPiece(ChickenPicturePiece piece) => _model.OpenPiece(piece);
+
+    #endregion
+}
+
+public interface IStoreChickenPicturePieceProvider
+{
+    void OpenPiece(ChickenPicturePiece piece);
 }
 
 public interface IStoreChickenPicturePieceListener

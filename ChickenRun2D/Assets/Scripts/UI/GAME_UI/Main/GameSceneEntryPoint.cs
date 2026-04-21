@@ -79,8 +79,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         timerPresenter_Game = new TimerPresenter(new TimerModel(), viewContainer.GetView<TimerView_Formatted>("Game"));
 
         storeChickenPicturePresenter = new StoreChickenPicturePresenter(new StoreChickenPictureModel("CHICKEN_PICTURES", chickenAllPicturesSO));
-        storeChickenPicturePiecePresenter = new StoreChickenPicturePiecePresenter(new StoreChickenPicturePieceModel(storeChickenPicturePresenter));
-        visualPseudoPicturePiecePresenter = new VisualPseudoPicturePiecePresenter(new VisualPseudoPicturePieceModel(storeChickenPicturePiecePresenter), viewContainer.GetView<VisualPseudoPicturePieceView>());
+        storeChickenPicturePiecePresenter = new StoreChickenPicturePiecePresenter(new StoreChickenPicturePieceModel(storeChickenPicturePresenter, storeChickenPicturePresenter));
+        visualPseudoPicturePiecePresenter = new VisualPseudoPicturePiecePresenter(new VisualPseudoPicturePieceModel(storeChickenPicturePiecePresenter, storeChickenPicturePiecePresenter), viewContainer.GetView<VisualPseudoPicturePieceView>());
         visualChickenPicturePresenter = new VisualChickenPicturePresenter(new VisualChickenPictureModel(storeChickenPicturePresenter, storeChickenPicturePresenter), viewContainer.GetView<VisualChickenPictureView>());
 
         stateMachine = new StateMachine_Game(

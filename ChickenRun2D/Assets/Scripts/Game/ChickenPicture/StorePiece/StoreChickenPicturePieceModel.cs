@@ -5,12 +5,14 @@ using UnityEngine;
 public class StoreChickenPicturePieceModel
 {
     private readonly IStoreChickenPictureListener _storeChickenPictureListener;
+    private readonly IStoreChickenPictureProvider _storeChickenPictureProvider;
 
     private readonly List<ChickenPicturePiece> _ownedPieces = new();
 
-    public StoreChickenPicturePieceModel(IStoreChickenPictureListener storeChickenPictureListener)
+    public StoreChickenPicturePieceModel(IStoreChickenPictureListener storeChickenPictureListener, IStoreChickenPictureProvider storeChickenPictureProvider)
     {
         _storeChickenPictureListener = storeChickenPictureListener;
+        _storeChickenPictureProvider = storeChickenPictureProvider;
     }
 
     public void Initialize()
@@ -40,6 +42,11 @@ public class StoreChickenPicturePieceModel
             OnRemovePiece?.Invoke(piece);
             _ownedPieces.Remove(piece);
         }
+    }
+
+    public void OpenPiece(ChickenPicturePiece piece)
+    {
+        _storeChickenPictureProvider.OpenPiece(piece.Type, piece.IdPicture, piece.IdPiece);
     }
 
     #region OUTPUT

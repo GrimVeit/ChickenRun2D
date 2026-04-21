@@ -33,6 +33,8 @@ public class VisualChickenPictureModel
 
         OnClear?.Invoke();
 
+        OnSetType?.Invoke(type);
+
         foreach (var pic in snapshot.Pictures)
             foreach (var piece in pic.Pieces)
             {
@@ -52,6 +54,7 @@ public class VisualChickenPictureModel
 
     #region Output
 
+    public event Action<ChickenType> OnSetType;
     public event Action OnClear;
     public event Action<ChickenPicturePiece> OnPieceUpdate;
     public event Action OnSelectType;

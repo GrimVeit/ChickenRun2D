@@ -8,6 +8,7 @@ public class VisualChickenPictureView : View
 {
     [SerializeField] private ChickenPictureButtons chickenPictureButtons;
     [SerializeField] private List<VisualChickenPicture> chickenPictureList;
+    [SerializeField] private List<PictureDropZone> dropZones;
 
     public void Initialize()
     {
@@ -24,6 +25,11 @@ public class VisualChickenPictureView : View
     public void Clear()
     {
         chickenPictureList.ForEach(cp => cp.Clear());
+    }
+
+    public void SetType(ChickenType Type)
+    {
+        dropZones.ForEach(cp => cp.SetType(Type));
     }
 
     public void UpdatePiece(ChickenPicturePiece dto)
@@ -55,6 +61,8 @@ public class VisualChickenPicture
     [SerializeField] private string name;
     [SerializeField] private List<VisualChickenPicturePiece> picturePieces = new();
     [SerializeField] private PieceLayout pieceLayout;
+
+    
 
     public void Clear()
     {

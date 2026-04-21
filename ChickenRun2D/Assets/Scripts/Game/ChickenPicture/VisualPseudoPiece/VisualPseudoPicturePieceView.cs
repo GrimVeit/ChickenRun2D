@@ -27,6 +27,8 @@ public class VisualPseudoPicturePieceView : View
 
         pseudoPiece.SetSize(size);
         pseudoPiece.SetData(piece);
+
+        _pseudoPieces.Add(pseudoPiece);
     }
 
     public void RemovePiece(ChickenPicturePiece piece)
@@ -74,6 +76,8 @@ public class VisualPseudoPicturePieceView : View
             _currentPseudoChip.OnEndMove -= EndMove;
 
             _currentPseudoChip.Teleport();
+
+            _currentPseudoChip = null;
         }
     }
 
@@ -83,12 +87,14 @@ public class VisualPseudoPicturePieceView : View
 
     public void StartMove()
     {
-        _currentPseudoChip.StartMove();
+        if(_currentPseudoChip != null)
+           _currentPseudoChip.StartMove();
     }
 
     public void Move(Vector2 vector)
     {
-        _currentPseudoChip.Move(vector / canvas.scaleFactor);
+        if(_currentPseudoChip != null)
+           _currentPseudoChip.Move(vector / canvas.scaleFactor);
     }
 
     public void EndMove(VisualPseudoPicturePiece piece, RectTransform rectTransform)
@@ -102,7 +108,34 @@ public class VisualPseudoPicturePieceView : View
         }
         else
         {
-            _currentPseudoChip.EndMove();
+            Collider2D collider = Physics2D.OverlapPoint(rectTransform.position);
+
+            if (collider != null)
+            {
+                Debug.Log(collider.gameObject.name);
+
+                if (collider.gameObject.TryGetComponent(out IPictureDropZone zone))
+                {
+                    Debug.Log($"TYPE PIECE: {piece.Data.Type}/TYPE ZONE: {zone.Type}, ID_PICTURE PIECE: {piece.Data.IdPicture}/ID_PICTURE ZONE: {zone.IdZone}");
+
+                    if(piece.Data.Type == zone.Type && piece.Data.IdPicture == zone.IdZone)
+                    {
+                        OnOpenPiece?.Invoke(piece.Data);
+                    }
+                    else
+                    {
+                        _currentPseudoChip.EndMove();
+                    }
+                }
+                else
+                {
+                    _currentPseudoChip.EndMove();
+                }
+            }
+            else
+            {
+                _currentPseudoChip.EndMove();
+            }
         }
     }
 
@@ -126,4 +159,10 @@ public class VisualPseudoPicturePieceView : View
         return pos.x >= rect.xMin && pos.x <= rect.xMax &&
                pos.y >= rect.yMin && pos.y <= rect.yMax;
     }
+
+    #region Output
+
+    public event Action<ChickenPicturePiece> OnOpenPiece;
+
+    #endregion
 }
