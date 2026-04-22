@@ -27,6 +27,7 @@ public class UIGameRoot : UIRoot
 
 
 
+    [SerializeField] private MovePanel piecesPanel;
     [SerializeField] private CardsHeaderPanel_Game cardsHeaderPanel;
     [SerializeField] private CardsPanel_Game cardsPanel;
     [SerializeField] private CardsTypePanel_Game cardsTypePanel;
@@ -66,6 +67,7 @@ public class UIGameRoot : UIRoot
 
 
 
+        piecesPanel.Initialize();
         cardsHeaderPanel.Initialize();
         cardsTypePanel.Initialize();
         cardsPanel.Initialize();
@@ -142,6 +144,7 @@ public class UIGameRoot : UIRoot
 
 
 
+        piecesPanel.Dispose();
         cardsHeaderPanel.Dispose();
         cardsTypePanel.Dispose();
         cardsPanel.Dispose();
@@ -386,6 +389,21 @@ public class UIGameRoot : UIRoot
 
 
     #region CARDS
+
+    public void OpenPiecesPanel()
+    {
+        if(piecesPanel.IsActive) return;
+
+        OpenOtherPanel(piecesPanel);
+    }
+
+    public void ClosePiecesPanel()
+    {
+        if(!piecesPanel.IsActive) return;
+
+        CloseOtherPanel(piecesPanel);
+    }
+
 
     public void OpenCardsHeaderPanel()
     {

@@ -41,6 +41,11 @@ public class BuyPiecesModel
         OnSetPieces?.Invoke(list);
     }
 
+    public void OwnedPiece(ChickenPicturePiece piece)
+    {
+        _storeChickenPictureProvider.OwnedPiece(piece.Type, piece.IdPicture, piece.IdPiece);
+    }
+
     #region Output
 
     public event Action<List<ChickenPicturePiece>> OnSetPieces;

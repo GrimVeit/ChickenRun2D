@@ -20,6 +20,7 @@ public class CardsState_Game : IState
         _visualChickenPictureListener.OnSelectType += ChangeStateToCardsType;
         _sceneRoot.OnClickToExit_CARDSHEADER += ChangeStateToRestart;
 
+        _sceneRoot.OpenPiecesPanel();
         _sceneRoot.OpenCardsHeaderPanel();
         _sceneRoot.OpenCardsPanel();
     }
@@ -36,6 +37,7 @@ public class CardsState_Game : IState
     {
         _machineProvider.EnterState(_machineProvider.GetState<ChickenSpawnState_Game>());
 
+        _sceneRoot.ClosePiecesPanel();
         _sceneRoot.CloseCardsHeaderPanel();
         _sceneRoot.CloseBackgroundBrownPanel();
     }

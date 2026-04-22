@@ -5,16 +5,22 @@ using UnityEngine.UI;
 
 public class VisualBuyPiece : MonoBehaviour
 {
+    public ChickenPicturePiece Data => _data;
+
     [SerializeField] private Image imagePiece;
 
-    public void SetData(Sprite sprite)
+    private ChickenPicturePiece _data;
+
+    public void SetData(ChickenPicturePiece data)
     {
-        imagePiece.sprite = sprite;
+        _data = data;
+
+        imagePiece.sprite = _data.Sprite;
     }
 
     public void Destroy()
     {
-        OnDestroy?.Invoke();
+        transform.DOScale(0, 0.2f).OnComplete(() => OnDestroy?.Invoke(this));
     }
 
     public void SetSize(Vector2 size)
@@ -29,7 +35,7 @@ public class VisualBuyPiece : MonoBehaviour
 
     #region Output
 
-    public event Action OnDestroy;
+    public event Action<VisualBuyPiece> OnDestroy;
 
     #endregion
 }

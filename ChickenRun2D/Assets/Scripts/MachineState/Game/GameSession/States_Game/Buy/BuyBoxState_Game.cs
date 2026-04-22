@@ -53,7 +53,27 @@ public class BuyBoxState_Game : IState
 
         yield return new WaitForSeconds(0.8f);
 
-        _buyPiecesProvider.Show();
+        yield return _buyPiecesProvider.ShowPieces();
+
+        yield return new WaitForSeconds(0.2f);
+
+        _sceneRoot.OpenPiecesPanel();
+
+        yield return new WaitForSeconds(0.2f);
+
+        yield return _buyPiecesProvider.OwnedPieces();
+
+        yield return new WaitForSeconds(0.1f);
+
+        _buyBoxProvider.CloseCover(0.6f);
+
+        yield return new WaitForSeconds(0.6f);
+
+        _buyBoxProvider.ScaleTo(0, 0.6f);
+
+        yield return new WaitForSeconds(0.6f);
+
+        ChangeStateToCards();
     }
 
     private void ChangeStateToCards()

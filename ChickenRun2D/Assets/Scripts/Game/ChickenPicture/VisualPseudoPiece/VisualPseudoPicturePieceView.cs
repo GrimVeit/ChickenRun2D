@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 using UnityEngine;
 
 public class VisualPseudoPicturePieceView : View
@@ -27,6 +28,9 @@ public class VisualPseudoPicturePieceView : View
 
         pseudoPiece.SetSize(size);
         pseudoPiece.SetData(piece);
+
+        pseudoPiece.transform.localScale = Vector3.zero;
+        pseudoPiece.transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
 
         _pseudoPieces.Add(pseudoPiece);
     }

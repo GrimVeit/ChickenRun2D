@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,18 +26,25 @@ public class BuyPiecesPresenter : IBuyPiecesProvider
 
     private void ActivateEvents()
     {
+        _view.OnOwnedPiece += _model.OwnedPiece;
+
         _model.OnSetPieces += _view.SetPieces;
     }
 
     private void DeactivateEvents()
     {
+        _view.OnOwnedPiece -= _model.OwnedPiece;
+
         _model.OnSetPieces -= _view.SetPieces;
     }
 
     #region Input
 
     public void GeneratePieces() => _model.GeneratePieces();
-    public void Show() => _view.Show();
+    public IEnumerator ShowPieces() => _view.ShowCoro();
+
+    public IEnumerator OwnedPieces() => _view.OwnedCoro();
+
     public void Clear()
     {
 
@@ -45,9 +53,16 @@ public class BuyPiecesPresenter : IBuyPiecesProvider
     #endregion
 }
 
+public interface IBuyPiecesListener
+{
+    public event Action OnAllOwned;
+    public event Action OnAllShowed;
+}
+
 public interface IBuyPiecesProvider
 {
     public void GeneratePieces();
-    public void Show();
+    public IEnumerator ShowPieces();
+    public IEnumerator OwnedPieces();
     public void Clear();
 }

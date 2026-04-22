@@ -97,7 +97,7 @@ public class StoreChickenPictureModel
             {
                 foreach (var piece in picture.Pieces)
                 {
-                    if (!piece.IsOpen)
+                    if (!piece.IsOpen && !piece.IsOwned)
                     {
                         available.Add(piece);
                     }
