@@ -22,6 +22,7 @@ public class UIGameRoot : UIRoot
     [SerializeField] private WinPanel_Game winPanel;
 
     [SerializeField] private CostBoxPanel_Game costBoxPanel;
+    [SerializeField] private Panel buyBoxPanel;
 
 
 
@@ -61,6 +62,7 @@ public class UIGameRoot : UIRoot
         winPanel.Initialize();
 
         costBoxPanel.Initialize();
+        buyBoxPanel.Initialize();
 
 
 
@@ -135,6 +137,7 @@ public class UIGameRoot : UIRoot
         winPanel.Dispose();
 
         costBoxPanel.Dispose();
+        buyBoxPanel.Dispose();
 
 
 
@@ -352,6 +355,16 @@ public class UIGameRoot : UIRoot
         if(!costBoxPanel.IsActive) return;
 
         CloseOtherPanel(costBoxPanel);
+    }
+
+    public void OpenBuyBoxPanel()
+    {
+        OpenOtherPanel(buyBoxPanel);
+    }
+
+    public void CloseBuyBoxPanel()
+    {
+        CloseOtherPanel(buyBoxPanel);
     }
 
 

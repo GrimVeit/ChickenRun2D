@@ -28,11 +28,13 @@ public class GameSceneEntryPoint : MonoBehaviour
     private MaskEffectPresenter maskEffectPresenter;
 
     private ChooseBuyBoxPresenter chooseBuyBoxPresenter;
+    private BuyBoxPresenter buyBoxPresenter;
     private RaceDesignPresenter raceDesignPresenter;
 
     private TimerPresenter timerPresenter_Start;
     private TimerPresenter timerPresenter_Game;
 
+    private BuyPiecesPresenter buyPiecesPresenter;
     private ShowChickenPicturePresenter showChickenPicturePresenter;
     private VisualChickenPicturePresenter visualChickenPicturePresenter;
     private VisualPseudoPicturePiecePresenter visualPseudoPicturePiecePresenter;
@@ -74,6 +76,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         maskEffectPresenter = new MaskEffectPresenter(new MaskEffectModel(), viewContainer.GetView<MaskEffectView>());
 
         chooseBuyBoxPresenter = new ChooseBuyBoxPresenter(new ChooseBuyBoxModel(), viewContainer.GetView<ChooseBuyBoxView>());
+        buyBoxPresenter = new BuyBoxPresenter(new BuyBoxModel(chooseBuyBoxPresenter), viewContainer.GetView<BuyBoxView>());
         raceDesignPresenter = new RaceDesignPresenter(new RaceDesignModel(slotMachinePresenter), viewContainer.GetView<RaceDesignView>());
 
         timerPresenter_Start = new TimerPresenter(new TimerModel(), viewContainer.GetView<TimerView_Mapped>("Start"));
@@ -84,6 +87,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         visualPseudoPicturePiecePresenter = new VisualPseudoPicturePiecePresenter(new VisualPseudoPicturePieceModel(storeChickenPicturePiecePresenter, storeChickenPicturePiecePresenter), viewContainer.GetView<VisualPseudoPicturePieceView>());
         visualChickenPicturePresenter = new VisualChickenPicturePresenter(new VisualChickenPictureModel(storeChickenPicturePresenter, storeChickenPicturePresenter), viewContainer.GetView<VisualChickenPictureView>());
         showChickenPicturePresenter = new ShowChickenPicturePresenter(new ShowChickenPictureModel(visualChickenPicturePresenter), viewContainer.GetView<ShowChickenPictureView>());
+        buyPiecesPresenter = new BuyPiecesPresenter(new BuyPiecesModel(storeChickenPicturePresenter), viewContainer.GetView<BuyPiecesView>());
 
         stateMachine = new StateMachine_Game(
             storeChickenPresenter, 
@@ -102,7 +106,9 @@ public class GameSceneEntryPoint : MonoBehaviour
             timerPresenter_Start,
             timerPresenter_Game,
             visualChickenPicturePresenter,
-            showChickenPicturePresenter);
+            showChickenPicturePresenter,
+            buyBoxPresenter,
+            buyPiecesPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -124,11 +130,13 @@ public class GameSceneEntryPoint : MonoBehaviour
         spawnerChickenPresenter.Initialize();
 
         chooseBuyBoxPresenter.Initialize();
+        buyBoxPresenter.Initialize();
         raceDesignPresenter.Initialize();
 
         timerPresenter_Start.Initialize();
         timerPresenter_Game.Initialize();
 
+        buyPiecesPresenter.Initialize();
         showChickenPicturePresenter.Initialize();
         visualChickenPicturePresenter.Initialize();
         visualPseudoPicturePiecePresenter.Initialize();
@@ -188,11 +196,13 @@ public class GameSceneEntryPoint : MonoBehaviour
         spawnerChickenPresenter?.Dispose();
 
         chooseBuyBoxPresenter?.Dispose();
+        buyBoxPresenter?.Dispose();
         raceDesignPresenter?.Dispose();
 
         timerPresenter_Start?.Dispose();
         timerPresenter_Game?.Dispose();
 
+        buyPiecesPresenter?.Dispose();
         showChickenPicturePresenter?.Dispose();
         visualChickenPicturePresenter?.Dispose();
         visualPseudoPicturePiecePresenter?.Dispose();

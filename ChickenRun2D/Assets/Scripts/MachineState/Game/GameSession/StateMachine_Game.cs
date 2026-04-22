@@ -29,7 +29,10 @@ public class StateMachine_Game : IStateMachineProvider
         ITimerProvider timerProvider_Game,
 
         IVisualChickenPictureListener visualChickenPictureListener,
-        IShowChickenPictureListener showChickenPictureListener
+        IShowChickenPictureListener showChickenPictureListener,
+
+        IBuyBoxProvider buyBoxProvider,
+        IBuyPiecesProvider buyPiecesProvider
     )
     {
         states[typeof(IntroVideoState_Game)] = new IntroVideoState_Game(this, sceneRoot, videoProvider, maskEffectProvider);
@@ -50,6 +53,7 @@ public class StateMachine_Game : IStateMachineProvider
         states[typeof(WinState_Game)] = new WinState_Game(this, sceneRoot);
 
         states[typeof(ChooseBuyBoxState_Game)] = new ChooseBuyBoxState_Game(this, chooseBuyBoxProvider, sceneRoot);
+        states[typeof(BuyBoxState_Game)] = new BuyBoxState_Game(this, sceneRoot, buyBoxProvider, buyPiecesProvider);
 
         states[typeof(CardsState_Game)] = new CardsState_Game(this, sceneRoot, visualChickenPictureListener);
         states[typeof(CardsTypeState_Game)] = new CardsTypeState_Game(this, sceneRoot, showChickenPictureListener);

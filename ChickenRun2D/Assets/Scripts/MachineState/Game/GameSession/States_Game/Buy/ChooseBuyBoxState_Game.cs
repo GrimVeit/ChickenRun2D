@@ -17,7 +17,7 @@ public class ChooseBuyBoxState_Game : IState
 
     public void EnterState()
     {
-        _sceneRoot.OnClickToBox_COSTBOX += ChangeStateToBuy;
+        _sceneRoot.OnClickToBox_COSTBOX += ChangeStateToBuyBox;
 
         _sceneRoot.OpenBackgroundBrownPanel();
         _sceneRoot.OpenCostBoxPanel();
@@ -26,14 +26,14 @@ public class ChooseBuyBoxState_Game : IState
 
     public void ExitState()
     {
-        _sceneRoot.OnClickToBox_COSTBOX -= ChangeStateToBuy;
+        _sceneRoot.OnClickToBox_COSTBOX -= ChangeStateToBuyBox;
 
         _sceneRoot.CloseCostBoxPanel();
         _chooseBuyBoxProvider.HideAll();
     }
 
-    private void ChangeStateToBuy()
+    private void ChangeStateToBuyBox()
     {
-        _machineProvider.EnterState(_machineProvider.GetState<CardsState_Game>());
+        _machineProvider.EnterState(_machineProvider.GetState<BuyBoxState_Game>());
     }
 }

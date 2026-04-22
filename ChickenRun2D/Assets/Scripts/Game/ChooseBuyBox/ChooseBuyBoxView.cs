@@ -180,7 +180,7 @@ public class BuyBox
         }
         else
         {
-            tweenScaleMain = transformMain.DOScale(1, durationScaleMain);
+            tweenScaleMain = transformMain.DOScale(0, durationScaleMain);
         }
     }
 

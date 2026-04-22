@@ -6,7 +6,16 @@ public class Panel : MonoBehaviour
 {
     [SerializeField] private protected GameObject panel;
     public virtual void Initialize() { }
-    public virtual void ActivatePanel() { }
-    public virtual void DeactivatePanel() { }
+
+    public virtual void ActivatePanel() 
+    { 
+        panel.SetActive(true);
+    }
+
+    public virtual void DeactivatePanel() 
+    { 
+        panel.SetActive(false);
+    }
+
     public virtual void Dispose() { }
 }
