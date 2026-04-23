@@ -1,18 +1,45 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VisualHintPicturePieceModel : MonoBehaviour
+public class VisualHintPicturePieceModel
 {
-    // Start is called before the first frame update
-    void Start()
+    private readonly IPseudoPicturePieceListener _pseudoPicturePieceListener;
+
+    public VisualHintPicturePieceModel(IPseudoPicturePieceListener pseudoPicturePieceListener)
     {
-        
+        _pseudoPicturePieceListener = pseudoPicturePieceListener;
+
+        _pseudoPicturePieceListener.OnStartDrag += Show;
+        _pseudoPicturePieceListener.OnStopDrag += Hide;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void Initialize()
     {
-        
+
     }
+
+    public void Dispose()
+    {
+        _pseudoPicturePieceListener.OnStartDrag -= Show;
+        _pseudoPicturePieceListener.OnStopDrag -= Hide;
+    }
+
+    private void Show()
+    {
+        OnShow?.Invoke();
+    }
+
+    private void Hide()
+    {
+        OnHide?.Invoke();
+    }
+
+    #region Output
+
+    public event Action OnShow;
+    public event Action OnHide;
+
+    #endregion
 }

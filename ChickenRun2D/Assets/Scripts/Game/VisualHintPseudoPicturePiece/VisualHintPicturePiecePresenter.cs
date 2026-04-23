@@ -16,20 +16,28 @@ public class VisualHintPicturePiecePresenter
     public void Initialize()
     {
         ActivateEvents();
+
+        _model.Initialize();
+        _view.Initialize();
     }
 
     public void Dispose()
     {
         DeactivateEvents();
+
+        _model.Dispose();
+        _view.Dispose();
     }
 
     private void ActivateEvents()
     {
-
+        _model.OnShow += _view.Show;
+        _model.OnHide += _view.Hide;
     }
 
     private void DeactivateEvents()
     {
-
+        _model.OnShow -= _view.Show;
+        _model.OnHide -= _view.Hide;
     }
 }

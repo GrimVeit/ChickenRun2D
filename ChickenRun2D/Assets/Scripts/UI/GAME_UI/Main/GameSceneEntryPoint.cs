@@ -37,6 +37,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private BuyPiecesPresenter buyPiecesPresenter;
     private ShowChickenPicturePresenter showChickenPicturePresenter;
     private VisualChickenPicturePresenter visualChickenPicturePresenter;
+    private VisualHintPicturePiecePresenter visualHintPicturePresenter;
     private VisualPseudoPicturePiecePresenter visualPseudoPicturePiecePresenter;
     private StoreChickenPicturePiecePresenter storeChickenPicturePiecePresenter;
     private StoreChickenPicturePresenter storeChickenPicturePresenter;
@@ -85,6 +86,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         storeChickenPicturePresenter = new StoreChickenPicturePresenter(new StoreChickenPictureModel("CHICKEN_PICTURES", chickenAllPicturesSO));
         storeChickenPicturePiecePresenter = new StoreChickenPicturePiecePresenter(new StoreChickenPicturePieceModel(storeChickenPicturePresenter, storeChickenPicturePresenter));
         visualPseudoPicturePiecePresenter = new VisualPseudoPicturePiecePresenter(new VisualPseudoPicturePieceModel(storeChickenPicturePiecePresenter, storeChickenPicturePiecePresenter), viewContainer.GetView<VisualPseudoPicturePieceView>());
+        visualHintPicturePresenter = new VisualHintPicturePiecePresenter(new VisualHintPicturePieceModel(visualPseudoPicturePiecePresenter), viewContainer.GetView<VisualHintPicturePieceView>());
         visualChickenPicturePresenter = new VisualChickenPicturePresenter(new VisualChickenPictureModel(storeChickenPicturePresenter, storeChickenPicturePresenter), viewContainer.GetView<VisualChickenPictureView>());
         showChickenPicturePresenter = new ShowChickenPicturePresenter(new ShowChickenPictureModel(visualChickenPicturePresenter), viewContainer.GetView<ShowChickenPictureView>());
         buyPiecesPresenter = new BuyPiecesPresenter(new BuyPiecesModel(storeChickenPicturePresenter), viewContainer.GetView<BuyPiecesView>());
@@ -139,6 +141,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         buyPiecesPresenter.Initialize();
         showChickenPicturePresenter.Initialize();
         visualChickenPicturePresenter.Initialize();
+        visualHintPicturePresenter.Initialize();
         visualPseudoPicturePiecePresenter.Initialize();
         storeChickenPicturePiecePresenter.Initialize();
         storeChickenPicturePresenter.Initialize();
@@ -205,6 +208,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         buyPiecesPresenter?.Dispose();
         showChickenPicturePresenter?.Dispose();
         visualChickenPicturePresenter?.Dispose();
+        visualHintPicturePresenter?.Dispose();
         visualPseudoPicturePiecePresenter?.Dispose();
         storeChickenPicturePiecePresenter?.Dispose();
         storeChickenPicturePresenter?.Dispose();

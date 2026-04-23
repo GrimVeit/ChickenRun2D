@@ -12,11 +12,15 @@ public class VisualPseudoPicturePieceView : View
     public void Initialize()
     {
         visualInteractivePseudoPieces.OnOpenPiece += OpenPiece;
+        visualInteractivePseudoPieces.OnStartDrag += StartDrag;
+        visualInteractivePseudoPieces.OnStopDrag += StopDrag;
     }
 
     public void Dispose()
     {
         visualInteractivePseudoPieces.OnOpenPiece -= OpenPiece;
+        visualInteractivePseudoPieces.OnStartDrag -= StartDrag;
+        visualInteractivePseudoPieces.OnStopDrag -= StopDrag;
     }
 
     public void AddPiece(ChickenPicturePiece piece)
@@ -121,7 +125,10 @@ public class VisualPseudoPicturePieceView : View
         public void StartMove()
         {
             if (_currentPseudoChip != null)
+            {
+                OnStartDrag?.Invoke();
                 _currentPseudoChip.StartMove();
+            }
         }
 
         public void Move(Vector2 vector)
@@ -160,6 +167,12 @@ public class VisualPseudoPicturePieceView : View
                             _currentPseudoChip.EndMove();
                         }
                     }
+                    else if(collider.gameObject.TryGetComponent(out IHintPictureZone hintZone))
+                    {
+                        hintZone.SetType(piece.Data.Type);
+
+                        _currentPseudoChip.EndMove();
+                    }
                     else
                     {
                         _currentPseudoChip.EndMove();
@@ -170,6 +183,8 @@ public class VisualPseudoPicturePieceView : View
                     _currentPseudoChip.EndMove();
                 }
             }
+
+            OnStopDrag?.Invoke();
         }
 
         #endregion
@@ -196,6 +211,9 @@ public class VisualPseudoPicturePieceView : View
         #region Output
 
         public event Action<ChickenPicturePiece> OnOpenPiece;
+
+        public event Action OnStartDrag;
+        public event Action OnStopDrag;
 
         #endregion
     }
@@ -338,9 +356,22 @@ public class VisualPseudoPicturePieceView : View
 
     public event Action<ChickenPicturePiece> OnOpenPiece;
 
+    public event Action OnStartDrag;
+    public event Action OnStopDrag;
+
     private void OpenPiece(ChickenPicturePiece piece)
     {
         OnOpenPiece?.Invoke(piece);
+    }
+
+    private void StartDrag()
+    {
+        OnStartDrag?.Invoke();
+    }
+
+    private void StopDrag()
+    {
+        OnStopDrag?.Invoke();
     }
 
     #endregion

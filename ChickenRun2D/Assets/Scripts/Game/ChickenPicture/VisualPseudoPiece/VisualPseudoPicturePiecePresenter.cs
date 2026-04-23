@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class VisualPseudoPicturePiecePresenter : IPseudoPicturePieceActivatorProvider
+public class VisualPseudoPicturePiecePresenter : IPseudoPicturePieceActivatorProvider, IPseudoPicturePieceListener
 {
     private readonly VisualPseudoPicturePieceModel _model;
     private readonly VisualPseudoPicturePieceView _view;
@@ -45,6 +46,22 @@ public class VisualPseudoPicturePiecePresenter : IPseudoPicturePieceActivatorPro
         _model.OnRemovePieceFromVisual -= _view.RemovePiece;
     }
 
+    #region Output
+
+    public event Action OnStartDrag
+    {
+        add => _view.OnStartDrag += value;
+        remove => _view.OnStartDrag -= value;
+    }
+
+    public event Action OnStopDrag
+    {
+        add => _view.OnStopDrag += value;
+        remove => _view.OnStopDrag -= value;
+    }
+
+    #endregion
+
     #region Input
 
     public void Activate()
@@ -58,6 +75,12 @@ public class VisualPseudoPicturePiecePresenter : IPseudoPicturePieceActivatorPro
     }
 
     #endregion
+}
+
+public interface IPseudoPicturePieceListener
+{
+    public event Action OnStartDrag;
+    public event Action OnStopDrag;
 }
 
 public interface IPseudoPicturePieceActivatorProvider
