@@ -190,7 +190,7 @@ public class StoreChickenPictureModel
                 var pieces = new PicturePieceData[pic.Pieces.Count];
 
                 for (int i = 0; i < pieces.Length; i++)
-                    pieces[i] = new PicturePieceData(false, false);
+                    pieces[i] = new PicturePieceData(true, true);
 
                 pictures.Add(new PictureData(pieces));
             }
