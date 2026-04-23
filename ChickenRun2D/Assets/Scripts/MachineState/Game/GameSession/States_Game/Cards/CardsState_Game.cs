@@ -18,7 +18,7 @@ public class CardsState_Game : IState
     public void EnterState()
     {
         _visualChickenPictureListener.OnSelectType += ChangeStateToCardsType;
-        _sceneRoot.OnClickToExit_CARDSHEADER += ChangeStateToRestart;
+        _sceneRoot.OnClickToExit_CARDSHEADER += ChangeStateToChooseBuyBox;
 
         _sceneRoot.OpenPiecesPanel();
         _sceneRoot.OpenCardsHeaderPanel();
@@ -28,18 +28,17 @@ public class CardsState_Game : IState
     public void ExitState()
     {
         _visualChickenPictureListener.OnSelectType -= ChangeStateToCardsType;
-        _sceneRoot.OnClickToExit_CARDSHEADER -= ChangeStateToRestart;
+        _sceneRoot.OnClickToExit_CARDSHEADER -= ChangeStateToChooseBuyBox;
 
+        _sceneRoot.ClosePiecesPanel();
         _sceneRoot.CloseCardsPanel();
     }
 
-    private void ChangeStateToRestart()
+    private void ChangeStateToChooseBuyBox()
     {
-        _machineProvider.EnterState(_machineProvider.GetState<ChickenSpawnState_Game>());
+        _machineProvider.EnterState(_machineProvider.GetState<ChooseBuyBoxState_Game>());
 
-        _sceneRoot.ClosePiecesPanel();
         _sceneRoot.CloseCardsHeaderPanel();
-        _sceneRoot.CloseBackgroundBrownPanel();
     }
 
     private void ChangeStateToCardsType()

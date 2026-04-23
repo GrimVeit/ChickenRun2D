@@ -27,7 +27,7 @@ public class UIGameRoot : UIRoot
 
 
 
-    [SerializeField] private MovePanel piecesPanel;
+    [SerializeField] private PiecesPanel_Game piecesPanel;
     [SerializeField] private CardsHeaderPanel_Game cardsHeaderPanel;
     [SerializeField] private CardsPanel_Game cardsPanel;
     [SerializeField] private CardsTypePanel_Game cardsTypePanel;

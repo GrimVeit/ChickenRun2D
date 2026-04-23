@@ -6,125 +6,159 @@ using UnityEngine;
 
 public class VisualPseudoPicturePieceView : View
 {
-    [SerializeField] private Canvas canvas;
-    [SerializeField] private VisualPseudoPicturePiece pseudoPiecePrefab;
-    [SerializeField] private RectTransform pseudoPiecesParent;
+    [SerializeField] private VisualInteractivePseudoPicturePieces visualInteractivePseudoPieces;
+    [SerializeField] private VisualNotInteractivePseudoPicturePieces notInteractivePseudoPieces;
 
-    private List<VisualPseudoPicturePiece> _pseudoPieces = new();
-    private VisualPseudoPicturePiece _currentPseudoChip;
+    public void Initialize()
+    {
+        visualInteractivePseudoPieces.OnOpenPiece += OpenPiece;
+    }
+
+    public void Dispose()
+    {
+        visualInteractivePseudoPieces.OnOpenPiece -= OpenPiece;
+    }
 
     public void AddPiece(ChickenPicturePiece piece)
     {
-        var pseudoPiece = Instantiate(pseudoPiecePrefab, pseudoPiecesParent);
-
-        var pos = GetRandomPointInRect(pseudoPiecesParent);
-        pseudoPiece.SetMainPos(pos);
-        pseudoPiece.transform.localPosition = pos;
-
-        pseudoPiece.OnGrabbing += GrabPseudoPiece;
-        pseudoPiece.Initialize();
-
-        var size = new Vector2(piece.Sprite.rect.width, piece.Sprite.rect.height) / 7.2f;
-
-        pseudoPiece.SetSize(size);
-        pseudoPiece.SetData(piece);
-
-        pseudoPiece.transform.localScale = Vector3.zero;
-        pseudoPiece.transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
-
-        _pseudoPieces.Add(pseudoPiece);
+        visualInteractivePseudoPieces.AddPiece(piece);
+        notInteractivePseudoPieces.AddPiece(piece);
     }
 
     public void RemovePiece(ChickenPicturePiece piece)
     {
-        var pseudoPiece = GetPseudoPicturePiece(piece);
-
-        if (pseudoPiece == null) return;
-
-        _pseudoPieces.Remove(pseudoPiece);
-
-        pseudoPiece.OnGrabbing -= GrabPseudoPiece;
-        pseudoPiece.OnStartMove -= StartMove;
-        pseudoPiece.OnMove -= Move;
-        pseudoPiece.OnEndMove -= EndMove;
-
-        pseudoPiece.Dispose();
-
-        Destroy(pseudoPiece.gameObject);
+        visualInteractivePseudoPieces.RemovePiece(piece);
+        notInteractivePseudoPieces.RemovePiece(piece);
     }
 
-    private VisualPseudoPicturePiece GetPseudoPicturePiece(ChickenPicturePiece piece)
+
+    [System.Serializable]
+    private class VisualInteractivePseudoPicturePieces
     {
-        return _pseudoPieces.FirstOrDefault(data => data.Data == piece);
-    }
+        [SerializeField] private Canvas canvas;
+        [SerializeField] private VisualPseudoPicturePiece pseudoPiecePrefab;
+        [SerializeField] private RectTransform pseudoPiecesParent;
 
-    #region GRAB/UNGRAB
+        private List<VisualPseudoPicturePiece> _pseudoPieces = new();
+        private VisualPseudoPicturePiece _currentPseudoChip;
 
-    public void GrabPseudoPiece(VisualPseudoPicturePiece data)
-    {
-        UngrabPseudoPiece();
-
-        _currentPseudoChip = data;
-
-        _currentPseudoChip.OnStartMove += StartMove;
-        _currentPseudoChip.OnMove += Move;
-        _currentPseudoChip.OnEndMove += EndMove;
-    }
-
-    public void UngrabPseudoPiece()
-    {
-        if (_currentPseudoChip != null)
+        public void AddPiece(ChickenPicturePiece piece)
         {
-            _currentPseudoChip.OnStartMove -= StartMove;
-            _currentPseudoChip.OnMove -= Move;
-            _currentPseudoChip.OnEndMove -= EndMove;
+            var pseudoPiece = Instantiate(pseudoPiecePrefab, pseudoPiecesParent);
 
-            _currentPseudoChip.Teleport();
+            var pos = GetRandomPointInRect(pseudoPiecesParent);
+            pseudoPiece.SetMainPos(pos);
+            pseudoPiece.transform.localPosition = pos;
 
-            _currentPseudoChip = null;
+            pseudoPiece.OnGrabbing += GrabPseudoPiece;
+            pseudoPiece.Initialize();
+
+            var size = new Vector2(piece.Sprite.rect.width, piece.Sprite.rect.height) / 7.2f;
+
+            pseudoPiece.SetSize(size);
+            pseudoPiece.SetData(piece);
+
+            pseudoPiece.transform.localScale = Vector3.zero;
+            pseudoPiece.transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
+
+            _pseudoPieces.Add(pseudoPiece);
         }
-    }
 
-    #endregion
-
-    #region MOVE
-
-    public void StartMove()
-    {
-        if(_currentPseudoChip != null)
-           _currentPseudoChip.StartMove();
-    }
-
-    public void Move(Vector2 vector)
-    {
-        if(_currentPseudoChip != null)
-           _currentPseudoChip.Move(vector / canvas.scaleFactor);
-    }
-
-    public void EndMove(VisualPseudoPicturePiece piece, RectTransform rectTransform)
-    {
-        if (IsInsideParent(pseudoPiecesParent, rectTransform))
+        public void RemovePiece(ChickenPicturePiece piece)
         {
-            Debug.Log("Внутри родителя (локально)");
+            var pseudoPiece = GetPseudoPicturePiece(piece);
 
-            _currentPseudoChip.SetMainPos(rectTransform.anchoredPosition);
-            _currentPseudoChip.EndMove();
+            if (pseudoPiece == null) return;
+
+            _pseudoPieces.Remove(pseudoPiece);
+
+            pseudoPiece.OnGrabbing -= GrabPseudoPiece;
+            pseudoPiece.OnStartMove -= StartMove;
+            pseudoPiece.OnMove -= Move;
+            pseudoPiece.OnEndMove -= EndMove;
+
+            pseudoPiece.Dispose();
+
+            Destroy(pseudoPiece.gameObject);
         }
-        else
-        {
-            Collider2D collider = Physics2D.OverlapPoint(rectTransform.position);
 
-            if (collider != null)
+        private VisualPseudoPicturePiece GetPseudoPicturePiece(ChickenPicturePiece piece)
+        {
+            return _pseudoPieces.FirstOrDefault(data => data.Data == piece);
+        }
+
+        #region GRAB/UNGRAB
+
+        public void GrabPseudoPiece(VisualPseudoPicturePiece data)
+        {
+            UngrabPseudoPiece();
+
+            _currentPseudoChip = data;
+
+            _currentPseudoChip.OnStartMove += StartMove;
+            _currentPseudoChip.OnMove += Move;
+            _currentPseudoChip.OnEndMove += EndMove;
+        }
+
+        public void UngrabPseudoPiece()
+        {
+            if (_currentPseudoChip != null)
             {
-                Debug.Log(collider.gameObject.name);
+                _currentPseudoChip.OnStartMove -= StartMove;
+                _currentPseudoChip.OnMove -= Move;
+                _currentPseudoChip.OnEndMove -= EndMove;
 
-                if (collider.gameObject.TryGetComponent(out IPictureDropZone zone))
+                _currentPseudoChip.Teleport();
+
+                _currentPseudoChip = null;
+            }
+        }
+
+        #endregion
+
+        #region MOVE
+
+        public void StartMove()
+        {
+            if (_currentPseudoChip != null)
+                _currentPseudoChip.StartMove();
+        }
+
+        public void Move(Vector2 vector)
+        {
+            if (_currentPseudoChip != null)
+                _currentPseudoChip.Move(vector / canvas.scaleFactor);
+        }
+
+        public void EndMove(VisualPseudoPicturePiece piece, RectTransform rectTransform)
+        {
+            if (IsInsideParent(pseudoPiecesParent, rectTransform))
+            {
+                Debug.Log("Внутри родителя (локально)");
+
+                _currentPseudoChip.SetMainPos(rectTransform.anchoredPosition);
+                _currentPseudoChip.EndMove();
+            }
+            else
+            {
+                Collider2D collider = Physics2D.OverlapPoint(rectTransform.position);
+
+                if (collider != null)
                 {
-                    Debug.Log($"TYPE PIECE: {piece.Data.Type}/TYPE ZONE: {zone.Type}, ID_PICTURE PIECE: {piece.Data.IdPicture}/ID_PICTURE ZONE: {zone.IdZone}");
+                    Debug.Log(collider.gameObject.name);
 
-                    if(piece.Data.Type == zone.Type && piece.Data.IdPicture == zone.IdZone)
+                    if (collider.gameObject.TryGetComponent(out IPictureDropZone zone))
                     {
-                        OnOpenPiece?.Invoke(piece.Data);
+                        Debug.Log($"TYPE PIECE: {piece.Data.Type}/TYPE ZONE: {zone.Type}, ID_PICTURE PIECE: {piece.Data.IdPicture}/ID_PICTURE ZONE: {zone.IdZone}");
+
+                        if (piece.Data.Type == zone.Type && piece.Data.IdPicture == zone.IdZone)
+                        {
+                            OnOpenPiece?.Invoke(piece.Data);
+                        }
+                        else
+                        {
+                            _currentPseudoChip.EndMove();
+                        }
                     }
                     else
                     {
@@ -136,37 +170,178 @@ public class VisualPseudoPicturePieceView : View
                     _currentPseudoChip.EndMove();
                 }
             }
+        }
+
+        #endregion
+
+        private Vector2 GetRandomPointInRect(RectTransform rectTransform)
+        {
+            Rect rect = rectTransform.rect;
+
+            float x = UnityEngine.Random.Range(rect.xMin, rect.xMax);
+            float y = UnityEngine.Random.Range(rect.yMin, rect.yMax);
+
+            return new Vector2(x, y);
+        }
+
+        private bool IsInsideParent(RectTransform parent, RectTransform child)
+        {
+            Vector2 pos = child.anchoredPosition;
+            Rect rect = parent.rect;
+
+            return pos.x >= rect.xMin && pos.x <= rect.xMax &&
+                   pos.y >= rect.yMin && pos.y <= rect.yMax;
+        }
+
+        #region Output
+
+        public event Action<ChickenPicturePiece> OnOpenPiece;
+
+        #endregion
+    }
+
+    [System.Serializable]
+    private class VisualNotInteractivePseudoPicturePieces
+    {
+        [SerializeField] private Canvas canvas;
+        [SerializeField] private VisualPseudoPicturePiece pseudoPiecePrefab;
+        [SerializeField] private RectTransform pseudoPiecesParent;
+
+        private List<VisualPseudoPicturePiece> _pseudoPieces = new();
+        private VisualPseudoPicturePiece _currentPseudoChip;
+
+        public void AddPiece(ChickenPicturePiece piece)
+        {
+            var pseudoPiece = Instantiate(pseudoPiecePrefab, pseudoPiecesParent);
+
+            var pos = GetRandomPointInRect(pseudoPiecesParent);
+            pseudoPiece.SetMainPos(pos);
+            pseudoPiece.transform.localPosition = pos;
+
+            pseudoPiece.OnGrabbing += GrabPseudoPiece;
+            pseudoPiece.Initialize();
+
+            var size = new Vector2(piece.Sprite.rect.width, piece.Sprite.rect.height) / 7.2f;
+
+            pseudoPiece.SetSize(size);
+            pseudoPiece.SetData(piece);
+
+            pseudoPiece.transform.localScale = Vector3.zero;
+            pseudoPiece.transform.DOScale(1, 0.2f).SetEase(Ease.OutBack);
+
+            _pseudoPieces.Add(pseudoPiece);
+        }
+
+        public void RemovePiece(ChickenPicturePiece piece)
+        {
+            var pseudoPiece = GetPseudoPicturePiece(piece);
+
+            if (pseudoPiece == null) return;
+
+            _pseudoPieces.Remove(pseudoPiece);
+
+            pseudoPiece.OnGrabbing -= GrabPseudoPiece;
+            pseudoPiece.OnStartMove -= StartMove;
+            pseudoPiece.OnMove -= Move;
+            pseudoPiece.OnEndMove -= EndMove;
+
+            pseudoPiece.Dispose();
+
+            Destroy(pseudoPiece.gameObject);
+        }
+
+        private VisualPseudoPicturePiece GetPseudoPicturePiece(ChickenPicturePiece piece)
+        {
+            return _pseudoPieces.FirstOrDefault(data => data.Data == piece);
+        }
+
+        #region GRAB/UNGRAB
+
+        public void GrabPseudoPiece(VisualPseudoPicturePiece data)
+        {
+            UngrabPseudoPiece();
+
+            _currentPseudoChip = data;
+
+            _currentPseudoChip.OnStartMove += StartMove;
+            _currentPseudoChip.OnMove += Move;
+            _currentPseudoChip.OnEndMove += EndMove;
+        }
+
+        public void UngrabPseudoPiece()
+        {
+            if (_currentPseudoChip != null)
+            {
+                _currentPseudoChip.OnStartMove -= StartMove;
+                _currentPseudoChip.OnMove -= Move;
+                _currentPseudoChip.OnEndMove -= EndMove;
+
+                _currentPseudoChip.Teleport();
+
+                _currentPseudoChip = null;
+            }
+        }
+
+        #endregion
+
+        #region MOVE
+
+        public void StartMove()
+        {
+            if (_currentPseudoChip != null)
+                _currentPseudoChip.StartMove();
+        }
+
+        public void Move(Vector2 vector)
+        {
+            if (_currentPseudoChip != null)
+                _currentPseudoChip.Move(vector / canvas.scaleFactor);
+        }
+
+        public void EndMove(VisualPseudoPicturePiece piece, RectTransform rectTransform)
+        {
+            if (IsInsideParent(pseudoPiecesParent, rectTransform))
+            {
+                _currentPseudoChip.SetMainPos(rectTransform.anchoredPosition);
+                _currentPseudoChip.EndMove();
+            }
             else
             {
                 _currentPseudoChip.EndMove();
             }
         }
+
+        #endregion
+
+        private Vector2 GetRandomPointInRect(RectTransform rectTransform)
+        {
+            Rect rect = rectTransform.rect;
+
+            float x = UnityEngine.Random.Range(rect.xMin, rect.xMax);
+            float y = UnityEngine.Random.Range(rect.yMin, rect.yMax);
+
+            return new Vector2(x, y);
+        }
+
+        private bool IsInsideParent(RectTransform parent, RectTransform child)
+        {
+            Vector2 pos = child.anchoredPosition;
+            Rect rect = parent.rect;
+
+            return pos.x >= rect.xMin && pos.x <= rect.xMax &&
+                   pos.y >= rect.yMin && pos.y <= rect.yMax;
+        }
     }
 
-    #endregion
 
-    private Vector2 GetRandomPointInRect(RectTransform rectTransform)
-    {
-        Rect rect = rectTransform.rect;
-
-        float x = UnityEngine.Random.Range(rect.xMin, rect.xMax);
-        float y = UnityEngine.Random.Range(rect.yMin, rect.yMax);
-
-        return new Vector2(x, y);
-    }
-
-    private bool IsInsideParent(RectTransform parent, RectTransform child)
-    {
-        Vector2 pos = child.anchoredPosition;
-        Rect rect = parent.rect;
-
-        return pos.x >= rect.xMin && pos.x <= rect.xMax &&
-               pos.y >= rect.yMin && pos.y <= rect.yMax;
-    }
-
-    #region Output
+    #region
 
     public event Action<ChickenPicturePiece> OnOpenPiece;
+
+    private void OpenPiece(ChickenPicturePiece piece)
+    {
+        OnOpenPiece?.Invoke(piece);
+    }
 
     #endregion
 }
