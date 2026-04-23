@@ -89,6 +89,8 @@ public class UIGameRoot : UIRoot
         winPanel.OnClickToBuy += ClickToBuy_WIN;
 
         costBoxPanel.OnClickToBuy += ClickToBox_COSTBOX;
+        costBoxPanel.OnClickToMenu += ClickToMenu_COSTBOX;
+        costBoxPanel.OnClickToExit += ClickToExit_COSTBOX;
 
 
         cardsHeaderPanel.OnClickToExit += ClickToExit_CARDSHEADER;
@@ -112,6 +114,8 @@ public class UIGameRoot : UIRoot
         winPanel.OnClickToBuy -= ClickToBuy_WIN;
 
         costBoxPanel.OnClickToBuy -= ClickToBox_COSTBOX;
+        costBoxPanel.OnClickToMenu -= ClickToMenu_COSTBOX;
+        costBoxPanel.OnClickToExit -= ClickToExit_COSTBOX;
 
 
         cardsHeaderPanel.OnClickToExit -= ClickToExit_CARDSHEADER;
@@ -570,12 +574,28 @@ public class UIGameRoot : UIRoot
     #region COST_BOX
 
     public event Action OnClickToBox_COSTBOX;
+    public event Action OnClickToMenu_COSTBOX;
+    public event Action OnClickToExit_COSTBOX;
 
     private void ClickToBox_COSTBOX()
     {
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToBox_COSTBOX?.Invoke();
+    }
+
+    private void ClickToMenu_COSTBOX()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToMenu_COSTBOX?.Invoke();
+    }
+
+    private void ClickToExit_COSTBOX()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToExit_COSTBOX?.Invoke();
     }
 
     #endregion

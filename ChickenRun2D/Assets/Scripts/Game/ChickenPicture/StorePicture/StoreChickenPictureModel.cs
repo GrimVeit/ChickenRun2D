@@ -87,6 +87,27 @@ public class StoreChickenPictureModel
         return typeData;
     }
 
+    public int CountAvailablePieces()
+    {
+        List<ChickenPicturePiece> available = new();
+
+        foreach (var type in _runtime.chickenTypePictures)
+        {
+            foreach (var picture in type.Pictures)
+            {
+                foreach (var piece in picture.Pieces)
+                {
+                    if (!piece.IsOpen && !piece.IsOwned)
+                    {
+                        available.Add(piece);
+                    }
+                }
+            }
+        }
+
+        return available.Count;
+    }
+
     public ChickenPicturePiece GetRandomAvailablePiece()
     {
         List<ChickenPicturePiece> available = new();
@@ -108,7 +129,11 @@ public class StoreChickenPictureModel
         if (available.Count == 0)
             return null;
 
-        return available[UnityEngine.Random.Range(0, available.Count)];
+        var pieceL = available[UnityEngine.Random.Range(0, available.Count)];
+
+        pieceL.Owned();
+
+        return pieceL;
     }
 
     public void OpenPiece(ChickenType type, int pictureId, int pieceId)
@@ -142,8 +167,7 @@ public class StoreChickenPictureModel
         var piece = picture.Pieces.Find(p => p.IdPiece == pieceId);
         if (piece == null) return;
 
-        if (piece.IsOpen)
-            return;
+        if (piece.IsOpen) return;
 
         piece.Owned();
         OnPieceOwned?.Invoke(piece);

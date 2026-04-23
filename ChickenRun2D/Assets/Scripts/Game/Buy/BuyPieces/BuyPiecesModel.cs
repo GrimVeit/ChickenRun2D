@@ -24,11 +24,18 @@ public class BuyPiecesModel
 
     public void GeneratePieces()
     {
-        var count = UnityEngine.Random.Range(3, 6);
+        int allAvailableCount = _storeChickenPictureProvider.CountAvailablePieces();
+
+        var countRandom = UnityEngine.Random.Range(3, 6);
 
         var list = new List<ChickenPicturePiece>();
 
-        for (int i = 0; i < count; i++)
+        if(countRandom > allAvailableCount)
+        {
+            countRandom = allAvailableCount;
+        }
+
+        for (int i = 0; i < countRandom; i++)
         {
             list.Add(_storeChickenPictureProvider.GetRandomAvailablePiece());
         }
@@ -37,6 +44,8 @@ public class BuyPiecesModel
         {
             //BRANCH
         }
+
+        Debug.Log(list.Count);
 
         OnSetPieces?.Invoke(list);
     }

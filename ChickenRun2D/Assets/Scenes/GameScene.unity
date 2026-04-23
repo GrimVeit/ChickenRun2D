@@ -12068,6 +12068,8 @@ MonoBehaviour:
   canvasGroup: {fileID: 473634635}
   combination: {fileID: 473634633}
   buttonBuy: {fileID: 1429001372}
+  buttonExit: {fileID: 1966810763}
+  buttonMenu: {fileID: 1197344321}
 --- !u!225 &473634635
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -22640,6 +22642,7 @@ GameObject:
   - component: {fileID: 957522298}
   - component: {fileID: 957522297}
   - component: {fileID: 957522299}
+  - component: {fileID: 957522300}
   m_Layer: 5
   m_Name: Coins
   m_TagString: Untagged
@@ -22719,6 +22722,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.1
   scaleElement: {fileID: 957522296}
+--- !u!114 &957522300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957522295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0174d5135afe0df4a8aa5042eb1ee730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMoney: {fileID: 1688935170}
+  moneyDisplay: {fileID: 957522296}
 --- !u!1 &967133481
 GameObject:
   m_ObjectHideFlags: 0
@@ -28897,6 +28914,7 @@ GameObject:
   - component: {fileID: 1197344317}
   - component: {fileID: 1197344319}
   - component: {fileID: 1197344318}
+  - component: {fileID: 1197344321}
   - component: {fileID: 1197344320}
   m_Layer: 5
   m_Name: MENU_BUTTON
@@ -28976,6 +28994,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.1
   scaleElement: {fileID: 1197344317}
+--- !u!114 &1197344321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197344316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1197344318}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1199396475
 GameObject:
   m_ObjectHideFlags: 0
@@ -37667,8 +37729,9 @@ GameObject:
   - component: {fileID: 1600189601}
   - component: {fileID: 1600189600}
   - component: {fileID: 1600189602}
+  - component: {fileID: 1600189603}
   m_Layer: 5
-  m_Name: COIN_DISPLAY
+  m_Name: COIN_DISPLAY_LOSE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -37747,6 +37810,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.1
   scaleElement: {fileID: 1600189599}
+--- !u!114 &1600189603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600189598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0174d5135afe0df4a8aa5042eb1ee730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMoney: {fileID: 113958477}
+  moneyDisplay: {fileID: 1600189599}
 --- !u!1 &1626696643
 GameObject:
   m_ObjectHideFlags: 0
@@ -44519,6 +44596,7 @@ GameObject:
   - component: {fileID: 1966810759}
   - component: {fileID: 1966810761}
   - component: {fileID: 1966810760}
+  - component: {fileID: 1966810763}
   - component: {fileID: 1966810762}
   m_Layer: 5
   m_Name: CLOSE_BUTTON
@@ -44598,6 +44676,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.1
   scaleElement: {fileID: 1966810759}
+--- !u!114 &1966810763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966810758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1966810760}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1968610722
 GameObject:
   m_ObjectHideFlags: 0
@@ -45664,8 +45786,9 @@ GameObject:
   - component: {fileID: 2044883828}
   - component: {fileID: 2044883827}
   - component: {fileID: 2044883829}
+  - component: {fileID: 2044883830}
   m_Layer: 5
-  m_Name: COIN_DISPLAY
+  m_Name: COIN_DISPLAY_WIN
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45744,6 +45867,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.1
   scaleElement: {fileID: 2044883826}
+--- !u!114 &2044883830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2044883825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0174d5135afe0df4a8aa5042eb1ee730, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  textMoney: {fileID: 567998460}
+  moneyDisplay: {fileID: 2044883826}
 --- !u!1 &2046625808
 GameObject:
   m_ObjectHideFlags: 0
@@ -48143,7 +48280,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc68cbee46181fb43a897988d6edc22a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bankDisplayViews: []
+  bankDisplayViews:
+  - {fileID: 2044883830}
+  - {fileID: 1600189603}
+  - {fileID: 957522300}
 --- !u!114 &3241749473482128761
 MonoBehaviour:
   m_ObjectHideFlags: 0

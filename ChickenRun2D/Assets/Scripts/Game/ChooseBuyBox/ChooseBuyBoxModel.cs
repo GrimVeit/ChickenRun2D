@@ -17,6 +17,8 @@ public class ChooseBuyBoxModel
     public void HideAll()
     {
         OnHideAll?.Invoke(_currentId);
+
+        _currentId = -1;
     }
 
     public void ShowAll()
