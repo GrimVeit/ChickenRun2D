@@ -63,7 +63,7 @@ public class StateMachine_Game : IStateMachineProvider
 
     public void Initialize()
     {
-        EnterState(GetState<ChooseBuyBoxState_Game>());
+        EnterState(GetState<IntroVideoState_Game>());
     }
 
     public void Dispose()

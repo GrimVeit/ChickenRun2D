@@ -17,6 +17,10 @@ public class GameSceneEntryPoint : MonoBehaviour
     private SoundPresenter soundPresenter;
     private VideoPresenter videoPresenter;
 
+    private CustomSliderPresenter customSliderPresenter_Sound;
+    private CustomSliderPresenter customSliderPresenter_Music;
+    private VolumeSettingsPresenter volumeSettingsPresenter;
+
     private StoreChickenPresenter storeChickenPresenter;
     private ChooseChickenPresenter chooseChickenPresenter;
     private SpawnerChickenPresenter spawnerChickenPresenter;
@@ -58,6 +62,10 @@ public class GameSceneEntryPoint : MonoBehaviour
                     viewContainer.GetView<SoundView>());
 
         videoPresenter = new VideoPresenter(new VideoModel(), viewContainer.GetView<VideoView>());
+
+        customSliderPresenter_Music = new CustomSliderPresenter(new CustomSliderModel(soundPresenter), viewContainer.GetView<CustomSliderView>("Music"));
+        customSliderPresenter_Sound = new CustomSliderPresenter(new CustomSliderModel(soundPresenter), viewContainer.GetView<CustomSliderView>("Sound"));
+        volumeSettingsPresenter = new VolumeSettingsPresenter(new VolumeSettingsModel(soundPresenter, customSliderPresenter_Sound, customSliderPresenter_Music));
 
         bankPresenter = new BankPresenter(new BankModel(), viewContainer.GetView<BankView>());
         
@@ -119,6 +127,11 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         soundPresenter.Initialize();
         videoPresenter.Initialize();
+
+        customSliderPresenter_Music.Initialize();
+        customSliderPresenter_Sound.Initialize();
+        volumeSettingsPresenter.Initialize();
+
         particleEffectPresenter.Initialize();
         sceneRoot.Initialize();
         bankPresenter.Initialize();
@@ -187,9 +200,16 @@ public class GameSceneEntryPoint : MonoBehaviour
 
     private void Dispose()
     {
+        Deactivate();
+
         DeactivateEvents();
 
         videoPresenter?.Dispose();
+
+        customSliderPresenter_Music?.Dispose();
+        customSliderPresenter_Sound?.Dispose();
+        volumeSettingsPresenter?.Dispose();
+
         chooseChickenPresenter?.Dispose();
         chickenBattlePresenter?.Dispose();
         cameraFollowPresenter?.Dispose();
