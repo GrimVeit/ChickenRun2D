@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,6 +11,7 @@ public class VisualChickenPictureView : View
     [SerializeField] private ChickenPictureButtons chickenPictureButtons;
     [SerializeField] private List<VisualChickenPicture> chickenPictureList;
     [SerializeField] private List<PictureDropZone> dropZones;
+    [SerializeField] private TypeNames typeNames;
 
     private ChickenType _type;
 
@@ -46,6 +48,8 @@ public class VisualChickenPictureView : View
     {
         _type = Type;
 
+        typeNames.SetType(_type);
+
         dropZones.ForEach(cp => cp.SetType(Type));
     }
 
@@ -74,6 +78,44 @@ public class VisualChickenPictureView : View
     }
 
     #endregion
+
+    [System.Serializable]
+    private class TypeNames
+    {
+        [SerializeField] private List<TypeName> typeNames = new List<TypeName>();
+        [SerializeField] private TextMeshProUGUI textName;
+
+        public void SetType(ChickenType type)
+        {
+            var typeName = GetTypeName(type);
+
+            if(typeName == null)
+            {
+                Debug.LogWarning("Not found TypeName with ChickenType - " + type);
+                return;
+            }
+
+            textName.text = typeName.Name;
+            textName.color = typeName.Color;
+        }
+
+        private TypeName GetTypeName(ChickenType type)
+        {
+            return typeNames.Find(data => data.Type == type);
+        }
+    }
+
+    [System.Serializable]
+    private class TypeName
+    {
+        [SerializeField] private ChickenType type;
+        [SerializeField] private string name;
+        [SerializeField] private Color color;
+
+        public ChickenType Type => type;
+        public string Name => name;
+        public Color Color => color;
+    }
 }
 
 #region Visual

@@ -7,12 +7,14 @@ public class ChooseBuyBoxState_Game : IState
     private readonly IStateMachineProvider _machineProvider;
     private readonly IChooseBuyBoxProvider _chooseBuyBoxProvider;
     private readonly UIGameRoot _sceneRoot;
+    private readonly IMoneyProvider _moneyProvider;
 
-    public ChooseBuyBoxState_Game(IStateMachineProvider machineProvider, IChooseBuyBoxProvider chooseBuyBoxProvider, UIGameRoot sceneRoot)
+    public ChooseBuyBoxState_Game(IStateMachineProvider machineProvider, IChooseBuyBoxProvider chooseBuyBoxProvider, UIGameRoot sceneRoot, IMoneyProvider moneyProvider)
     {
         _machineProvider = machineProvider;
         _chooseBuyBoxProvider = chooseBuyBoxProvider;
         _sceneRoot = sceneRoot;
+        _moneyProvider = moneyProvider;
     }
 
     public void EnterState()
@@ -36,7 +38,15 @@ public class ChooseBuyBoxState_Game : IState
 
     private void ChangeStateToBuyBox()
     {
-        _machineProvider.EnterState(_machineProvider.GetState<BuyBoxState_Game>());
+        if (_moneyProvider.CanAfford(5))
+        {
+            _moneyProvider.SendMoney(-5);
+            _machineProvider.EnterState(_machineProvider.GetState<BuyBoxState_Game>());
+        }
+        else
+        {
+            Debug.Log("NOT MONEY!!!");
+        }
     }
 
     private void ChangeStateToWin()

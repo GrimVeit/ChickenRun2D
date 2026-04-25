@@ -32,7 +32,10 @@ public class StateMachine_Game : IStateMachineProvider
         IShowChickenPictureListener showChickenPictureListener,
 
         IBuyBoxProvider buyBoxProvider,
-        IBuyPiecesProvider buyPiecesProvider
+        IBuyPiecesProvider buyPiecesProvider,
+
+        ICountChickenPictureProvider countChickenPictureProvider,
+        IMoneyProvider moneyProvider
     )
     {
         states[typeof(IntroVideoState_Game)] = new IntroVideoState_Game(this, sceneRoot, videoProvider, maskEffectProvider);
@@ -52,10 +55,10 @@ public class StateMachine_Game : IStateMachineProvider
         states[typeof(StartWinState_Game)] = new StartWinState_Game(this, videoProvider, sceneRoot);
         states[typeof(WinState_Game)] = new WinState_Game(this, sceneRoot);
 
-        states[typeof(ChooseBuyBoxState_Game)] = new ChooseBuyBoxState_Game(this, chooseBuyBoxProvider, sceneRoot);
+        states[typeof(ChooseBuyBoxState_Game)] = new ChooseBuyBoxState_Game(this, chooseBuyBoxProvider, sceneRoot, moneyProvider);
         states[typeof(BuyBoxState_Game)] = new BuyBoxState_Game(this, sceneRoot, buyBoxProvider, buyPiecesProvider);
 
-        states[typeof(CardsState_Game)] = new CardsState_Game(this, sceneRoot, visualChickenPictureListener);
+        states[typeof(CardsState_Game)] = new CardsState_Game(this, sceneRoot, visualChickenPictureListener, countChickenPictureProvider);
         states[typeof(CardsTypeState_Game)] = new CardsTypeState_Game(this, sceneRoot, showChickenPictureListener);
         states[typeof(ShowFullPictureState_Game)] = new ShowFullPictureState_Game(this, sceneRoot);
         states[typeof(ShowNotFullPictureState_Game)] = new ShowNotFullPictureState_Game(this, sceneRoot);
@@ -63,7 +66,7 @@ public class StateMachine_Game : IStateMachineProvider
 
     public void Initialize()
     {
-        EnterState(GetState<IntroVideoState_Game>());
+        EnterState(GetState<ChooseBuyBoxState_Game>());
     }
 
     public void Dispose()

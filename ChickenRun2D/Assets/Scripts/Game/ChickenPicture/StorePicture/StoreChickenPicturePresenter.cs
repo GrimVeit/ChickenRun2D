@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 public class StoreChickenPicturePresenter : IStoreChickenPictureListener, IStoreChickenPictureProvider
 {
@@ -45,6 +46,9 @@ public class StoreChickenPicturePresenter : IStoreChickenPictureListener, IStore
 
     public AllChickenPictures GetPicturesByType(ChickenType type) => _model.GetPicturesByType(type);
     public ChickenPicturePiece GetRandomAvailablePiece() => _model.GetRandomAvailablePiece();
+
+    public List<ChickenTypeStatsDTO> GetTypesStats() => _model.GetTypesStats();
+
     public int CountAvailablePieces() => _model.CountAvailablePieces();
 
     public void OpenPiece(ChickenType type, int pictureId, int pieceId) => _model.OpenPiece(type, pictureId, pieceId);
@@ -65,6 +69,8 @@ public interface IStoreChickenPictureProvider
 {
     public AllChickenPictures GetPicturesByType(ChickenType type);
     public ChickenPicturePiece GetRandomAvailablePiece();
+
+    public List<ChickenTypeStatsDTO> GetTypesStats();
 
     public int CountAvailablePieces();
 

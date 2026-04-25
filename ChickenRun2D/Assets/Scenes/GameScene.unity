@@ -1660,7 +1660,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 84788485}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -2947,7 +2947,7 @@ GameObject:
   - component: {fileID: 167181043}
   - component: {fileID: 167181042}
   m_Layer: 5
-  m_Name: Count
+  m_Name: ALIEN_COUNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5611,7 +5611,7 @@ GameObject:
   - component: {fileID: 286046703}
   - component: {fileID: 286046702}
   m_Layer: 5
-  m_Name: Count
+  m_Name: YELLOW_COUNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10043,7 +10043,7 @@ GameObject:
   - component: {fileID: 481521349}
   - component: {fileID: 481521348}
   m_Layer: 5
-  m_Name: Count
+  m_Name: BLUE_COUNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14398,7 +14398,7 @@ GameObject:
   - component: {fileID: 765437977}
   - component: {fileID: 765437976}
   m_Layer: 5
-  m_Name: Count
+  m_Name: WHITE_COUNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17044,9 +17044,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1364085623}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 50, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &921822689
@@ -18741,6 +18741,39 @@ MonoBehaviour:
   - {fileID: 1700977910}
   - {fileID: 980262563}
   - {fileID: 1782278235}
+  typeNames:
+    typeNames:
+    - type: 1
+      name: Alien Chicken
+      color: {r: 0.21960786, g: 0.47058827, b: 0.49411768, a: 1}
+    - type: 2
+      name: Yellow Chicken
+      color: {r: 0.91372555, g: 0.7803922, b: 0.64705884, a: 1}
+    - type: 3
+      name: Blue Chicken
+      color: {r: 0.1764706, g: 0.34901962, b: 0.6039216, a: 1}
+    - type: 4
+      name: Business Chicken
+      color: {r: 0.8980393, g: 0.72156864, b: 0.5568628, a: 1}
+    - type: 5
+      name: Cowboy Chicken
+      color: {r: 0.9803922, g: 0.9725491, b: 0.95294124, a: 1}
+    - type: 6
+      name: Gold Chicken
+      color: {r: 0.7411765, g: 0.5647059, b: 0.21568629, a: 1}
+    - type: 7
+      name: Red Chicken
+      color: {r: 0.86274517, g: 0.30980393, b: 0.21176472, a: 1}
+    - type: 8
+      name: Samurai Chicken
+      color: {r: 0.9725491, g: 0.9450981, b: 0.9176471, a: 1}
+    - type: 9
+      name: White Chicken
+      color: {r: 0.9725491, g: 0.9450981, b: 0.9176471, a: 1}
+    - type: 10
+      name: White Chicken
+      color: {r: 0.41960788, g: 0.4431373, b: 0.34509805, a: 1}
+    textName: {fileID: 1482795583}
 --- !u!1 &923983609
 GameObject:
   m_ObjectHideFlags: 0
@@ -24202,7 +24235,7 @@ GameObject:
   - component: {fileID: 1184820258}
   - component: {fileID: 1184820257}
   m_Layer: 5
-  m_Name: Count
+  m_Name: SAMURAI_COUNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26085,7 +26118,7 @@ GameObject:
   - component: {fileID: 1275058335}
   - component: {fileID: 1275058334}
   m_Layer: 5
-  m_Name: Count
+  m_Name: COWBOY_COUNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27368,7 +27401,7 @@ GameObject:
   - component: {fileID: 1362110351}
   - component: {fileID: 1362110350}
   m_Layer: 5
-  m_Name: Count
+  m_Name: RED_COUNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27522,6 +27555,7 @@ RectTransform:
   - {fileID: 628678963}
   - {fileID: 522102824}
   - {fileID: 81049810}
+  - {fileID: 1696763454}
   m_Father: {fileID: 426014025604183617}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -29141,7 +29175,7 @@ GameObject:
   - component: {fileID: 1436181298}
   - component: {fileID: 1436181297}
   m_Layer: 5
-  m_Name: Count
+  m_Name: GOLD_COUNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29618,7 +29652,7 @@ GameObject:
   - component: {fileID: 1448648313}
   - component: {fileID: 1448648312}
   m_Layer: 5
-  m_Name: Count
+  m_Name: ZOMBIE_COUNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30115,6 +30149,155 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1478319755}
   m_CullTransparentMesh: 1
+--- !u!1 &1482795581
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1482795582}
+  - component: {fileID: 1482795584}
+  - component: {fileID: 1482795583}
+  - component: {fileID: 1482795585}
+  m_Layer: 5
+  m_Name: NAME_TYPE
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1482795582
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482795581}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1845191443}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -142.4, y: 840}
+  m_SizeDelta: {x: 524.4, y: 135.2}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1482795583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482795581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: Business Chicken
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: a21944dd7e04be0488530873c6111c91, type: 2}
+  m_sharedMaterial: {fileID: -2691247617092704369, guid: a21944dd7e04be0488530873c6111c91, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 52
+  m_fontSizeBase: 36
+  m_fontWeight: 400
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 15
+  m_fontSizeMax: 52
+  m_fontStyle: 1
+  m_HorizontalAlignment: 1
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 2.2384033, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &1482795584
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482795581}
+  m_CullTransparentMesh: 1
+--- !u!114 &1482795585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482795581}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e81e16cc91490c34eba2b1fd07a8728b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  duration: 0.1
+  scaleElement: {fileID: 1482795582}
 --- !u!1 &1490690588
 GameObject:
   m_ObjectHideFlags: 0
@@ -33033,6 +33216,76 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1694159715}
   m_CullTransparentMesh: 1
+--- !u!1 &1696763453
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1696763454}
+  - component: {fileID: 1696763455}
+  m_Layer: 5
+  m_Name: Count
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1696763454
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696763453}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1364085623}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1696763455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696763453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3c801631fad994b9d47cb959e415b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chickenTexts:
+    countChickenTexts:
+    - type: 1
+      textCount: {fileID: 167181042}
+    - type: 2
+      textCount: {fileID: 286046702}
+    - type: 3
+      textCount: {fileID: 481521348}
+    - type: 4
+      textCount: {fileID: 1822193995}
+    - type: 5
+      textCount: {fileID: 1275058334}
+    - type: 6
+      textCount: {fileID: 1436181297}
+    - type: 7
+      textCount: {fileID: 1362110350}
+    - type: 8
+      textCount: {fileID: 1184820257}
+    - type: 9
+      textCount: {fileID: 765437976}
+    - type: 10
+      textCount: {fileID: 1448648312}
 --- !u!1 &1700977905
 GameObject:
   m_ObjectHideFlags: 0
@@ -35033,7 +35286,7 @@ GameObject:
   - component: {fileID: 1822193996}
   - component: {fileID: 1822193995}
   m_Layer: 5
-  m_Name: Count
+  m_Name: BUSINESS_COUNT
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35428,6 +35681,7 @@ RectTransform:
   - {fileID: 584082815}
   - {fileID: 1798028132}
   - {fileID: 108515851}
+  - {fileID: 1482795582}
   m_Father: {fileID: 5582424929244784645}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -35457,6 +35711,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startTimeDelay: 0.1
   uiEffects:
+  - {fileID: 1482795585}
   - {fileID: 108515854}
   - {fileID: 380290248}
   - {fileID: 1120156347}

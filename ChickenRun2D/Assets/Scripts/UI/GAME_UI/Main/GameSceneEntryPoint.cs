@@ -38,6 +38,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private TimerPresenter timerPresenter_Start;
     private TimerPresenter timerPresenter_Game;
 
+    private CountChickenPicturePresenter countChickenPicturePresenter;
     private BuyPiecesPresenter buyPiecesPresenter;
     private ShowChickenPicturePresenter showChickenPicturePresenter;
     private VisualChickenPicturePresenter visualChickenPicturePresenter;
@@ -98,7 +99,8 @@ public class GameSceneEntryPoint : MonoBehaviour
         visualChickenPicturePresenter = new VisualChickenPicturePresenter(new VisualChickenPictureModel(storeChickenPicturePresenter, storeChickenPicturePresenter), viewContainer.GetView<VisualChickenPictureView>());
         showChickenPicturePresenter = new ShowChickenPicturePresenter(new ShowChickenPictureModel(visualChickenPicturePresenter), viewContainer.GetView<ShowChickenPictureView>());
         buyPiecesPresenter = new BuyPiecesPresenter(new BuyPiecesModel(storeChickenPicturePresenter), viewContainer.GetView<BuyPiecesView>());
-
+        countChickenPicturePresenter = new CountChickenPicturePresenter(new CountChickenPictureModel(storeChickenPicturePresenter), viewContainer.GetView<CountChickenPictureView>());
+        
         stateMachine = new StateMachine_Game(
             storeChickenPresenter, 
             spawnerChickenPresenter, 
@@ -118,7 +120,9 @@ public class GameSceneEntryPoint : MonoBehaviour
             visualChickenPicturePresenter,
             showChickenPicturePresenter,
             buyBoxPresenter,
-            buyPiecesPresenter);
+            buyPiecesPresenter,
+            countChickenPicturePresenter,
+            bankPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -151,6 +155,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         timerPresenter_Start.Initialize();
         timerPresenter_Game.Initialize();
 
+        countChickenPicturePresenter.Initialize();
         buyPiecesPresenter.Initialize();
         showChickenPicturePresenter.Initialize();
         visualChickenPicturePresenter.Initialize();
@@ -225,6 +230,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         timerPresenter_Start?.Dispose();
         timerPresenter_Game?.Dispose();
 
+        countChickenPicturePresenter?.Dispose();
         buyPiecesPresenter?.Dispose();
         showChickenPicturePresenter?.Dispose();
         visualChickenPicturePresenter?.Dispose();

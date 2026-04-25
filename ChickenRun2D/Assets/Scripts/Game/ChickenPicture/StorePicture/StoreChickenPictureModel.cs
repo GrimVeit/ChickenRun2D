@@ -108,6 +108,42 @@ public class StoreChickenPictureModel
         return available.Count;
     }
 
+    public List<ChickenTypeStatsDTO> GetTypesStats()
+    {
+        var result = new List<ChickenTypeStatsDTO>();
+
+        foreach (var type in _runtime.chickenTypePictures)
+        {
+            int completed = 0;
+            int total = type.Pictures.Count;
+
+            foreach (var picture in type.Pictures)
+            {
+                bool isFull = true;
+
+                foreach (var piece in picture.Pieces)
+                {
+                    if (!piece.IsOpen)
+                    {
+                        isFull = false;
+                        break;
+                    }
+                }
+
+                if (isFull)
+                    completed++;
+            }
+
+            result.Add(new ChickenTypeStatsDTO(
+                type.Type,
+                completed,
+                total
+            ));
+        }
+
+        return result;
+    }
+
     public ChickenPicturePiece GetRandomAvailablePiece()
     {
         List<ChickenPicturePiece> available = new();
@@ -190,7 +226,7 @@ public class StoreChickenPictureModel
                 var pieces = new PicturePieceData[pic.Pieces.Count];
 
                 for (int i = 0; i < pieces.Length; i++)
-                    pieces[i] = new PicturePieceData(false, false);
+                    pieces[i] = new PicturePieceData(true, true);
 
                 pictures.Add(new PictureData(pieces));
             }
@@ -331,5 +367,21 @@ public class PicturePieceData
     {
         IsOpen = isOpen;
         IsOwned = isOwned;
+    }
+}
+
+
+
+public class ChickenTypeStatsDTO
+{
+    public readonly ChickenType Type;
+    public readonly int CompletedPictures;
+    public readonly int TotalPictures;
+
+    public ChickenTypeStatsDTO(ChickenType type, int completedPictures, int totalPictures)
+    {
+        Type = type;
+        CompletedPictures = completedPictures;
+        TotalPictures = totalPictures;
     }
 }
