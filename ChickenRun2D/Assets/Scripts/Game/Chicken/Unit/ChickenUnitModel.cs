@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class ChickenUnitModel
@@ -67,6 +68,58 @@ public class ChickenUnitModel
 
     #endregion
 
+
+
+    #region EVENT_GAME
+
+    #region AUTO
+
+    public void EventGame_Auto_Activate()
+    {
+        OnEventsGame_Auto_Activate?.Invoke();
+    }
+
+    public void EventGame_Auto_Clear()
+    {
+        OnEventsGame_Auto_Clear?.Invoke();
+    }
+
+    #endregion
+
+
+
+    #region UFO
+
+    public void EventGame_UFO_Activate()
+    {
+        OnEventsGame_UFO_Activate?.Invoke();
+    }
+
+    public void EventGame_UFO_Clear()
+    {
+        OnEventsGame_UFO_Clear?.Invoke();
+    }
+
+    #endregion
+
+
+
+    #region UFO
+
+    public void EventGame_Tornado_Activate()
+    {
+        OnEventsGame_Tornado_Activate?.Invoke();
+    }
+
+    public void EventGame_Tornado_Clear()
+    {
+        OnEventsGame_Tornado_Clear?.Invoke();
+    }
+
+    #endregion
+
+    #endregion
+
     #region Output
 
     public event Action<float> OnSetSpeed;
@@ -77,6 +130,17 @@ public class ChickenUnitModel
     public event Action OnShow;
     public event Action OnHide;
     public event Action<ChickenAnimationType> OnActivateAnimation;
+
+
+
+    public event Action OnEventsGame_Auto_Activate;
+    public event Action OnEventsGame_Auto_Clear;
+
+    public event Action OnEventsGame_UFO_Activate;
+    public event Action OnEventsGame_UFO_Clear;
+
+    public event Action OnEventsGame_Tornado_Activate;
+    public event Action OnEventsGame_Tornado_Clear;
 
     #endregion
 }

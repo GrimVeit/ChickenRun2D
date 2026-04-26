@@ -35,7 +35,23 @@ public class ChickenStateMachine : IStateMachineProvider
 
         var stateFall = new ChickenState_Fall(this, _model);
         states[typeof(ChickenState_Fall)] = stateFall;
-        _badStates.Add(stateFall);
+        //_badStates.Add(stateFall);
+
+        var stateAuto = new ChickenState_Auto(this, _model);
+        states[typeof(ChickenState_Auto)] = stateAuto;
+        //_badStates.Add(stateAuto);
+
+        var stateUFO = new ChickenState_UFO(this, _model);
+        states[typeof(ChickenState_UFO)] = stateUFO;
+        //_badStates.Add(stateUFO);
+
+        var statePhone = new ChickenState_Phone(this, _model);
+        states[typeof(ChickenState_Phone)] = statePhone;
+        //_badStates.Add(statePhone);
+
+        var stateTornado = new ChickenState_Tornado(this, _model);
+        states[typeof(ChickenState_Tornado)] = stateTornado;
+        _badStates.Add(stateTornado);
     }
 
     public void Dispose()

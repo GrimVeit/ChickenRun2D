@@ -1,15 +1,19 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 
 public class ChickenUnitView : View
 {
+    public ChickenUnit_Auto Auto => chickenUnit_Auto;
+    public ChickenUnit_UFO UFO => chickenUnit_UFO;
+    public ChickenUnit_Tornado Tornado => chickenUnit_Tornado;
     public Vector3 LocalPosition => move.LocalPosition;
 
     [SerializeField] private ChickenUnit_Move move;
     [SerializeField] private ChickenUnit_Animations animations;
+
+    [SerializeField] private ChickenUnit_Auto chickenUnit_Auto;
+    [SerializeField] private ChickenUnit_UFO chickenUnit_UFO;
+    [SerializeField] private ChickenUnit_Tornado chickenUnit_Tornado;
 
     public void Initialize()
     {

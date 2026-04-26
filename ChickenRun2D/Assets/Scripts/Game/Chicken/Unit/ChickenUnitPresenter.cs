@@ -45,6 +45,16 @@ public class ChickenUnitPresenter : IChickenUnit
         _model.OnStopMove += _view.StopMove;
         _model.OnSetSpeed += _view.SetSpeed;
         _model.OnSetSpeed_Smooth += _view.SetSpeed;
+
+
+        _model.OnEventsGame_Auto_Activate += _view.Auto.Activate;
+        _model.OnEventsGame_Auto_Clear += _view.Auto.Clear;
+
+        _model.OnEventsGame_UFO_Activate += _view.UFO.Activate;
+        _model.OnEventsGame_UFO_Clear += _view.UFO.Clear;
+
+        _model.OnEventsGame_Tornado_Activate += _view.Tornado.Activate;
+        _model.OnEventsGame_Tornado_Clear += _view.Tornado.Clear;
     }
 
     private void DeactivateEvents()
@@ -60,6 +70,16 @@ public class ChickenUnitPresenter : IChickenUnit
         _model.OnStopMove -= _view.StopMove;
         _model.OnSetSpeed -= _view.SetSpeed;
         _model.OnSetSpeed_Smooth -= _view.SetSpeed;
+
+
+        _model.OnEventsGame_Auto_Activate -= _view.Auto.Activate;
+        _model.OnEventsGame_Auto_Clear -= _view.Auto.Clear;
+
+        _model.OnEventsGame_UFO_Activate -= _view.UFO.Activate;
+        _model.OnEventsGame_UFO_Clear -= _view.UFO.Clear;
+
+        _model.OnEventsGame_Tornado_Activate -= _view.Tornado.Activate;
+        _model.OnEventsGame_Tornado_Clear -= _view.Tornado.Clear;
     }
 
     #region Input
