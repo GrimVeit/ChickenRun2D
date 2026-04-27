@@ -55,6 +55,16 @@ public class ChickenUnitPresenter : IChickenUnit
 
         _model.OnEventsGame_Tornado_Activate += _view.Tornado.Activate;
         _model.OnEventsGame_Tornado_Clear += _view.Tornado.Clear;
+
+        _model.OnEventsGame_Ghost_Activate += _view.Ghost.Activate;
+        _model.OnEventsGame_Ghost_Clear += _view.Ghost.Clear;
+
+        _model.OnEventsGame_Hunter_Activate += _view.Hunter.Activate;
+        _model.OnEventsGame_Hunter_Clear += _view.Hunter.Clear;
+
+        _model.OnEventsGame_Pigeon_ActivateStart += _view.Pigeon.ActivateStart;
+        _model.OnEventsGame_Pigeon_ActivateEnd += _view.Pigeon.ActivateEnd;
+        _model.OnEventsGame_Pigeon_Clear += _view.Pigeon.Clear;
     }
 
     private void DeactivateEvents()
@@ -80,6 +90,16 @@ public class ChickenUnitPresenter : IChickenUnit
 
         _model.OnEventsGame_Tornado_Activate -= _view.Tornado.Activate;
         _model.OnEventsGame_Tornado_Clear -= _view.Tornado.Clear;
+
+        _model.OnEventsGame_Ghost_Activate -= _view.Ghost.Activate;
+        _model.OnEventsGame_Ghost_Clear -= _view.Ghost.Clear;
+
+        _model.OnEventsGame_Hunter_Activate -= _view.Hunter.Activate;
+        _model.OnEventsGame_Hunter_Clear -= _view.Hunter.Clear;
+
+        _model.OnEventsGame_Pigeon_ActivateStart -= _view.Pigeon.ActivateStart;
+        _model.OnEventsGame_Pigeon_ActivateEnd -= _view.Pigeon.ActivateEnd;
+        _model.OnEventsGame_Pigeon_Clear -= _view.Pigeon.Clear;
     }
 
     #region Input

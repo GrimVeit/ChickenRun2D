@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ChickenStateMachine : IStateMachineProvider
 {
@@ -29,29 +30,53 @@ public class ChickenStateMachine : IStateMachineProvider
         states[typeof(ChickenState_Run)] = stateRun;
         _stateRun = stateRun;
 
+
+
+
+
         var stateNitro = new ChickenState_Nitro(this, _model);
         states[typeof(ChickenState_Nitro)] = stateNitro;
         _goodStates.Add(stateNitro);
 
+
+
+
+
         var stateFall = new ChickenState_Fall(this, _model);
         states[typeof(ChickenState_Fall)] = stateFall;
-        //_badStates.Add(stateFall);
+        _badStates.Add(stateFall);
 
         var stateAuto = new ChickenState_Auto(this, _model);
         states[typeof(ChickenState_Auto)] = stateAuto;
-        //_badStates.Add(stateAuto);
+        _badStates.Add(stateAuto);
 
         var stateUFO = new ChickenState_UFO(this, _model);
         states[typeof(ChickenState_UFO)] = stateUFO;
-        //_badStates.Add(stateUFO);
+        _badStates.Add(stateUFO);
 
         var statePhone = new ChickenState_Phone(this, _model);
         states[typeof(ChickenState_Phone)] = statePhone;
-        //_badStates.Add(statePhone);
+        _badStates.Add(statePhone);
 
         var stateTornado = new ChickenState_Tornado(this, _model);
         states[typeof(ChickenState_Tornado)] = stateTornado;
         _badStates.Add(stateTornado);
+
+        var stateSleep = new ChickenState_Sleep(this, _model);
+        states[typeof(ChickenState_Sleep)] = stateSleep;
+        _badStates.Add(stateSleep);
+
+        var statePigeon = new ChickenState_Pigeon(this, _model);
+        states[typeof(ChickenState_Pigeon)] = statePigeon;
+        _badStates.Add(statePigeon);
+
+        var stateGhost = new ChickenState_Ghost(this, _model);
+        states[typeof(ChickenState_Ghost)] = stateGhost;
+        _badStates.Add(stateGhost);
+
+        var stateHunter = new ChickenState_Hunter(this, _model);
+        states[typeof(ChickenState_Hunter)] = stateHunter;
+        _badStates.Add(stateHunter);
     }
 
     public void Dispose()

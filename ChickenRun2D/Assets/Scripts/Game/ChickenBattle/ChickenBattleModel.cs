@@ -151,7 +151,7 @@ public class ChickenBattleModel
         if (_finished.Contains(chicken))
             return;
 
-        if (_random.Next(0, 100) < 50)
+        if (_random.Next(0, 100) < 30)
             chicken.ActivateGoodState();
         else
             chicken.ActivateBadState();

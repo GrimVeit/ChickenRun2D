@@ -1,15 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ChickenState_Auto : IState
+public class ChickenState_Hunter : IState
 {
     private readonly IStateMachineProvider _machineProvider;
     private readonly ChickenUnitModel _model;
 
     private IEnumerator timer;
 
-    public ChickenState_Auto(IStateMachineProvider stateMachineProvider, ChickenUnitModel model)
+    public ChickenState_Hunter(IStateMachineProvider stateMachineProvider, ChickenUnitModel model)
     {
         _machineProvider = stateMachineProvider;
         _model = model;
@@ -17,7 +16,7 @@ public class ChickenState_Auto : IState
 
     public void EnterState()
     {
-        Debug.Log("AUTO");
+        Debug.Log("HUNTER");
 
         if (timer != null) Coroutines.Stop(timer);
 
@@ -27,21 +26,21 @@ public class ChickenState_Auto : IState
 
     private IEnumerator Timer()
     {
-        _model.EventGame_Auto_Activate();
+        _model.EventGame_Hunter_Activate();
 
-        yield return new WaitForSeconds(0.4f);
+        yield return new WaitForSeconds(0.1f);
 
         _model.SetSpeed(0, 0.2f);
-        _model.ActivateAnimation(ChickenAnimationType.HitCar);
+        _model.ActivateAnimation(ChickenAnimationType.Fright);
 
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(2);
 
         ChangeStateToRun();
     }
 
     public void ExitState()
     {
-        _model.EventGame_Auto_Clear();
+        _model.EventGame_Hunter_Clear();
 
         if (timer != null) Coroutines.Stop(timer);
     }

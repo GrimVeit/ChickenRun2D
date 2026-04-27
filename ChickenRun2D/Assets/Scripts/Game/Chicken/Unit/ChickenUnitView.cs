@@ -6,6 +6,10 @@ public class ChickenUnitView : View
     public ChickenUnit_Auto Auto => chickenUnit_Auto;
     public ChickenUnit_UFO UFO => chickenUnit_UFO;
     public ChickenUnit_Tornado Tornado => chickenUnit_Tornado;
+    public ChickenUnit_Pigeon Pigeon => chickenUnit_Pigeon;
+    public ChickenUnit_Ghost Ghost => chickenUnit_Ghost;
+    public ChickenUnit_Hunter Hunter => chickenUnit_Hunter;
+
     public Vector3 LocalPosition => move.LocalPosition;
 
     [SerializeField] private ChickenUnit_Move move;
@@ -14,6 +18,9 @@ public class ChickenUnitView : View
     [SerializeField] private ChickenUnit_Auto chickenUnit_Auto;
     [SerializeField] private ChickenUnit_UFO chickenUnit_UFO;
     [SerializeField] private ChickenUnit_Tornado chickenUnit_Tornado;
+    [SerializeField] private ChickenUnit_Pigeon chickenUnit_Pigeon;
+    [SerializeField] private ChickenUnit_Ghost chickenUnit_Ghost;
+    [SerializeField] private ChickenUnit_Hunter chickenUnit_Hunter;
 
     public void Initialize()
     {

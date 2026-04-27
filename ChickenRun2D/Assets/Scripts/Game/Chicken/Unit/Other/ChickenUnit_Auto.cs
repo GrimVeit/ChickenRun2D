@@ -21,7 +21,6 @@ public class ChickenUnit_Auto : MonoBehaviour
         sequence = DOTween.Sequence();
 
         sequence.Append(transformAuto.DOScale(1, 0.2f));
-        sequence.AppendInterval(0.1f);
         sequence.Append(transformAuto.DOLocalMove(transformEnd.localPosition, 1));
         sequence.Append(transformAuto.DOScale(0, 0.15f));
     }

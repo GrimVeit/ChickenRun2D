@@ -104,7 +104,7 @@ public class ChickenUnitModel
 
 
 
-    #region UFO
+    #region Tornado
 
     public void EventGame_Tornado_Activate()
     {
@@ -117,6 +117,58 @@ public class ChickenUnitModel
     }
 
     #endregion
+
+
+
+    #region Ghost
+
+    public void EventGame_Ghost_Activate()
+    {
+        OnEventsGame_Ghost_Activate?.Invoke();
+    }
+
+    public void EventGame_Ghost_Clear()
+    {
+        OnEventsGame_Ghost_Clear?.Invoke();
+    }
+
+    #endregion
+
+    #region Ghost
+
+    public void EventGame_Hunter_Activate()
+    {
+        OnEventsGame_Hunter_Activate?.Invoke();
+    }
+
+    public void EventGame_Hunter_Clear()
+    {
+        OnEventsGame_Hunter_Clear?.Invoke();
+    }
+
+    #endregion
+
+
+
+    #region Pigeon
+
+    public void EventGame_Pigeon_ActivateStart()
+    {
+        OnEventsGame_Pigeon_ActivateStart?.Invoke();
+    }
+
+    public void EventGame_Pigeon_ActivateEnd()
+    {
+        OnEventsGame_Pigeon_ActivateEnd?.Invoke();
+    }
+
+    public void EventGame_Pigeon_Clear()
+    {
+        OnEventsGame_Pigeon_Clear?.Invoke();
+    }
+
+    #endregion
+
 
     #endregion
 
@@ -141,6 +193,16 @@ public class ChickenUnitModel
 
     public event Action OnEventsGame_Tornado_Activate;
     public event Action OnEventsGame_Tornado_Clear;
+
+    public event Action OnEventsGame_Ghost_Activate;
+    public event Action OnEventsGame_Ghost_Clear;
+
+    public event Action OnEventsGame_Hunter_Activate;
+    public event Action OnEventsGame_Hunter_Clear;
+
+    public event Action OnEventsGame_Pigeon_ActivateStart;
+    public event Action OnEventsGame_Pigeon_ActivateEnd;
+    public event Action OnEventsGame_Pigeon_Clear;
 
     #endregion
 }
