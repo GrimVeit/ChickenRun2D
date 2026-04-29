@@ -35,7 +35,8 @@ public class StateMachine_Game : IStateMachineProvider
         IBuyPiecesProvider buyPiecesProvider,
 
         ICountChickenPictureProvider countChickenPictureProvider,
-        IMoneyProvider moneyProvider
+        IMoneyProvider moneyProvider,
+        IChickenRaceLeaderProvider chickenRaceLeaderProvider
     )
     {
         states[typeof(IntroVideoState_Game)] = new IntroVideoState_Game(this, sceneRoot, videoProvider, maskEffectProvider);
@@ -46,7 +47,7 @@ public class StateMachine_Game : IStateMachineProvider
         states[typeof(ChickenSpawnState_Game)] = new ChickenSpawnState_Game(this, spawnerChickenProvider, chooseChickenProvider, storeChickenProvider, sceneRoot);
         states[typeof(ChooseChickenState_Game)] = new ChooseChickenState_Game(this, chooseChickenProvider, sceneRoot, visualChickenEffectProvider);
         states[typeof(WaitGameRunState_Game)] = new WaitGameRunState_Game(this, timerProvider_Start, timerListener_Start);
-        states[typeof(GameRunState_Game)] = new GameRunState_Game(this, chickenBattleProvider, chickenBattleListener, sceneRoot, timerProvider_Game);
+        states[typeof(GameRunState_Game)] = new GameRunState_Game(this, chickenBattleProvider, chickenBattleListener, sceneRoot, timerProvider_Game, chickenRaceLeaderProvider);
         states[typeof(CheckWinnerState_Game)] = new CheckWinnerState_Game(this, chickenBattleListener, chickenBattleProvider, chooseChickenProvider);
 
         states[typeof(StartLoseState_Game)] = new StartLoseState_Game(this, videoProvider, sceneRoot);
@@ -66,7 +67,7 @@ public class StateMachine_Game : IStateMachineProvider
 
     public void Initialize()
     {
-        EnterState(GetState<ChooseBuyBoxState_Game>());
+        EnterState(GetState<IntroVideoState_Game>());
     }
 
     public void Dispose()

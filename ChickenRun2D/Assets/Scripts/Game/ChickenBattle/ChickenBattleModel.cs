@@ -12,6 +12,7 @@ public class ChickenBattleModel
     private readonly System.Random _random = new();
 
     private IEnumerator _eventsCoroutine;
+    private IEnumerator _leaderCoroutine;
 
     private ChickenType _chickenTypeChoose;
     private ChickenType _chickenTypeWinner;
@@ -20,7 +21,11 @@ public class ChickenBattleModel
 
     private bool _hasWinner = false;
 
-    public ChickenBattleModel(ISpawnerChickenListener spawnerChickenListener, IChooseChickenListener chooseChickenListener)
+    private IChickenUnit _leader;
+
+    public ChickenBattleModel(
+        ISpawnerChickenListener spawnerChickenListener,
+        IChooseChickenListener chooseChickenListener)
     {
         _spawnerChickenListener = spawnerChickenListener;
         _chooseChickenListener = chooseChickenListener;
@@ -43,13 +48,9 @@ public class ChickenBattleModel
             return;
 
         if (_chickenTypeChoose == _chickenTypeWinner)
-        {
             OnWin?.Invoke();
-        }
         else
-        {
             OnLose?.Invoke();
-        }
     }
 
     public void StartGame()
@@ -57,7 +58,6 @@ public class ChickenBattleModel
         for (int i = 0; i < _chickens.Count; i++)
         {
             if (_chickens[i] == null) continue;
-
             _chickens[i].SetRun();
         }
 
@@ -79,7 +79,6 @@ public class ChickenBattleModel
         for (int i = 0; i < _chickens.Count; i++)
         {
             if (_chickens[i] == null) continue;
-
             _chickens[i].OnEndMove += EndMove;
         }
     }
@@ -89,7 +88,6 @@ public class ChickenBattleModel
         if (chicken == null)
             return;
 
-        // 🔥 уже финишировал — игнор
         if (_finished.Contains(chicken))
             return;
 
@@ -118,13 +116,29 @@ public class ChickenBattleModel
 
         _eventsCoroutine = EventsLoop();
         Coroutines.Start(_eventsCoroutine);
+
+        _leaderCoroutine = LeaderLoop();
+        Coroutines.Start(_leaderCoroutine);
     }
 
     private void StopEventsLoop()
     {
-        if (_eventsCoroutine != null) Coroutines.Stop(_eventsCoroutine);
+        if (_eventsCoroutine != null)
+        {
+            Coroutines.Stop(_eventsCoroutine);
+            _eventsCoroutine = null;
+        }
+
+        if (_leaderCoroutine != null)
+        {
+            Coroutines.Stop(_leaderCoroutine);
+            _leaderCoroutine = null;
+        }
     }
 
+    // =========================
+    // 🎲 EVENTS LOOP (random)
+    // =========================
     private IEnumerator EventsLoop()
     {
         while (true)
@@ -146,6 +160,20 @@ public class ChickenBattleModel
         }
     }
 
+    // =========================
+    // 🧠 LEADER LOOP (fixed 0.1s)
+    // =========================
+    private IEnumerator LeaderLoop()
+    {
+        var wait = new WaitForSeconds(0.1f);
+
+        while (true)
+        {
+            RecalculateLeader();
+            yield return wait;
+        }
+    }
+
     private void TriggerRandomEvent(IChickenUnit chicken)
     {
         if (_finished.Contains(chicken))
@@ -157,13 +185,46 @@ public class ChickenBattleModel
             chicken.ActivateBadState();
     }
 
+    // =========================
+    // 🧠 LEADER LOGIC
+    // =========================
+    private void RecalculateLeader()
+    {
+        if (_hasWinner || _chickens.Count == 0)
+            return;
+
+        IChickenUnit best = null;
+        float bestX = float.MinValue;
+
+        for (int i = 0; i < _chickens.Count; i++)
+        {
+            var c = _chickens[i];
+
+            if (c == null)
+                continue;
+
+            if (_finished.Contains(c))
+                continue;
+
+            float x = c.LocalPosition.x;
+
+            if (x > bestX)
+            {
+                bestX = x;
+                best = c;
+            }
+        }
+
+        if (best != _leader)
+        {
+            _leader = best;
+            OnLeaderChanged?.Invoke(_leader);
+        }
+    }
+
     private void Clear()
     {
-        if (_eventsCoroutine != null)
-        {
-            Coroutines.Stop(_eventsCoroutine);
-            _eventsCoroutine = null;
-        }
+        StopEventsLoop();
 
         for (int i = 0; i < _chickens.Count; i++)
         {
@@ -177,14 +238,16 @@ public class ChickenBattleModel
 
         _chickens.Clear();
         _finished.Clear();
+
+        _leader = null;
     }
 
     #region Output
 
     public event Action OnWin;
     public event Action OnLose;
-
     public event Action OnEndGame;
+    public event Action<IChickenUnit> OnLeaderChanged;
 
     #endregion
 }

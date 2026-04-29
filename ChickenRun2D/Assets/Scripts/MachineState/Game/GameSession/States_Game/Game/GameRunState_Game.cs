@@ -10,18 +10,27 @@ public class GameRunState_Game : IState
     private readonly UIGameRoot _sceneRoot;
 
     private readonly ITimerProvider _timerProvider;
+    private readonly IChickenRaceLeaderProvider _chickenRaceLeaderProvider;
 
-    public GameRunState_Game(IStateMachineProvider stateMachineProvider, IChickenBattleProvider chickenBattleProvider, IChickenBattleListener chickenBattleListener, UIGameRoot sceneRoot, ITimerProvider timerProvider)
+    private IEnumerator timer;
+
+    public GameRunState_Game(IStateMachineProvider stateMachineProvider, IChickenBattleProvider chickenBattleProvider, IChickenBattleListener chickenBattleListener, UIGameRoot sceneRoot, ITimerProvider timerProvider, IChickenRaceLeaderProvider chickenRaceLeaderProvider)
     {
         _stateMachineProvider = stateMachineProvider;
         _chickenBattleProvider = chickenBattleProvider;
         _chickenBattleListener = chickenBattleListener;
         _sceneRoot = sceneRoot;
         _timerProvider = timerProvider;
+        _chickenRaceLeaderProvider = chickenRaceLeaderProvider;
     }
 
     public void EnterState()
     {
+        if(timer != null) Coroutines.Stop(timer);
+
+        timer = Timer();
+        Coroutines.Start(timer);
+
         _chickenBattleListener.OnEndGame += ChangeStateToCheckWinnerState;
 
         _chickenBattleProvider.StartGame();
@@ -31,10 +40,20 @@ public class GameRunState_Game : IState
 
     public void ExitState()
     {
+        if (timer != null) Coroutines.Stop(timer);
+
         _chickenBattleListener.OnEndGame -= ChangeStateToCheckWinnerState;
 
         _sceneRoot.CloseMainHeaderPanel();
         _timerProvider.DeactivateTimer();
+        _chickenRaceLeaderProvider.Deactivate();
+    }
+
+    private IEnumerator Timer()
+    {
+        yield return new WaitForSeconds(5);
+
+        _chickenRaceLeaderProvider.Activate();
     }
 
     private void ChangeStateToCheckWinnerState()

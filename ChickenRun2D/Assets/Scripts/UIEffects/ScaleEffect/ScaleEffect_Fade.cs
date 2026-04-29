@@ -46,6 +46,6 @@ public class ScaleEffect_Fade : ScaleEffect
 
         isActive = false;
 
-        tweenFade = scaleElement.DOScale(Vector3.zero, duration);
+        tweenFade = scaleElement.DOScale(Vector3.zero, duration).SetEase(Ease.InBack); ;
     }
 }

@@ -42,6 +42,12 @@ public class ChickenBattlePresenter : IChickenBattleProvider, IChickenBattleList
         remove => _model.OnEndGame -= value;
     }
 
+    public event Action<IChickenUnit> OnLeaderChanged
+    {
+        add => _model.OnLeaderChanged += value;
+        remove => _model.OnLeaderChanged -= value;
+    }
+
     #endregion
 
     #region Input
@@ -58,6 +64,8 @@ public interface IChickenBattleListener
     public event Action OnLose;
 
     public event Action OnEndGame;
+
+    public event Action<IChickenUnit> OnLeaderChanged;
 }
 
 public interface IChickenBattleProvider

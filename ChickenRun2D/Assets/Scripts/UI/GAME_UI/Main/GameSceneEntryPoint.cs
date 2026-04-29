@@ -28,6 +28,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     private CameraFollowPresenter cameraFollowPresenter;
     private SlotMachinePresenter slotMachinePresenter;
     private VisualChickenEffectPresenter visualChickenEffectPresenter;
+    private ChickenRaceLeaderPresenter chickenRaceLeaderPresenter;
 
     private MaskEffectPresenter maskEffectPresenter;
 
@@ -80,6 +81,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         chickenBattlePresenter = new ChickenBattlePresenter(new ChickenBattleModel(spawnerChickenPresenter, chooseChickenPresenter));
         cameraFollowPresenter = new CameraFollowPresenter(new CameraFollowModel(spawnerChickenPresenter), viewContainer.GetView<CameraFollowView>());
         visualChickenEffectPresenter = new VisualChickenEffectPresenter(new VisualChickenEffectModel(chooseChickenPresenter, storeChickenPresenter), viewContainer.GetView<VisualChickenEffectView>());
+        chickenRaceLeaderPresenter = new ChickenRaceLeaderPresenter(new ChickenRaceLeaderModel(chickenBattlePresenter), viewContainer.GetView<ChickenRaceLeaderView>()); ;
 
         slotMachinePresenter = new SlotMachinePresenter(new SlotMachineModel(), viewContainer.GetView<SlotMachineView>());
 
@@ -122,7 +124,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             buyBoxPresenter,
             buyPiecesPresenter,
             countChickenPicturePresenter,
-            bankPresenter);
+            bankPresenter,
+            chickenRaceLeaderPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();
@@ -143,6 +146,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseChickenPresenter.Initialize();
         chickenBattlePresenter.Initialize();
         cameraFollowPresenter.Initialize();
+        chickenRaceLeaderPresenter.Initialize();
         visualChickenEffectPresenter.Initialize();
         slotMachinePresenter.Initialize();
         maskEffectPresenter.Initialize();
@@ -218,6 +222,7 @@ public class GameSceneEntryPoint : MonoBehaviour
         chooseChickenPresenter?.Dispose();
         chickenBattlePresenter?.Dispose();
         cameraFollowPresenter?.Dispose();
+        chickenRaceLeaderPresenter?.Dispose();
         visualChickenEffectPresenter?.Dispose();
         slotMachinePresenter?.Dispose();
         maskEffectPresenter?.Dispose();
