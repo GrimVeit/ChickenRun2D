@@ -5,9 +5,11 @@ public class UIGameRoot : UIRoot
 {
     [SerializeField] private MovePanel introVideoPanel;
     [SerializeField] private PlayVideoPanel_Game playVideoPanel;
+    [SerializeField] private PlayPanel_Game playPanel;
     [SerializeField] private MovePanel winVideoPanel;
     [SerializeField] private MovePanel loseVideoPanel;
     [SerializeField] private ChooseLocationPanel_Game chooseLocationPanel;
+    [SerializeField] private SettingsPanel_Game settingsPanel;
 
     [SerializeField] private MovePanel backgroundBrownPanel;
     [SerializeField] private MovePanel backgroundBarnPanel;
@@ -47,9 +49,11 @@ public class UIGameRoot : UIRoot
     {
         introVideoPanel.Initialize();
         playVideoPanel.Initialize();
+        playPanel.Initialize();
         winVideoPanel.Initialize();
         loseVideoPanel.Initialize();
         chooseLocationPanel.Initialize();
+        settingsPanel.Initialize();
 
         backgroundBarnPanel.Initialize();
         backgroundBrownPanel.Initialize();
@@ -79,6 +83,10 @@ public class UIGameRoot : UIRoot
     public void Activate()
     {
         playVideoPanel.OnClickPlay += ClickToPlay_PLAY;
+        playPanel.OnClickSettings += ClickToSettings_PLAY;
+        playPanel.OnClickCollection += ClickToCollection_PLAY;
+
+        settingsPanel.OnClickToExit += ClickToExit_Settings;
 
         mainHeaderPanel.OnClickToMenu += ClickToMenu_MainHeader;
 
@@ -104,6 +112,10 @@ public class UIGameRoot : UIRoot
             CloseOtherPanel(currentPanel);
 
         playVideoPanel.OnClickPlay -= ClickToPlay_PLAY;
+        playPanel.OnClickSettings -= ClickToSettings_PLAY;
+        playPanel.OnClickCollection -= ClickToCollection_PLAY;
+
+        settingsPanel.OnClickToExit -= ClickToExit_Settings;
 
         mainHeaderPanel.OnClickToMenu -= ClickToMenu_MainHeader;
 
@@ -127,9 +139,11 @@ public class UIGameRoot : UIRoot
     {
         introVideoPanel.Dispose();
         playVideoPanel.Dispose();
+        playPanel.Dispose();
         winVideoPanel.Dispose();
         loseVideoPanel.Dispose();
         chooseLocationPanel.Dispose();
+        settingsPanel.Dispose();
 
         backgroundBarnPanel.Dispose();
         backgroundBrownPanel.Dispose();
@@ -224,6 +238,20 @@ public class UIGameRoot : UIRoot
     }
 
     #endregion
+
+    public void OpenPlayPanel()
+    {
+        if(playPanel.IsActive) return;
+
+        OpenOtherPanel(playPanel);
+    }
+
+    public void ClosePlayPanel()
+    {
+        if(!playPanel.IsActive) return;
+
+        CloseOtherPanel(playPanel);
+    }
 
 
     public void OpenMainPanel()
@@ -392,6 +420,23 @@ public class UIGameRoot : UIRoot
 
 
 
+
+    public void OpenSettingsPanel()
+    {
+        if(settingsPanel.IsActive) return;
+
+        OpenOtherPanel(settingsPanel);
+    }
+
+    public void CloseSettingsPanel()
+    {
+        if(!settingsPanel.IsActive) return;
+
+        CloseOtherPanel(settingsPanel);
+    }
+
+
+
     #region CARDS
 
     public void OpenPiecesPanel()
@@ -509,15 +554,44 @@ public class UIGameRoot : UIRoot
 
     #endregion
 
-    #region PLAY_VIDEO
+    #region PLAY
 
     public event Action OnClickToPlay_PLAY;
+    public event Action OnClickToSettings_PLAY;
+    public event Action OnClickToCollection_PLAY;
 
     private void ClickToPlay_PLAY()
     {
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToPlay_PLAY?.Invoke();
+    }
+
+    private void ClickToSettings_PLAY()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToSettings_PLAY?.Invoke();
+    }
+
+    private void ClickToCollection_PLAY()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToCollection_PLAY?.Invoke();
+    }
+
+    #endregion
+
+    #region SETTINGS
+
+    public event Action OnClickToExit_SETTINGS;
+
+    private void ClickToExit_Settings()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToExit_SETTINGS?.Invoke();
     }
 
     #endregion

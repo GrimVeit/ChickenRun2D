@@ -22,24 +22,12 @@ public class PlayVideoPanel_Game : MovePanel
         buttonPlay.onClick.RemoveListener(ClickPlay);
     }
 
-    public override void ActivatePanel()
-    {
-        base.ActivatePanel();
-    }
-
-    public override void DeactivatePanel()
-    {
-        base.DeactivatePanel();
-    }
-
     #region Output
 
     public event Action OnClickPlay;
 
     private void ClickPlay()
     {
-        Debug.Log("CLICK");
-
         OnClickPlay?.Invoke();
     }
 

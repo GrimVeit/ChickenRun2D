@@ -20,9 +20,11 @@ public class PlayVideoState_Game : IState
     public void EnterState()
     {
         _sceneRoot.OnClickToPlay_PLAY += ChangeStateToChooseLocation;
+        _sceneRoot.OnClickToSettings_PLAY += ChangeStateToSettings;
 
         _videoProvider.Play("Play");
         _sceneRoot.OpenPlayVideoPanel();
+        _sceneRoot.OpenPlayPanel();
 
         _maskEffectProvider.Play("Play", () =>
         {
@@ -34,10 +36,18 @@ public class PlayVideoState_Game : IState
     public void ExitState()
     {
         _sceneRoot.OnClickToPlay_PLAY -= ChangeStateToChooseLocation;
+        _sceneRoot.OnClickToSettings_PLAY -= ChangeStateToSettings;
+
+        _sceneRoot.ClosePlayPanel();
     }
 
     private void ChangeStateToChooseLocation()
     {
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChooseLocationState_Game>());
+    }
+
+    private void ChangeStateToSettings()
+    {
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<SettingsState_Game>());
     }
 }
