@@ -21,6 +21,7 @@ public class PlayVideoState_Game : IState
     {
         _sceneRoot.OnClickToPlay_PLAY += ChangeStateToChooseLocation;
         _sceneRoot.OnClickToSettings_PLAY += ChangeStateToSettings;
+        _sceneRoot.OnClickToCollection_PLAY += ChangeStateToCollection;
 
         _videoProvider.Play("Play");
         _sceneRoot.OpenPlayVideoPanel();
@@ -37,6 +38,7 @@ public class PlayVideoState_Game : IState
     {
         _sceneRoot.OnClickToPlay_PLAY -= ChangeStateToChooseLocation;
         _sceneRoot.OnClickToSettings_PLAY -= ChangeStateToSettings;
+        _sceneRoot.OnClickToCollection_PLAY -= ChangeStateToCollection;
 
         _sceneRoot.ClosePlayPanel();
     }
@@ -49,5 +51,14 @@ public class PlayVideoState_Game : IState
     private void ChangeStateToSettings()
     {
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<SettingsState_Game>());
+
+        _sceneRoot.ClosePlayVideoPanel();
+    }
+
+    private void ChangeStateToCollection()
+    {
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<StartCardsState_Game>());
+
+        _sceneRoot.ClosePlayVideoPanel();
     }
 }

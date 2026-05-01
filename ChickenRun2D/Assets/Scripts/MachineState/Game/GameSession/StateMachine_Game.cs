@@ -43,7 +43,12 @@ public class StateMachine_Game : IStateMachineProvider
         states[typeof(PlayVideoState_Game)] = new PlayVideoState_Game(this, sceneRoot, videoProvider, maskEffectProvider);
         states[typeof(ChooseLocationState_Game)] = new ChooseLocationState_Game(this, sceneRoot, maskEffectProvider, slotMachineListener, slotMachineProvider);
         states[typeof(StartGameRunState_Game)] = new StartGameRunState_Game(this, sceneRoot, maskEffectProvider);
+
         states[typeof(SettingsState_Game)] = new SettingsState_Game(this, sceneRoot);
+        states[typeof(StartCardsState_Game)] = new StartCardsState_Game(this, sceneRoot, visualChickenPictureListener, countChickenPictureProvider);
+        states[typeof(StartCardsTypeState_Game)] = new StartCardsTypeState_Game(this, sceneRoot, showChickenPictureListener);
+        states[typeof(StartShowFullPictureState_Game)] = new StartShowFullPictureState_Game(this, sceneRoot);
+        states[typeof(StartShowNotFullPictureState_Game)] = new StartShowNotFullPictureState_Game(this, sceneRoot);
 
         states[typeof(ChickenSpawnState_Game)] = new ChickenSpawnState_Game(this, spawnerChickenProvider, chooseChickenProvider, storeChickenProvider, sceneRoot);
         states[typeof(ChooseChickenState_Game)] = new ChooseChickenState_Game(this, chooseChickenProvider, sceneRoot, visualChickenEffectProvider);

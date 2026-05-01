@@ -31,6 +31,7 @@ public class MaskEffectSequence_ChooseLocation : MonoBehaviour, IMaskEffectSeque
 
     public void Exit()
     {
+        transformPlayPanel.DOColor(Color.white, 0.2f);
         transformPlayPanel.material = null;
     }
 

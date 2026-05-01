@@ -8,6 +8,7 @@ public class CardsHeaderPanel_Game : MovePanel
 {
     [SerializeField] private UIEffectCombination combination;
     [SerializeField] private Button buttonExit;
+    [SerializeField] private Button buttonMenu;
 
     public override void Initialize()
     {
@@ -16,6 +17,7 @@ public class CardsHeaderPanel_Game : MovePanel
         combination.Initialize();
 
         buttonExit.onClick.AddListener(ClickToExit);
+        buttonMenu.onClick.AddListener(ClickToMenu);
     }
 
     public override void Dispose()
@@ -25,6 +27,7 @@ public class CardsHeaderPanel_Game : MovePanel
         combination.Dispose();
 
         buttonExit.onClick.RemoveListener(ClickToExit);
+        buttonMenu.onClick.RemoveListener(ClickToMenu);
     }
 
     public override void ActivatePanel()
@@ -44,10 +47,16 @@ public class CardsHeaderPanel_Game : MovePanel
     #region Output
 
     public event Action OnClickToExit;
+    public event Action OnClickToMenu;
 
     private void ClickToExit()
     {
         OnClickToExit?.Invoke();
+    }
+
+    private void ClickToMenu()
+    {
+        OnClickToMenu?.Invoke();
     }
 
     #endregion

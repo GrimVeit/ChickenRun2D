@@ -31,6 +31,7 @@ public class MaskEffectSequence_Play : MonoBehaviour, IMaskEffectSequence
 
     public void Exit()
     {
+        transformIntroPanel.DOColor(Color.white, 0.2f);
         transformIntroPanel.material = null;
     }
 

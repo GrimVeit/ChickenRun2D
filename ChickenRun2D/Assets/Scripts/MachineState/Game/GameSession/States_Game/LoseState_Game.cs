@@ -16,6 +16,8 @@ public class LoseState_Game : IState
     public void EnterState()
     {
         _sceneRoot.OnClickToRestart_LOSE += ChangeStateToRestart;
+        _sceneRoot.OnClickToMenu_LOSE += ChangeStateToMenu;
+        _sceneRoot.OnClickToExit_LOSE += ChangeStateToExit;
 
         _sceneRoot.OpenBackgroundBrownPanel();
         _sceneRoot.OpenLosePanel();
@@ -24,6 +26,8 @@ public class LoseState_Game : IState
     public void ExitState()
     {
         _sceneRoot.OnClickToRestart_LOSE -= ChangeStateToRestart;
+        _sceneRoot.OnClickToMenu_LOSE -= ChangeStateToMenu;
+        _sceneRoot.OnClickToExit_LOSE -= ChangeStateToExit;
 
         _sceneRoot.CloseLosePanel();
         _sceneRoot.CloseLoseVideoPanel();
@@ -32,5 +36,18 @@ public class LoseState_Game : IState
     private void ChangeStateToRestart()
     {
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChooseLocationState_Game>());
+    }
+
+    private void ChangeStateToMenu()
+    {
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<PlayVideoState_Game>());
+
+        _sceneRoot.CLoseMainPanel();
+        _sceneRoot.CloseBackgroundBrownPanel();
+    }
+
+    private void ChangeStateToExit()
+    {
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<StartGameRunState_Game>());
     }
 }

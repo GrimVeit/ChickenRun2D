@@ -93,6 +93,9 @@ public class UIGameRoot : UIRoot
         choosePanel.OnChoose += ClickToChoose_CHOOSE;
 
         losePanel.OnClickToRestart += ClickToRestart_LOSE;
+        losePanel.OnClickToMenu += ClickToMenu_LOSE;
+        losePanel.OnClickToExit += ClickToExit_LOSE;
+
         winPanel.OnClickToRestart += ClickToRestart_WIN;
         winPanel.OnClickToBuy += ClickToBuy_WIN;
 
@@ -102,6 +105,7 @@ public class UIGameRoot : UIRoot
 
 
         cardsHeaderPanel.OnClickToExit += ClickToExit_CARDSHEADER;
+        cardsHeaderPanel.OnClickToMenu += ClickToMenu_CARDSHEADER;
 
         fullPicturePanel.OnClickExit += ClickToExit_FullPicture;
     }
@@ -122,6 +126,9 @@ public class UIGameRoot : UIRoot
         choosePanel.OnChoose -= ClickToChoose_CHOOSE;
 
         losePanel.OnClickToRestart -= ClickToRestart_LOSE;
+        losePanel.OnClickToMenu -= ClickToMenu_LOSE;
+        losePanel.OnClickToExit -= ClickToExit_LOSE;
+
         winPanel.OnClickToRestart -= ClickToRestart_WIN;
         winPanel.OnClickToBuy -= ClickToBuy_WIN;
 
@@ -131,6 +138,7 @@ public class UIGameRoot : UIRoot
 
 
         cardsHeaderPanel.OnClickToExit -= ClickToExit_CARDSHEADER;
+        cardsHeaderPanel.OnClickToMenu -= ClickToMenu_CARDSHEADER;
 
         fullPicturePanel.OnClickExit -= ClickToExit_FullPicture;
     }
@@ -613,12 +621,28 @@ public class UIGameRoot : UIRoot
     #region LOSE
 
     public event Action OnClickToRestart_LOSE;
+    public event Action OnClickToExit_LOSE;
+    public event Action OnClickToMenu_LOSE;
 
     private void ClickToRestart_LOSE()
     {
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToRestart_LOSE?.Invoke();
+    }
+
+    private void ClickToExit_LOSE()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToExit_LOSE?.Invoke();
+    }
+
+    private void ClickToMenu_LOSE()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToMenu_LOSE?.Invoke();
     }
 
     #endregion
@@ -677,12 +701,20 @@ public class UIGameRoot : UIRoot
     #region COST_BOX
 
     public event Action OnClickToExit_CARDSHEADER;
+    public event Action OnClickToMenu_CARDSHEADER;
 
     private void ClickToExit_CARDSHEADER()
     {
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToExit_CARDSHEADER?.Invoke();
+    }
+
+    private void ClickToMenu_CARDSHEADER()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToMenu_CARDSHEADER?.Invoke();
     }
 
     #endregion

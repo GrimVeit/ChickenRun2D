@@ -37,6 +37,7 @@ public class MaskEffectSequence_StartGame : MonoBehaviour, IMaskEffectSequence
 
     public void Exit()
     {
+        transformChooseLocationPanel.DOColor(Color.white, 0.2f);
         transformChooseLocationPanel.material = null;
 
         for (int i = 0; i < imageList.Count; i++)
