@@ -5,6 +5,12 @@ Shader "UI/MaskWriterSoft"
         _MainTex ("Sprite", 2D) = "white" {}
         _Cutoff ("Alpha Cutoff", Range(0,1)) = 0.1
         _Softness ("Edge Softness", Range(0.001, 0.5)) = 0.05
+        _Stencil ("Stencil ID", Float) = 1
+        _StencilOp ("Stencil Operation", Float) = 2
+        _StencilWriteMask ("Stencil Write Mask", Float) = 255
+        _StencilReadMask ("Stencil Read Mask", Float) = 255
+        _StencilComp ("Stencil Comparison", Float) = 8
+        _ColorMask ("Color Mask", Float) = 0
     }
 
     SubShader
