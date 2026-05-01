@@ -9,6 +9,8 @@ public class WinPanel_Game : MovePanel
     [SerializeField] private UIEffectCombination combination;
     [SerializeField] private Button buttonRestart;
     [SerializeField] private Button buttonBuy;
+    [SerializeField] private Button buttonMenu;
+    [SerializeField] private Button buttonExit;
 
     public override void Initialize()
     {
@@ -18,6 +20,8 @@ public class WinPanel_Game : MovePanel
 
         buttonRestart.onClick.AddListener(ClickRestart);
         buttonBuy.onClick.AddListener(ClickBuy);
+        buttonExit.onClick.AddListener(ClickExit);
+        buttonMenu.onClick.AddListener(ClickMenu);
     }
 
     public override void Dispose()
@@ -28,6 +32,8 @@ public class WinPanel_Game : MovePanel
 
         buttonRestart.onClick.RemoveListener(ClickRestart);
         buttonBuy.onClick.RemoveListener(ClickBuy);
+        buttonExit.onClick.RemoveListener(ClickExit);
+        buttonMenu.onClick.RemoveListener(ClickMenu);
     }
 
     public override void ActivatePanel()
@@ -48,6 +54,8 @@ public class WinPanel_Game : MovePanel
 
     public event Action OnClickToRestart;
     public event Action OnClickToBuy;
+    public event Action OnClickToMenu;
+    public event Action OnClickToExit;
 
     private void ClickRestart()
     {
@@ -57,6 +65,16 @@ public class WinPanel_Game : MovePanel
     private void ClickBuy()
     {
         OnClickToBuy?.Invoke();
+    }
+
+    private void ClickExit()
+    {
+        OnClickToExit?.Invoke();
+    }
+
+    private void ClickMenu()
+    {
+        OnClickToMenu?.Invoke();
     }
 
     #endregion

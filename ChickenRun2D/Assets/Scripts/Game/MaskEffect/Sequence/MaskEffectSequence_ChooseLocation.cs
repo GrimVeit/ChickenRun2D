@@ -25,12 +25,14 @@ public class MaskEffectSequence_ChooseLocation : MonoBehaviour, IMaskEffectSeque
         _effectFigure.SetPosition(transformPosFigure.transform.localPosition);
 
         transformPlayPanel.material = _matPanel;
+        transformPlayPanel.raycastTarget = false;
         transformPlayPanel.DOColor(Color.black, 1f);
         _effectFigure.Show(2f, 4, OnComplete);
     }
 
     public void Exit()
     {
+        transformPlayPanel.raycastTarget = true;
         transformPlayPanel.DOColor(Color.white, 0.2f);
         transformPlayPanel.material = null;
     }

@@ -98,6 +98,8 @@ public class UIGameRoot : UIRoot
 
         winPanel.OnClickToRestart += ClickToRestart_WIN;
         winPanel.OnClickToBuy += ClickToBuy_WIN;
+        winPanel.OnClickToMenu += ClickToMenu_WIN;
+        winPanel.OnClickToExit += ClickToExit_WIN;
 
         costBoxPanel.OnClickToBuy += ClickToBox_COSTBOX;
         costBoxPanel.OnClickToMenu += ClickToMenu_COSTBOX;
@@ -131,6 +133,8 @@ public class UIGameRoot : UIRoot
 
         winPanel.OnClickToRestart -= ClickToRestart_WIN;
         winPanel.OnClickToBuy -= ClickToBuy_WIN;
+        winPanel.OnClickToMenu -= ClickToMenu_WIN;
+        winPanel.OnClickToExit -= ClickToExit_WIN;
 
         costBoxPanel.OnClickToBuy -= ClickToBox_COSTBOX;
         costBoxPanel.OnClickToMenu -= ClickToMenu_COSTBOX;
@@ -651,6 +655,8 @@ public class UIGameRoot : UIRoot
 
     public event Action OnClickToRestart_WIN;
     public event Action OnClickToBuy_WIN;
+    public event Action OnClickToMenu_WIN;
+    public event Action OnClickToExit_WIN;
 
     private void ClickToRestart_WIN()
     {
@@ -664,6 +670,20 @@ public class UIGameRoot : UIRoot
         _soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToBuy_WIN?.Invoke();
+    }
+
+    private void ClickToMenu_WIN()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToMenu_WIN?.Invoke();
+    }
+
+    private void ClickToExit_WIN()
+    {
+        _soundProvider.PlayOneShot("PanelOpen");
+
+        OnClickToExit_WIN?.Invoke();
     }
 
     #endregion

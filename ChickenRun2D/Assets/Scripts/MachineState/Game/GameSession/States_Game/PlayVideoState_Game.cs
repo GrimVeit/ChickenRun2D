@@ -24,14 +24,15 @@ public class PlayVideoState_Game : IState
         _sceneRoot.OnClickToCollection_PLAY += ChangeStateToCollection;
 
         _videoProvider.Play("Play");
-        _sceneRoot.OpenPlayVideoPanel();
-        _sceneRoot.OpenPlayPanel();
+
 
         _maskEffectProvider.Play("Play", () =>
         {
             _maskEffectProvider.Stop("Intro");
             _sceneRoot.CloseIntroVideoPanel();
         });
+        _sceneRoot.OpenPlayVideoPanel();
+        _sceneRoot.OpenPlayPanel();
     }
 
     public void ExitState()
@@ -41,6 +42,9 @@ public class PlayVideoState_Game : IState
         _sceneRoot.OnClickToCollection_PLAY -= ChangeStateToCollection;
 
         _sceneRoot.ClosePlayPanel();
+
+        _sceneRoot.CloseIntroVideoPanel();
+        _maskEffectProvider.Stop("Intro");
     }
 
     private void ChangeStateToChooseLocation()

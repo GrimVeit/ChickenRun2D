@@ -17,6 +17,8 @@ public class WinState_Game : IState
     {
         _sceneRoot.OnClickToBuy_WIN += ChangeStateToChooseBuyBox;
         _sceneRoot.OnClickToRestart_WIN += ChangeStateToRestart;
+        _sceneRoot.OnClickToMenu_WIN += ChangeStateToMenu;
+        _sceneRoot.OnClickToExit_WIN += ChangeStateToExit;
 
         _sceneRoot.OpenBackgroundBrownPanel();
         _sceneRoot.OpenWinVideoPanel();
@@ -27,6 +29,8 @@ public class WinState_Game : IState
     {
         _sceneRoot.OnClickToBuy_WIN -= ChangeStateToChooseBuyBox;
         _sceneRoot.OnClickToRestart_WIN -= ChangeStateToRestart;
+        _sceneRoot.OnClickToMenu_WIN -= ChangeStateToMenu;
+        _sceneRoot.OnClickToExit_WIN -= ChangeStateToExit;
 
         _sceneRoot.CloseWinPanel();
         _sceneRoot.CloseWinVideoPanel();
@@ -35,10 +39,27 @@ public class WinState_Game : IState
     private void ChangeStateToRestart()
     {
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChooseLocationState_Game>());
+
+        _sceneRoot.CloseBackgroundBrownPanel();
     }
 
     private void ChangeStateToChooseBuyBox()
     {
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChooseBuyBoxState_Game>());
+    }
+
+    private void ChangeStateToMenu()
+    {
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<PlayVideoState_Game>());
+
+        _sceneRoot.CLoseMainPanel();
+        _sceneRoot.CloseBackgroundBrownPanel();
+    }
+
+    private void ChangeStateToExit()
+    {
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<StartGameRunState_Game>());
+
+        _sceneRoot.CloseBackgroundBrownPanel();
     }
 }

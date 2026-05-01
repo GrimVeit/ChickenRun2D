@@ -36,6 +36,8 @@ public class LoseState_Game : IState
     private void ChangeStateToRestart()
     {
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<ChooseLocationState_Game>());
+
+        _sceneRoot.CloseBackgroundBrownPanel();
     }
 
     private void ChangeStateToMenu()
@@ -49,5 +51,7 @@ public class LoseState_Game : IState
     private void ChangeStateToExit()
     {
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<StartGameRunState_Game>());
+
+        _sceneRoot.CloseBackgroundBrownPanel();
     }
 }

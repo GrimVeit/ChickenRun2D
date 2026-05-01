@@ -26,12 +26,14 @@ public class MaskEffectSequence_Play : MonoBehaviour, IMaskEffectSequence
 
         transformIntroPanel.material = _matPanel;
         transformIntroPanel.DOColor(Color.black, 0.5f);
+        transformIntroPanel.raycastTarget = false;
         _effectFigure.Show(1f, 4, OnComplete);
     }
 
     public void Exit()
     {
         transformIntroPanel.DOColor(Color.white, 0.2f);
+        transformIntroPanel.raycastTarget = true;
         transformIntroPanel.material = null;
     }
 
