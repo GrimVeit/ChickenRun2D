@@ -14,7 +14,7 @@ public class MovePanel : Panel
     [SerializeField] protected CanvasGroup canvasGroup;
     protected Tween tween;
 
-    private bool isActive = false;
+    protected bool isActive = false;
 
     public override void ActivatePanel()
     {
@@ -44,14 +44,14 @@ public class MovePanel : Panel
         CanvasGroupAlpha(canvasGroup, 1, 0, time);
     }
 
-    private void CanvasGroupAlpha(CanvasGroup canvasGroup, float from, float to, float time)
+    protected void CanvasGroupAlpha(CanvasGroup canvasGroup, float from, float to, float time, Action OnComplete = null)
     {
         if(canvasGroup == null) return;
 
-        Coroutines.Start(SmoothVal(canvasGroup, from, to, time));
+        Coroutines.Start(SmoothVal(canvasGroup, from, to, time, OnComplete));
     }
 
-    private IEnumerator SmoothVal(CanvasGroup canvasGroup, float from, float to, float timer)
+    private IEnumerator SmoothVal(CanvasGroup canvasGroup, float from, float to, float timer, Action OnComplete = null)
     {
         float t = 0.0f;
         canvasGroup.alpha = from;
@@ -63,6 +63,8 @@ public class MovePanel : Panel
                 canvasGroup.alpha = Mathf.Lerp(from, to, t);
             yield return 0;
         }
+
+        OnComplete?.Invoke();
     }
 
     #region Input

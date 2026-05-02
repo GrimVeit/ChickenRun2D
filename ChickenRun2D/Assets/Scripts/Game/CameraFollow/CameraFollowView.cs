@@ -28,14 +28,19 @@ public class CameraFollowView : View
         RecalculateLeader(true);
     }
 
+    public void ClearTargets()
+    {
+        Clear();
+    }
+
     private void Update()
     {
         if (_chickens.Count == 0) return;
 
         RecalculateLeader();
 
-        if (_leader == null)
-            return;
+        if (_leader == null) return;
+
 
         float leaderX = _leader.LocalPosition.x;
 

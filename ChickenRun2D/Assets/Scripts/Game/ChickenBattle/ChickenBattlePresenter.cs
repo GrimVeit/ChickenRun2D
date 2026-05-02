@@ -54,6 +54,7 @@ public class ChickenBattlePresenter : IChickenBattleProvider, IChickenBattleList
 
     public void StartGame() => _model.StartGame();
     public void CheckWinner() => _model.CheckWinner();
+    public void StopBattle() => _model.StopBattle();
 
     #endregion
 }
@@ -72,4 +73,5 @@ public interface IChickenBattleProvider
 {
     void StartGame();
     void CheckWinner();
+    void StopBattle();
 }

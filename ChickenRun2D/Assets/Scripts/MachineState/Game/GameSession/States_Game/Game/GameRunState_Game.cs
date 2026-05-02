@@ -11,10 +11,12 @@ public class GameRunState_Game : IState
 
     private readonly ITimerProvider _timerProvider;
     private readonly IChickenRaceLeaderProvider _chickenRaceLeaderProvider;
+    private readonly ICameraFollowProvider _cameraFollowProvider;
+    private readonly IChooseChickenProvider _chooseChickenProvider;
 
     private IEnumerator timer;
 
-    public GameRunState_Game(IStateMachineProvider stateMachineProvider, IChickenBattleProvider chickenBattleProvider, IChickenBattleListener chickenBattleListener, UIGameRoot sceneRoot, ITimerProvider timerProvider, IChickenRaceLeaderProvider chickenRaceLeaderProvider)
+    public GameRunState_Game(IStateMachineProvider stateMachineProvider, IChickenBattleProvider chickenBattleProvider, IChickenBattleListener chickenBattleListener, UIGameRoot sceneRoot, ITimerProvider timerProvider, IChickenRaceLeaderProvider chickenRaceLeaderProvider, ICameraFollowProvider cameraFollowProvider, IChooseChickenProvider chooseChickenProvider)
     {
         _stateMachineProvider = stateMachineProvider;
         _chickenBattleProvider = chickenBattleProvider;
@@ -22,6 +24,8 @@ public class GameRunState_Game : IState
         _sceneRoot = sceneRoot;
         _timerProvider = timerProvider;
         _chickenRaceLeaderProvider = chickenRaceLeaderProvider;
+        _cameraFollowProvider = cameraFollowProvider;
+        _chooseChickenProvider = chooseChickenProvider;
     }
 
     public void EnterState()
@@ -32,6 +36,7 @@ public class GameRunState_Game : IState
         Coroutines.Start(timer);
 
         _chickenBattleListener.OnEndGame += ChangeStateToCheckWinnerState;
+        _sceneRoot.OnClickToMenu_MAINHEADER += ChangeStateToMenu;
 
         _chickenBattleProvider.StartGame();
         _sceneRoot.OpenMainHeaderPanel();
@@ -43,6 +48,7 @@ public class GameRunState_Game : IState
         if (timer != null) Coroutines.Stop(timer);
 
         _chickenBattleListener.OnEndGame -= ChangeStateToCheckWinnerState;
+        _sceneRoot.OnClickToMenu_MAINHEADER -= ChangeStateToMenu;
 
         _sceneRoot.CloseMainHeaderPanel();
         _timerProvider.DeactivateTimer();
@@ -59,5 +65,15 @@ public class GameRunState_Game : IState
     private void ChangeStateToCheckWinnerState()
     {
         _stateMachineProvider.EnterState(_stateMachineProvider.GetState<CheckWinnerState_Game>());
+    }
+
+    private void ChangeStateToMenu()
+    {
+        _stateMachineProvider.EnterState(_stateMachineProvider.GetState<PlayVideoState_Game>());
+
+        _cameraFollowProvider.Clear();
+        _chickenBattleProvider.StopBattle();
+        _chooseChickenProvider.HideAll();
+        _sceneRoot.CLoseMainPanel();
     }
 }

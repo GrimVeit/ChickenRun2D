@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class CameraFollowPresenter
+public class CameraFollowPresenter : ICameraFollowProvider
 {
     private readonly CameraFollowModel _model;
     private readonly CameraFollowView _view;
@@ -31,4 +31,15 @@ public class CameraFollowPresenter
     {
         _model.OnSetChickens -= _view.SetChickens;
     }
+
+    #region Input
+
+    public void Clear() => _view.ClearTargets();
+
+    #endregion
+}
+
+public interface ICameraFollowProvider
+{
+    void Clear();
 }

@@ -125,7 +125,8 @@ public class GameSceneEntryPoint : MonoBehaviour
             buyPiecesPresenter,
             countChickenPicturePresenter,
             bankPresenter,
-            chickenRaceLeaderPresenter);
+            chickenRaceLeaderPresenter,
+            cameraFollowPresenter);
 
         sceneRoot.SetSoundProvider(soundPresenter);
         sceneRoot.Activate();

@@ -64,6 +64,31 @@ public class ChickenBattleModel
         StartEventsLoop();
     }
 
+    public void StopBattle()
+    {
+        StopEventsLoop();
+
+        for (int i = 0; i < _chickens.Count; i++)
+        {
+            var chicken = _chickens[i];
+
+            if (chicken == null)
+                continue;
+
+            chicken.OnEndMove -= EndMove;
+            chicken.SetIdle();
+
+            _finished.Add(chicken);
+        }
+
+        _hasWinner = false;
+
+        _leader = null;
+
+        _chickenTypeChoose = ChickenType.None;
+        _chickenTypeWinner = ChickenType.None;
+    }
+
     private void SetChooseChicken(ChickenType chickenType)
     {
         _chickenTypeChoose = chickenType;
@@ -85,11 +110,9 @@ public class ChickenBattleModel
 
     private void EndMove(IChickenUnit chicken)
     {
-        if (chicken == null)
-            return;
+        if (chicken == null) return;
 
-        if (_finished.Contains(chicken))
-            return;
+        if (_finished.Contains(chicken)) return;
 
         _finished.Add(chicken);
 
