@@ -14,9 +14,13 @@ public class GameRunState_Game : IState
     private readonly ICameraFollowProvider _cameraFollowProvider;
     private readonly IChooseChickenProvider _chooseChickenProvider;
 
+    private readonly ISoundProvider _soundProvider;
+    private readonly ISound _sound_Main;
+    private readonly ISound _sound_Run;
+
     private IEnumerator timer;
 
-    public GameRunState_Game(IStateMachineProvider stateMachineProvider, IChickenBattleProvider chickenBattleProvider, IChickenBattleListener chickenBattleListener, UIGameRoot sceneRoot, ITimerProvider timerProvider, IChickenRaceLeaderProvider chickenRaceLeaderProvider, ICameraFollowProvider cameraFollowProvider, IChooseChickenProvider chooseChickenProvider)
+    public GameRunState_Game(IStateMachineProvider stateMachineProvider, IChickenBattleProvider chickenBattleProvider, IChickenBattleListener chickenBattleListener, UIGameRoot sceneRoot, ITimerProvider timerProvider, IChickenRaceLeaderProvider chickenRaceLeaderProvider, ICameraFollowProvider cameraFollowProvider, IChooseChickenProvider chooseChickenProvider, ISoundProvider soundProvider)
     {
         _stateMachineProvider = stateMachineProvider;
         _chickenBattleProvider = chickenBattleProvider;
@@ -26,6 +30,10 @@ public class GameRunState_Game : IState
         _chickenRaceLeaderProvider = chickenRaceLeaderProvider;
         _cameraFollowProvider = cameraFollowProvider;
         _chooseChickenProvider = chooseChickenProvider;
+        _soundProvider = soundProvider;
+
+        _sound_Main = _soundProvider.GetSound("Background_Main");
+        _sound_Run = _soundProvider.GetSound("Background_Run");
     }
 
     public void EnterState()
@@ -41,6 +49,9 @@ public class GameRunState_Game : IState
         _chickenBattleProvider.StartGame();
         _sceneRoot.OpenMainHeaderPanel();
         _timerProvider.ActivateTimer(3600, TimerDirection.Forward);
+
+        _sound_Main.Stop();
+        _sound_Run.Play();
     }
 
     public void ExitState()
@@ -53,6 +64,9 @@ public class GameRunState_Game : IState
         _sceneRoot.CloseMainHeaderPanel();
         _timerProvider.DeactivateTimer();
         _chickenRaceLeaderProvider.Deactivate();
+
+        _sound_Main.Play();
+        _sound_Run.Stop();
     }
 
     private IEnumerator Timer()

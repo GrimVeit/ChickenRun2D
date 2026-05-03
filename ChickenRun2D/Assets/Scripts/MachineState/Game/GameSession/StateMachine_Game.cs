@@ -35,7 +35,9 @@ public class StateMachine_Game : IStateMachineProvider
         ICountChickenPictureProvider countChickenPictureProvider,
         IMoneyProvider moneyProvider,
         IChickenRaceLeaderProvider chickenRaceLeaderProvider,
-        ICameraFollowProvider cameraFollowProvider
+        ICameraFollowProvider cameraFollowProvider,
+
+        ISoundProvider soundProvider
     )
     {
         states[typeof(IntroVideoState_Game)] = new IntroVideoState_Game(this, sceneRoot, videoProvider, maskEffectProvider);
@@ -52,7 +54,7 @@ public class StateMachine_Game : IStateMachineProvider
         states[typeof(ChickenSpawnState_Game)] = new ChickenSpawnState_Game(this, spawnerChickenProvider, chooseChickenProvider, storeChickenProvider, sceneRoot);
         states[typeof(ChooseChickenState_Game)] = new ChooseChickenState_Game(this, chooseChickenProvider, sceneRoot, visualChickenEffectProvider);
         states[typeof(WaitGameRunState_Game)] = new WaitGameRunState_Game(this, timerProvider_Start, timerListener_Start);
-        states[typeof(GameRunState_Game)] = new GameRunState_Game(this, chickenBattleProvider, chickenBattleListener, sceneRoot, timerProvider_Game, chickenRaceLeaderProvider, cameraFollowProvider, chooseChickenProvider);
+        states[typeof(GameRunState_Game)] = new GameRunState_Game(this, chickenBattleProvider, chickenBattleListener, sceneRoot, timerProvider_Game, chickenRaceLeaderProvider, cameraFollowProvider, chooseChickenProvider, soundProvider);
         states[typeof(CheckWinnerState_Game)] = new CheckWinnerState_Game(this, chickenBattleListener, chickenBattleProvider, chooseChickenProvider);
 
         states[typeof(StartLoseState_Game)] = new StartLoseState_Game(this, videoProvider, sceneRoot);
