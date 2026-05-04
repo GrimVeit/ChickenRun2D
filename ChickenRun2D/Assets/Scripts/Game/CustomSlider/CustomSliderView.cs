@@ -52,11 +52,11 @@ public class CustomSliderView : View, IIdentify
     {
         float percent = GetPercent(eventData);
 
-        Debug.Log(percent);
+        //Debug.Log(percent);
 
         int closestIndex = FindClosestBlock(percent);
 
-        Debug.Log(closestIndex);
+        //Debug.Log(closestIndex);
 
         if (closestIndex != activeBlockIndex)
         {

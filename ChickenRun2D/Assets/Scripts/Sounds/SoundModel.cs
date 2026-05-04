@@ -152,7 +152,7 @@ public class SoundModel
         {
             if (sound.AudioType == type)
             {
-                sound.SetVolume(value);
+                sound.SetMainRatio(value);
             }
         }
 

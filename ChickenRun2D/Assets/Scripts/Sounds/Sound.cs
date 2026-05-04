@@ -9,8 +9,8 @@ public class Sound : ISound
 {
     public AudioType AudioType => audioType;
     public string ID => id;
+    public float Volume => _baseVolume;
 
-    public float Volume => audioSource.volume;
 
     [SerializeField] private string id;
     [SerializeField] private AudioSource audioSource;
@@ -21,8 +21,12 @@ public class Sound : ISound
     [SerializeField] private bool isPlayAwake;
     [SerializeField] private AudioType audioType;
 
-    private float durationChangeVolume = 0.4f;
+    private readonly float durationChangeVolume = 0.4f;
 
+    private float _baseVolume = 1f;
+    private float _currentRatio = 1f;
+
+    private bool _isMuted;
     private bool isMainControl;
 
     private IEnumerator setVolume_Coroutine;
@@ -34,40 +38,75 @@ public class Sound : ISound
         audioSource.pitch = pitch;
         audioSource.loop = isLoop;
 
+        _baseVolume = Mathf.Clamp01(volume);
+
+        ApplyVolume();
+
         if (isPlayAwake)
         {
             audioSource.Play();
         }
     }
 
+    // -------------------------
+    // CORE
+    // -------------------------
+
+    private void ApplyVolume()
+    {
+        if (audioSource == null) return;
+
+        if (_isMuted)
+        {
+            audioSource.volume = 0f;
+            return;
+        }
+
+        audioSource.volume = _baseVolume * _currentRatio;
+    }
+
+    public void SetMainRatio(float ratio)
+    {
+        _currentRatio = Mathf.Clamp01(ratio);
+        ApplyVolume();
+    }
+
+    // -------------------------
+    // MAIN CONTROL
+    // -------------------------
+
     public void MainMute()
     {
         isMainControl = true;
-
-        //SetVolume(normalVolume, 0, () => audioSource.mute = true);
+        audioSource.mute = true;
     }
 
     public void MainUnmute()
     {
         audioSource.mute = false;
         isMainControl = false;
-
-        //SetVolume(0, normalVolume);
+        ApplyVolume();
     }
 
     public void Mute()
     {
         if (isMainControl) return;
 
-        audioSource.mute = true;
+        _isMuted = true;
+        ApplyVolume();
     }
 
     public void Unmute()
     {
         if (isMainControl) return;
 
-        audioSource.mute = false;
+        _isMuted = false;
+        ApplyVolume();
     }
+
+    // -------------------------
+    // BASIC CONTROL
+    // -------------------------
 
     public void SetPitch(float pitch)
     {
@@ -76,16 +115,19 @@ public class Sound : ISound
 
     public void SetVolume(float volume)
     {
-        audioSource.volume = volume;
+        _baseVolume = Mathf.Clamp01(volume);
+        ApplyVolume();
     }
+
+    // -------------------------
+    // PLAY
+    // -------------------------
 
     public void Play()
     {
-        if (play_Coroutine != null)
-            Coroutines.Stop(play_Coroutine);
+        Debug.Log("PLAY");
 
-        play_Coroutine = Play_Coroutine(0);
-        Coroutines.Start(play_Coroutine);
+        audioSource.Play();
     }
 
     public void Play(float await)
@@ -100,7 +142,9 @@ public class Sound : ISound
     public void PlayOneShot()
     {
         audioSource.pitch = pitch;
-        audioSource.PlayOneShot(audioClip);
+
+        float finalVol = _isMuted ? 0f : _baseVolume * _currentRatio;
+        audioSource.PlayOneShot(audioClip, finalVol);
     }
 
     public void Stop()
@@ -108,51 +152,59 @@ public class Sound : ISound
         audioSource.Stop();
     }
 
+    // -------------------------
+    // DISPOSE
+    // -------------------------
+
     public void Dispose()
     {
-        SetVolume(audioSource.volume, 0, () => Coroutines.Stop(setVolume_Coroutine));
+        SetVolume(_baseVolume, 0, () =>
+        {
+            if (setVolume_Coroutine != null)
+                Coroutines.Stop(setVolume_Coroutine);
+        });
     }
+
+    // -------------------------
+    // VOLUME API (UNCHANGED)
+    // -------------------------
 
     public void SetVolume(float startVolume, float endVolume, Action action = null)
     {
-        if (setVolume_Coroutine != null)
-            Coroutines.Stop(setVolume_Coroutine);
-
-        setVolume_Coroutine = ChangeVolume_Coroutine(startVolume, endVolume, durationChangeVolume, 0, action);
-        Coroutines.Start(setVolume_Coroutine);
+        StartVolumeRoutine(startVolume, endVolume, durationChangeVolume, 0, action);
     }
 
     public void SetVolume_End(float endVolume, float time, Action action = null)
     {
-        if (setVolume_Coroutine != null)
-            Coroutines.Stop(setVolume_Coroutine);
-
-        setVolume_Coroutine = ChangeVolume_Coroutine(audioSource.volume, endVolume, time, 0, action);
-        Coroutines.Start(setVolume_Coroutine);
+        StartVolumeRoutine(audioSource.volume, endVolume, time, 0, action);
     }
 
     public void SetVolume(float startVolume, float endVolume, float time, Action action = null)
     {
-        if (setVolume_Coroutine != null)
-            Coroutines.Stop(setVolume_Coroutine);
-
-        setVolume_Coroutine = ChangeVolume_Coroutine(startVolume, endVolume, time, 0, action);
-        Coroutines.Start(setVolume_Coroutine);
+        StartVolumeRoutine(startVolume, endVolume, time, 0, action);
     }
 
     public void SetVolume(float startVolume, float endVolume, float time, float awate, Action action = null)
     {
+        StartVolumeRoutine(startVolume, endVolume, time, awate, action);
+    }
+
+    private void StartVolumeRoutine(float startVolume, float endVolume, float time, float awate, Action action)
+    {
         if (setVolume_Coroutine != null)
             Coroutines.Stop(setVolume_Coroutine);
 
-        setVolume_Coroutine = ChangeVolume_Coroutine(startVolume, endVolume, time, 0, action);
+        setVolume_Coroutine = ChangeVolume_Coroutine(startVolume, endVolume, time, awate, action);
         Coroutines.Start(setVolume_Coroutine);
     }
+
+    // -------------------------
+    // COROUTINES
+    // -------------------------
 
     private IEnumerator Play_Coroutine(float await)
     {
         yield return new WaitForSeconds(await);
-
         audioSource.Play();
     }
 
@@ -160,20 +212,28 @@ public class Sound : ISound
     {
         if (audioSource == null) yield break;
 
-        if (audioSource.volume == endVolume) yield break;
-
         yield return new WaitForSeconds(awate);
 
-        audioSource.volume = startVolume;
         float elapsedTime = 0f;
+
+        float initialStart = Mathf.Clamp01(startVolume);
+        float targetEnd = Mathf.Clamp01(endVolume);
+
+        _baseVolume = initialStart;
+        ApplyVolume();
 
         while (elapsedTime < time)
         {
             elapsedTime += Time.deltaTime;
-            if (audioSource == null) yield break;
-            audioSource.volume = Mathf.Lerp(startVolume, endVolume, elapsedTime / time);
+
+            _baseVolume = Mathf.Lerp(initialStart, targetEnd, elapsedTime / time);
+            ApplyVolume();
+
             yield return null;
         }
+
+        _baseVolume = targetEnd;
+        ApplyVolume();
 
         actionOnend?.Invoke();
     }

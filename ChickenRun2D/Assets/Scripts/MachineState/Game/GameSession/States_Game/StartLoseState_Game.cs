@@ -6,14 +6,16 @@ public class StartLoseState_Game : IState
     private readonly IStateMachineProvider _machineProvider;
     private readonly IVideoProvider _videoProvider;
     private readonly UIGameRoot _sceneRoot;
+    private readonly ISoundProvider _soundProvider;
 
     private IEnumerator timer;
 
-    public StartLoseState_Game(IStateMachineProvider machineProvider, IVideoProvider videoProvider, UIGameRoot sceneRoot)
+    public StartLoseState_Game(IStateMachineProvider machineProvider, IVideoProvider videoProvider, UIGameRoot sceneRoot, ISoundProvider soundProvider)
     {
         _machineProvider = machineProvider;
         _videoProvider = videoProvider;
         _sceneRoot = sceneRoot;
+        _soundProvider = soundProvider;
     }
 
     public void EnterState()
@@ -33,6 +35,7 @@ public class StartLoseState_Game : IState
     {
         _videoProvider.Play("Lose");
         _sceneRoot.OpenLoseVideoPanel();
+        _soundProvider.PlayOneShot("Lose");
 
         yield return new WaitForSeconds(3);
 

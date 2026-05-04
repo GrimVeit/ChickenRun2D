@@ -56,11 +56,23 @@ public class TimerPresenter : ITimerProvider, ITimerListener
         _model.ResetTimer();
     }
 
+    #region Output
+
+
+    public event Action<int> OnTimeChanged
+    {
+        add => _model.OnTimeChanged += value;
+        remove => _model.OnTimeChanged -= value;
+    }
+
+
     public event Action OnStopTimer
     {
         add { _model.OnStopTimer += value; }
         remove { _model.OnStopTimer -= value; }
     }
+
+    #endregion
 }
 
 public interface ITimerView
@@ -83,4 +95,5 @@ public interface ITimerProvider
 public interface ITimerListener
 {
     public event Action OnStopTimer;
+    public event Action<int> OnTimeChanged;
 }

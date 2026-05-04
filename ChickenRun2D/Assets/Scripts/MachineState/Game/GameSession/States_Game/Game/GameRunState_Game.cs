@@ -50,8 +50,9 @@ public class GameRunState_Game : IState
         _sceneRoot.OpenMainHeaderPanel();
         _timerProvider.ActivateTimer(3600, TimerDirection.Forward);
 
-        _sound_Main.Stop();
+        _sound_Main.SetVolume(0.4f, 0, 0.1f, _sound_Main.Stop);
         _sound_Run.Play();
+        _sound_Run.SetVolume(0, 1, 0.1f);
     }
 
     public void ExitState()
@@ -65,8 +66,9 @@ public class GameRunState_Game : IState
         _timerProvider.DeactivateTimer();
         _chickenRaceLeaderProvider.Deactivate();
 
-        _sound_Main.Play();
-        _sound_Run.Stop();
+        _sound_Run.SetVolume(1, 0, 0.1f, _sound_Run.Stop);
+        //_sound_Main.Play();
+        //_sound_Main.SetVolume(0, 0.2f, 0.1f);
     }
 
     private IEnumerator Timer()

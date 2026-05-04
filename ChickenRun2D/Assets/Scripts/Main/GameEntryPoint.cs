@@ -31,7 +31,7 @@ public class GameEntryPoint
 
     private static void SetupGlobalSettings()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 90;
         Screen.sleepTimeout = SleepTimeout.NeverSleep;
     }
 
