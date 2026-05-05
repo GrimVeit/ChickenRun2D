@@ -12,12 +12,14 @@ public class ChickenStateMachine : IStateMachineProvider
     private IState _stateRun;
 
     private IState _currentState;
+    private readonly ISoundProvider _soundProvider;
 
     private readonly ChickenUnitModel _model;
 
-    public ChickenStateMachine(ChickenUnitModel model)
+    public ChickenStateMachine(ChickenUnitModel model, ISoundProvider soundProvider)
     {
         _model = model;
+        _soundProvider = soundProvider;
     }
 
     public void Initialize()
@@ -34,7 +36,7 @@ public class ChickenStateMachine : IStateMachineProvider
 
 
 
-        var stateNitro = new ChickenState_Nitro(this, _model);
+        var stateNitro = new ChickenState_Nitro(this, _model, _soundProvider);
         states[typeof(ChickenState_Nitro)] = stateNitro;
         _goodStates.Add(stateNitro);
 
@@ -46,7 +48,7 @@ public class ChickenStateMachine : IStateMachineProvider
         states[typeof(ChickenState_Fall)] = stateFall;
         _badStates.Add(stateFall);
 
-        var stateAuto = new ChickenState_Auto(this, _model);
+        var stateAuto = new ChickenState_Auto(this, _model, _soundProvider);
         states[typeof(ChickenState_Auto)] = stateAuto;
         _badStates.Add(stateAuto);
 
@@ -66,15 +68,15 @@ public class ChickenStateMachine : IStateMachineProvider
         states[typeof(ChickenState_Sleep)] = stateSleep;
         _badStates.Add(stateSleep);
 
-        var statePigeon = new ChickenState_Pigeon(this, _model);
+        var statePigeon = new ChickenState_Pigeon(this, _model, _soundProvider);
         states[typeof(ChickenState_Pigeon)] = statePigeon;
         _badStates.Add(statePigeon);
 
-        var stateGhost = new ChickenState_Ghost(this, _model);
+        var stateGhost = new ChickenState_Ghost(this, _model, _soundProvider);
         states[typeof(ChickenState_Ghost)] = stateGhost;
         _badStates.Add(stateGhost);
 
-        var stateHunter = new ChickenState_Hunter(this, _model);
+        var stateHunter = new ChickenState_Hunter(this, _model, _soundProvider);
         states[typeof(ChickenState_Hunter)] = stateHunter;
         _badStates.Add(stateHunter);
     }

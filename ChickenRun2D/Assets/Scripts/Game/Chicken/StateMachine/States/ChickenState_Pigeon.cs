@@ -6,13 +6,15 @@ public class ChickenState_Pigeon : IState
 {
     private readonly IStateMachineProvider _machineProvider;
     private readonly ChickenUnitModel _model;
+    private readonly ISoundProvider _soundProvider;
 
     private IEnumerator timer;
 
-    public ChickenState_Pigeon(IStateMachineProvider stateMachineProvider, ChickenUnitModel model)
+    public ChickenState_Pigeon(IStateMachineProvider stateMachineProvider, ChickenUnitModel model, ISoundProvider soundProvider)
     {
         _machineProvider = stateMachineProvider;
         _model = model;
+        _soundProvider = soundProvider;
     }
 
     public void EnterState()
@@ -31,6 +33,7 @@ public class ChickenState_Pigeon : IState
 
         yield return new WaitForSeconds(0.5f);
 
+        _soundProvider.PlayOneShot("Chicken_Pigeon");
         _model.SetSpeed(0, 0.2f);
         _model.ActivateAnimation(ChickenAnimationType.Pigeon);
 

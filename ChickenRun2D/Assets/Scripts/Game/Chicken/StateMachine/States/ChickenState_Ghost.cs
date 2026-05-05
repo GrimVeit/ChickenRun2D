@@ -5,13 +5,15 @@ public class ChickenState_Ghost : IState
 {
     private readonly IStateMachineProvider _machineProvider;
     private readonly ChickenUnitModel _model;
+    private readonly ISoundProvider _soundProvider;
 
     private IEnumerator timer;
 
-    public ChickenState_Ghost(IStateMachineProvider stateMachineProvider, ChickenUnitModel model)
+    public ChickenState_Ghost(IStateMachineProvider stateMachineProvider, ChickenUnitModel model, ISoundProvider soundProvider)
     {
         _machineProvider = stateMachineProvider;
         _model = model;
+        _soundProvider = soundProvider;
     }
 
     public void EnterState()
@@ -30,6 +32,7 @@ public class ChickenState_Ghost : IState
 
         yield return new WaitForSeconds(0.5f);
 
+        _soundProvider.PlayOneShot("Chicken_Ghost");
         _model.SetSpeed(0, 0.2f);
         _model.ActivateAnimation(ChickenAnimationType.Fright);
 

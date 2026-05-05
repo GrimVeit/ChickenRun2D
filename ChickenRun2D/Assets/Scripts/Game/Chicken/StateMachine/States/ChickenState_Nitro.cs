@@ -6,13 +6,15 @@ public class ChickenState_Nitro : IState
 {
     private readonly IStateMachineProvider _machineProvider;
     private readonly ChickenUnitModel _model;
+    private readonly ISoundProvider _soundProvider;
 
     private IEnumerator timer;
 
-    public ChickenState_Nitro(IStateMachineProvider stateMachineProvider, ChickenUnitModel model)
+    public ChickenState_Nitro(IStateMachineProvider stateMachineProvider, ChickenUnitModel model, ISoundProvider soundProvider)
     {
         _machineProvider = stateMachineProvider;
         _model = model;
+        _soundProvider = soundProvider;
     }
 
     public void EnterState()
@@ -30,6 +32,8 @@ public class ChickenState_Nitro : IState
         _model.ActivateAnimation(ChickenAnimationType.Nitro);
 
         yield return new WaitForSeconds(0.1f);
+
+        _soundProvider.PlayOneShot("Chicken_Nitro");
 
         _model.SetSpeed(Random.Range(450f, 500f), 0.1f);
 

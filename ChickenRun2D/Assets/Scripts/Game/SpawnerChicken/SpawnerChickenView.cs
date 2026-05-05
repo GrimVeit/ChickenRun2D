@@ -51,7 +51,7 @@ public class SpawnerChickenView : View
         return "chicken_samurai";
     }
 
-    public void SetTypes(List<ChickenType> types)
+    public void SetTypes(List<ChickenType> types, ISoundProvider soundProvider)
     {
         Debug.Log("Types: " + string.Join(", ", types));
 
@@ -59,7 +59,7 @@ public class SpawnerChickenView : View
 
         if(timer != null) Coroutines.Stop(timer);
 
-        timer = Timer(types);
+        timer = Timer(types, soundProvider);
         Coroutines.Start(timer);
     }
 
@@ -76,7 +76,7 @@ public class SpawnerChickenView : View
         }
     }
 
-    private IEnumerator Timer(List<ChickenType> types)
+    private IEnumerator Timer(List<ChickenType> types, ISoundProvider soundProvider)
     {
         for (int i = 0; i < Mathf.Min(types.Count, transformsSpawn.Count); i++)
         {
@@ -89,7 +89,7 @@ public class SpawnerChickenView : View
             newChicken.SetSkin(GetSkinName(type));
             newChicken.SetTarget(transformTarget.localPosition);
 
-            var presenter = new ChickenUnitPresenter(new ChickenUnitModel(type), newChicken);
+            var presenter = new ChickenUnitPresenter(new ChickenUnitModel(type), soundProvider, newChicken);
             presenter.Initialize();
             newChicken.Show();
 

@@ -27,7 +27,7 @@ public class SpawnerChickenModel
 
     public void SpawnChickens()
     {
-        OnSpawnChicken?.Invoke(_chickenTypes);
+        OnSpawnChicken?.Invoke(_chickenTypes, _soundProvider);
     }
 
     public void SpawnSound()
@@ -42,7 +42,7 @@ public class SpawnerChickenModel
 
     #region Output
 
-    public event Action<List<ChickenType>> OnSpawnChicken;
+    public event Action<List<ChickenType>, ISoundProvider> OnSpawnChicken;
 
     #endregion
 }

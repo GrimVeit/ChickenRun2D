@@ -8,12 +8,12 @@ public class ChickenUnitPresenter : IChickenUnit
 
     private readonly ChickenStateMachine _stateMachine;
 
-    public ChickenUnitPresenter(ChickenUnitModel model, ChickenUnitView view)
+    public ChickenUnitPresenter(ChickenUnitModel model, ISoundProvider soundProvider, ChickenUnitView view)
     {
         _model = model;
         _view = view;
 
-        _stateMachine = new ChickenStateMachine(_model);
+        _stateMachine = new ChickenStateMachine(_model, soundProvider);
     }
 
     public void Initialize()
