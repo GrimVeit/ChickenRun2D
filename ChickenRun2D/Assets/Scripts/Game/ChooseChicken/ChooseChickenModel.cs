@@ -11,9 +11,12 @@ public class ChooseChickenModel
 
     private readonly IStoreChickenListener _storeChickenListener;
 
-    public ChooseChickenModel(IStoreChickenListener storeChickenListener)
+    private readonly ISoundProvider _soundProvider;
+
+    public ChooseChickenModel(IStoreChickenListener storeChickenListener, ISoundProvider soundProvider)
     {
         _storeChickenListener = storeChickenListener;
+        _soundProvider = soundProvider;
     }
 
     public void Initialize()
@@ -42,6 +45,8 @@ public class ChooseChickenModel
             }
             else
             {
+                _soundProvider.PlayOneShot("ChooseChicken");
+
                 OnChoose?.Invoke(chickenTypes[i]);
             }
         }

@@ -40,6 +40,8 @@ public class Slot : MonoBehaviour
             elapsedTime += Time.deltaTime;
             float currentSpeed = Mathf.Lerp(startSpeed, endSpeed, elapsedTime/duration);
 
+            Debug.Log(currentSpeed);
+
             OnWheelSpeed?.Invoke(currentSpeed);
 
             scrollRect.verticalNormalizedPosition += currentSpeed * Time.deltaTime;

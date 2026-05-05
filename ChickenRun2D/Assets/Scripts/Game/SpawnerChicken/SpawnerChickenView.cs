@@ -95,6 +95,8 @@ public class SpawnerChickenView : View
 
             _chickenUnits.Add(presenter, newChicken);
 
+            OnSetSpawnSound?.Invoke();
+
             yield return new WaitForSeconds(0.4f);
         }
 
@@ -104,6 +106,8 @@ public class SpawnerChickenView : View
     #region Output
 
     public event Action<List<IChickenUnit>> OnSpawnChickens;
+
+    public event Action OnSetSpawnSound;
 
     #endregion
 }

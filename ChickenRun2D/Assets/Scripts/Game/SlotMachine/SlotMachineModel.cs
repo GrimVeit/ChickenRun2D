@@ -11,61 +11,41 @@ public class SlotMachineModel
     public event Action<int> OnStopSpinnedSlot;
     public event Action OnDeactivateMachine;
 
-    //private IMoneyProvider moneyProvider;
-    //private IParticleEffectProvider particleEffectProvider;
-    //private ISoundProvider soundProvider;
-    //private ISound[] slotWheelsSound;
+    private ISoundProvider _soundProvider;
+    private ISound _wheelSound;
 
-    public SlotMachineModel()
+    public SlotMachineModel(ISoundProvider soundProvider)
     {
-        //this.moneyProvider = moneyProvider;
-        //this.soundProvider = soundProvider;
-        //this.particleEffectProvider = particleEffectProvider;
+        _soundProvider = soundProvider;
 
-        //slotWheelsSound = new ISound[columnSlot];
-
-        //GetSounds();
+        _wheelSound = _soundProvider.GetSound("Wheel_Spin");
     }
 
     #region Sounds
 
-    private void GetSounds()
+    private void PlayWheelSound()
     {
-        //for (int i = 0; i < slotWheelsSound.Length; i++)
-        //{
-        //    slotWheelsSound[i] = soundProvider.GetSound("Wheel_" + i);
-        //}
-    }
-
-    private void PlayWheelSounds()
-    {
-        //for (int i = 0; i < slotWheelsSound.Length; i++)
-        //{
-        //    slotWheelsSound[i].SetVolume(0.1f);
-        //    slotWheelsSound[i].SetPitch(1);
-        //    slotWheelsSound[i].Play();
-        //}
+        _wheelSound.SetVolume(0.1f);
+        _wheelSound.SetPitch(1);
+        _wheelSound.Play();
     }
 
     private void StopWheelSounds()
     {
-        //for (int i = 0; i < slotWheelsSound.Length; i++)
-        //{
-        //    slotWheelsSound[i].Stop();
-        //}
+        _wheelSound.Stop();
     }
 
     public void WheelSpeed(float speed)
     {
-        //if (speed > 0.1f)
-        //{
-        //    return;
-        //}
+        if (speed > 2f)
+        {
+            speed = 1f;
+        }
 
-        //slotWheelsSound[index].SetVolume(speed/2);
+        _wheelSound.SetVolume(speed);
 
-        //float pitch = Mathf.Lerp(1, 0.88f, 1 - speed);
-        //slotWheelsSound[index].SetPitch(pitch * 1f);
+        float pitch = Mathf.Lerp(1, 0.88f, 1 - speed);
+        _wheelSound.SetPitch(pitch * 1f);
 
 
     }
@@ -77,7 +57,7 @@ public class SlotMachineModel
         if (IsActiveMachine) return;
 
         IsActiveMachine = true;
-        PlayWheelSounds();
+        PlayWheelSound();
         OnActivateMachine?.Invoke();
     }
 

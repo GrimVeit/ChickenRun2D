@@ -32,11 +32,15 @@ public class SpawnerChickenPresenter : ISpawnerChickenListener, ISpawnerChickenP
 
     private void ActivateEvents()
     {
+        _view.OnSetSpawnSound += _model.SpawnSound;
+
         _model.OnSpawnChicken += _view.SetTypes;
     }
 
     private void DeactivateEvents()
     {
+        _view.OnSetSpawnSound -= _model.SpawnSound;
+
         _model.OnSpawnChicken -= _view.SetTypes;
     }
 

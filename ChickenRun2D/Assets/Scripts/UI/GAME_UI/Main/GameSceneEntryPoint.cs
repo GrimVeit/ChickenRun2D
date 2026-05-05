@@ -76,14 +76,14 @@ public class GameSceneEntryPoint : MonoBehaviour
             viewContainer.GetView<ParticleEffectView>());
 
         storeChickenPresenter = new StoreChickenPresenter(new StoreChickenModel());
-        chooseChickenPresenter = new ChooseChickenPresenter(new ChooseChickenModel(storeChickenPresenter), viewContainer.GetView<ChooseChickenView>());
-        spawnerChickenPresenter = new SpawnerChickenPresenter(new SpawnerChickenModel(storeChickenPresenter), viewContainer.GetView<SpawnerChickenView>()); ;
+        chooseChickenPresenter = new ChooseChickenPresenter(new ChooseChickenModel(storeChickenPresenter, soundPresenter), viewContainer.GetView<ChooseChickenView>());
+        spawnerChickenPresenter = new SpawnerChickenPresenter(new SpawnerChickenModel(storeChickenPresenter, soundPresenter), viewContainer.GetView<SpawnerChickenView>()); ;
         chickenBattlePresenter = new ChickenBattlePresenter(new ChickenBattleModel(spawnerChickenPresenter, chooseChickenPresenter));
         cameraFollowPresenter = new CameraFollowPresenter(new CameraFollowModel(spawnerChickenPresenter), viewContainer.GetView<CameraFollowView>());
         visualChickenEffectPresenter = new VisualChickenEffectPresenter(new VisualChickenEffectModel(chooseChickenPresenter, storeChickenPresenter), viewContainer.GetView<VisualChickenEffectView>());
         chickenRaceLeaderPresenter = new ChickenRaceLeaderPresenter(new ChickenRaceLeaderModel(chickenBattlePresenter), viewContainer.GetView<ChickenRaceLeaderView>()); ;
 
-        slotMachinePresenter = new SlotMachinePresenter(new SlotMachineModel(), viewContainer.GetView<SlotMachineView>());
+        slotMachinePresenter = new SlotMachinePresenter(new SlotMachineModel(soundPresenter), viewContainer.GetView<SlotMachineView>());
 
         maskEffectPresenter = new MaskEffectPresenter(new MaskEffectModel(), viewContainer.GetView<MaskEffectView>());
 

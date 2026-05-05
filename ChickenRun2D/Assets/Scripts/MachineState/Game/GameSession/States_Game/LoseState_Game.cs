@@ -7,10 +7,15 @@ public class LoseState_Game : IState
     private readonly IStateMachineProvider _stateMachineProvider;
     private readonly UIGameRoot _sceneRoot;
 
-    public LoseState_Game(IStateMachineProvider stateMachineProvider, UIGameRoot sceneRoot)
+    private readonly ISoundProvider _soundProvider;
+    private readonly ISound _sound_Main;
+
+    public LoseState_Game(IStateMachineProvider stateMachineProvider, UIGameRoot sceneRoot, ISoundProvider soundProvider)
     {
         _stateMachineProvider = stateMachineProvider;
         _sceneRoot = sceneRoot;
+        _soundProvider = soundProvider;
+        _sound_Main = _soundProvider.GetSound("Background_Main");
     }
 
     public void EnterState()
@@ -21,6 +26,9 @@ public class LoseState_Game : IState
 
         _sceneRoot.OpenBackgroundBrownPanel();
         _sceneRoot.OpenLosePanel();
+
+        _sound_Main.Play();
+        _sound_Main.SetVolume(0, 1f, 0.1f);
     }
 
     public void ExitState()

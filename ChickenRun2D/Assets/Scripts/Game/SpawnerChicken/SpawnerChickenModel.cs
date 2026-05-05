@@ -5,12 +5,14 @@ using UnityEngine;
 public class SpawnerChickenModel
 {
     private readonly IStoreChickenListener _storeChickenListener;
+    private readonly ISoundProvider _soundProvider;
 
     private  List<ChickenType> _chickenTypes = new();
 
-    public SpawnerChickenModel(IStoreChickenListener storeChickenListener)
+    public SpawnerChickenModel(IStoreChickenListener storeChickenListener, ISoundProvider soundProvider)
     {
         _storeChickenListener = storeChickenListener;
+        _soundProvider = soundProvider;
     }
 
     public void Initialize()
@@ -26,6 +28,11 @@ public class SpawnerChickenModel
     public void SpawnChickens()
     {
         OnSpawnChicken?.Invoke(_chickenTypes);
+    }
+
+    public void SpawnSound()
+    {
+        _soundProvider.PlayOneShot("SpawnChicken");
     }
 
     private void SetTypes(List<ChickenType> types)

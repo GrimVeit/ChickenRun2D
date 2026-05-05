@@ -67,8 +67,6 @@ public class GameRunState_Game : IState
         _chickenRaceLeaderProvider.Deactivate();
 
         _sound_Run.SetVolume(1, 0, 0.1f, _sound_Run.Stop);
-        //_sound_Main.Play();
-        //_sound_Main.SetVolume(0, 0.2f, 0.1f);
     }
 
     private IEnumerator Timer()
