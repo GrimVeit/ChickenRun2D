@@ -5,13 +5,15 @@ public class ChickenState_UFO : IState
 {
     private readonly IStateMachineProvider _machineProvider;
     private readonly ChickenUnitModel _model;
+    private readonly ISoundProvider _soundProvider;
 
     private IEnumerator timer;
 
-    public ChickenState_UFO(IStateMachineProvider stateMachineProvider, ChickenUnitModel model)
+    public ChickenState_UFO(IStateMachineProvider stateMachineProvider, ChickenUnitModel model, ISoundProvider soundProvider)
     {
         _machineProvider = stateMachineProvider;
         _model = model;
+        _soundProvider = soundProvider;
     }
 
     public void EnterState()
@@ -28,6 +30,7 @@ public class ChickenState_UFO : IState
     {
         _model.EventGame_UFO_Activate();
 
+        _soundProvider.PlayOneShot("Chicken_UFO");
         _model.SetSpeed(0, 0.2f);
         _model.ActivateAnimation(ChickenAnimationType.Abduction_Take);
 

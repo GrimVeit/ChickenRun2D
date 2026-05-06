@@ -32,7 +32,7 @@ public class SpawnerChickenModel
 
     public void SpawnSound()
     {
-        _soundProvider.PlayOneShot("SpawnChicken");
+        //_soundProvider.PlayOneShot("SpawnChicken");
     }
 
     private void SetTypes(List<ChickenType> types)

@@ -96,9 +96,9 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         storeChickenPicturePresenter = new StoreChickenPicturePresenter(new StoreChickenPictureModel("CHICKEN_PICTURES", chickenAllPicturesSO));
         storeChickenPicturePiecePresenter = new StoreChickenPicturePiecePresenter(new StoreChickenPicturePieceModel(storeChickenPicturePresenter, storeChickenPicturePresenter));
-        visualPseudoPicturePiecePresenter = new VisualPseudoPicturePiecePresenter(new VisualPseudoPicturePieceModel(storeChickenPicturePiecePresenter, storeChickenPicturePiecePresenter), viewContainer.GetView<VisualPseudoPicturePieceView>());
+        visualPseudoPicturePiecePresenter = new VisualPseudoPicturePiecePresenter(new VisualPseudoPicturePieceModel(storeChickenPicturePiecePresenter, storeChickenPicturePiecePresenter, soundPresenter), viewContainer.GetView<VisualPseudoPicturePieceView>());
         visualHintPicturePresenter = new VisualHintPicturePiecePresenter(new VisualHintPicturePieceModel(visualPseudoPicturePiecePresenter), viewContainer.GetView<VisualHintPicturePieceView>());
-        visualChickenPicturePresenter = new VisualChickenPicturePresenter(new VisualChickenPictureModel(storeChickenPicturePresenter, storeChickenPicturePresenter), viewContainer.GetView<VisualChickenPictureView>());
+        visualChickenPicturePresenter = new VisualChickenPicturePresenter(new VisualChickenPictureModel(storeChickenPicturePresenter, storeChickenPicturePresenter, soundPresenter), viewContainer.GetView<VisualChickenPictureView>());
         showChickenPicturePresenter = new ShowChickenPicturePresenter(new ShowChickenPictureModel(visualChickenPicturePresenter), viewContainer.GetView<ShowChickenPictureView>());
         buyPiecesPresenter = new BuyPiecesPresenter(new BuyPiecesModel(storeChickenPicturePresenter), viewContainer.GetView<BuyPiecesView>());
         countChickenPicturePresenter = new CountChickenPicturePresenter(new CountChickenPictureModel(storeChickenPicturePresenter), viewContainer.GetView<CountChickenPictureView>());

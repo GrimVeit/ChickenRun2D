@@ -29,6 +29,11 @@ public class ChooseChickenModel
         _storeChickenListener.OnChooseChickens -= SetTypes;
     }
 
+    public void SetOpenSound()
+    {
+        _soundProvider.PlayOneShot("SpawnChicken");
+    }
+
     public void Choose(ChickenType chickenType)
     {
         if(_currentType == chickenType) return;

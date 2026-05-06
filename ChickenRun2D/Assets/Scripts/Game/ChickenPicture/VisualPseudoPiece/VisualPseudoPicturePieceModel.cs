@@ -3,15 +3,17 @@ using UnityEngine;
 
 public class VisualPseudoPicturePieceModel
 {
-    private IStoreChickenPicturePieceListener _storeChickenPicturePieceListener;
-    private IStoreChickenPicturePieceProvider _storeChickenPicturePieceProvider;
+    private readonly IStoreChickenPicturePieceListener _storeChickenPicturePieceListener;
+    private readonly IStoreChickenPicturePieceProvider _storeChickenPicturePieceProvider;
+    private readonly ISoundProvider _soundProvider;
 
     private bool isActive = true;
 
-    public VisualPseudoPicturePieceModel(IStoreChickenPicturePieceListener storeChickenPicturePieceListener, IStoreChickenPicturePieceProvider storeChickenPicturePieceProvider)
+    public VisualPseudoPicturePieceModel(IStoreChickenPicturePieceListener storeChickenPicturePieceListener, IStoreChickenPicturePieceProvider storeChickenPicturePieceProvider, ISoundProvider soundProvider)
     {
         _storeChickenPicturePieceListener = storeChickenPicturePieceListener;
         _storeChickenPicturePieceProvider = storeChickenPicturePieceProvider;
+        _soundProvider = soundProvider;
     }
 
     public void Initialize()
@@ -39,6 +41,18 @@ public class VisualPseudoPicturePieceModel
     public void OpenPiece(ChickenPicturePiece piece)
     {
         _storeChickenPicturePieceProvider.OpenPiece(piece);
+    }
+
+
+
+    public void SoundPieceReturn()
+    {
+        _soundProvider.PlayOneShot("Pseudo_Return");
+    }
+
+    public void SoundPiecePut()
+    {
+        _soundProvider.PlayOneShot("Pseudo_Put");
     }
 
     #region ACTIVATOR

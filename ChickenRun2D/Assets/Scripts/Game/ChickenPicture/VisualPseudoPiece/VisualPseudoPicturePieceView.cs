@@ -14,6 +14,11 @@ public class VisualPseudoPicturePieceView : View
         visualInteractivePseudoPieces.OnOpenPiece += OpenPiece;
         visualInteractivePseudoPieces.OnStartDrag += StartDrag;
         visualInteractivePseudoPieces.OnStopDrag += StopDrag;
+
+        visualInteractivePseudoPieces.OnPieceReturn += PieceReturn;
+        visualInteractivePseudoPieces.OnPiecePut += PiecePut;
+
+        notInteractivePseudoPieces.OnPieceReturn += PieceReturn;
     }
 
     public void Dispose()
@@ -21,6 +26,11 @@ public class VisualPseudoPicturePieceView : View
         visualInteractivePseudoPieces.OnOpenPiece -= OpenPiece;
         visualInteractivePseudoPieces.OnStartDrag -= StartDrag;
         visualInteractivePseudoPieces.OnStopDrag -= StopDrag;
+
+        visualInteractivePseudoPieces.OnPieceReturn -= PieceReturn;
+        visualInteractivePseudoPieces.OnPiecePut -= PiecePut;
+
+        notInteractivePseudoPieces.OnPieceReturn -= PieceReturn;
     }
 
     public void AddPiece(ChickenPicturePiece piece)
@@ -160,10 +170,12 @@ public class VisualPseudoPicturePieceView : View
 
                         if (piece.Data.Type == zone.Type && piece.Data.IdPicture == zone.IdZone)
                         {
+                            OnPiecePut?.Invoke();
                             OnOpenPiece?.Invoke(piece.Data);
                         }
                         else
                         {
+                            OnPieceReturn?.Invoke();
                             _currentPseudoChip.EndMove();
                         }
                     }
@@ -175,11 +187,13 @@ public class VisualPseudoPicturePieceView : View
                     }
                     else
                     {
+                        OnPieceReturn?.Invoke();
                         _currentPseudoChip.EndMove();
                     }
                 }
                 else
                 {
+                    OnPieceReturn?.Invoke();
                     _currentPseudoChip.EndMove();
                 }
             }
@@ -214,6 +228,9 @@ public class VisualPseudoPicturePieceView : View
 
         public event Action OnStartDrag;
         public event Action OnStopDrag;
+
+        public event Action OnPieceReturn;
+        public event Action OnPiecePut;
 
         #endregion
     }
@@ -325,6 +342,7 @@ public class VisualPseudoPicturePieceView : View
             }
             else
             {
+                OnPieceReturn?.Invoke();
                 _currentPseudoChip.EndMove();
             }
         }
@@ -349,6 +367,8 @@ public class VisualPseudoPicturePieceView : View
             return pos.x >= rect.xMin && pos.x <= rect.xMax &&
                    pos.y >= rect.yMin && pos.y <= rect.yMax;
         }
+
+        public event Action OnPieceReturn;
     }
 
 
@@ -358,6 +378,9 @@ public class VisualPseudoPicturePieceView : View
 
     public event Action OnStartDrag;
     public event Action OnStopDrag;
+
+    public event Action OnPieceReturn;
+    public event Action OnPiecePut;
 
     private void OpenPiece(ChickenPicturePiece piece)
     {
@@ -372,6 +395,16 @@ public class VisualPseudoPicturePieceView : View
     private void StopDrag()
     {
         OnStopDrag?.Invoke();
+    }
+
+    private void PieceReturn()
+    {
+        OnPieceReturn?.Invoke();
+    }
+
+    private void PiecePut()
+    {
+        OnPiecePut?.Invoke();
     }
 
     #endregion

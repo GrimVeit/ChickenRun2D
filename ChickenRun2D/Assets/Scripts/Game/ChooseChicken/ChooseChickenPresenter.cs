@@ -33,6 +33,7 @@ public class ChooseChickenPresenter : IChooseChickenProvider, IChooseChickenList
     private void ActivateEvents()
     {
         _view.OnChooseChicken += _model.Choose;
+        _view.OnSetSoundOpen += _model.SetOpenSound;
 
         _model.OnSetTypes += _view.SetTypes;
         _model.OnChoose += _view.Choose;
@@ -42,6 +43,7 @@ public class ChooseChickenPresenter : IChooseChickenProvider, IChooseChickenList
     private void DeactivateEvents()
     {
         _view.OnChooseChicken -= _model.Choose;
+        _view.OnSetSoundOpen -= _model.SetOpenSound;
 
         _model.OnSetTypes -= _view.SetTypes;
         _model.OnChoose -= _view.Choose;

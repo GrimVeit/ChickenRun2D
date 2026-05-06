@@ -615,7 +615,7 @@ public class UIGameRoot : UIRoot
 
     private void ClickToChoose_CHOOSE()
     {
-        _soundProvider.PlayOneShot("PanelOpen");
+        //_soundProvider.PlayOneShot("PanelOpen");
 
         OnClickToChoose_CHOOSE?.Invoke();
     }

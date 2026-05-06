@@ -33,6 +33,8 @@ public class VisualPseudoPicturePiecePresenter : IPseudoPicturePieceActivatorPro
     private void ActivateEvents()
     {
         _view.OnOpenPiece += _model.OpenPiece;
+        _view.OnPieceReturn += _model.SoundPieceReturn;
+        _view.OnPiecePut += _model.SoundPiecePut;
 
         _model.OnAddPieceToVisual += _view.AddPiece;
         _model.OnRemovePieceFromVisual += _view.RemovePiece;
@@ -41,6 +43,8 @@ public class VisualPseudoPicturePiecePresenter : IPseudoPicturePieceActivatorPro
     private void DeactivateEvents()
     {
         _view.OnOpenPiece -= _model.OpenPiece;
+        _view.OnPieceReturn -= _model.SoundPieceReturn;
+        _view.OnPiecePut -= _model.SoundPiecePut;
 
         _model.OnAddPieceToVisual -= _view.AddPiece;
         _model.OnRemovePieceFromVisual -= _view.RemovePiece;

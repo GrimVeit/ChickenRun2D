@@ -44,7 +44,7 @@ public class ChickenStateMachine : IStateMachineProvider
 
 
 
-        var stateFall = new ChickenState_Fall(this, _model);
+        var stateFall = new ChickenState_Fall(this, _model, _soundProvider);
         states[typeof(ChickenState_Fall)] = stateFall;
         _badStates.Add(stateFall);
 
@@ -52,7 +52,7 @@ public class ChickenStateMachine : IStateMachineProvider
         states[typeof(ChickenState_Auto)] = stateAuto;
         _badStates.Add(stateAuto);
 
-        var stateUFO = new ChickenState_UFO(this, _model);
+        var stateUFO = new ChickenState_UFO(this, _model, _soundProvider);
         states[typeof(ChickenState_UFO)] = stateUFO;
         _badStates.Add(stateUFO);
 
@@ -60,7 +60,7 @@ public class ChickenStateMachine : IStateMachineProvider
         states[typeof(ChickenState_Phone)] = statePhone;
         _badStates.Add(statePhone);
 
-        var stateTornado = new ChickenState_Tornado(this, _model);
+        var stateTornado = new ChickenState_Tornado(this, _model, _soundProvider);
         states[typeof(ChickenState_Tornado)] = stateTornado;
         _badStates.Add(stateTornado);
 

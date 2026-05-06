@@ -4,15 +4,18 @@ public class VisualChickenPictureModel
 {
     private readonly IStoreChickenPictureProvider _store;
     private readonly IStoreChickenPictureListener _listener;
+    private readonly ISoundProvider _soundProvider;
 
     private ChickenType _currentType;
 
     public VisualChickenPictureModel(
         IStoreChickenPictureProvider store,
-        IStoreChickenPictureListener listener)
+        IStoreChickenPictureListener listener,
+        ISoundProvider soundProvider)
     {
         _store = store;
         _listener = listener;
+        _soundProvider = soundProvider;
     }
 
     public void Initialize()
@@ -30,6 +33,8 @@ public class VisualChickenPictureModel
     public void GetPicturesByType(ChickenType type)
     {
         _currentType = type;
+
+        _soundProvider.PlayOneShot("PanelOpen");
 
         var snapshot = _store.GetPicturesByType(type);
 

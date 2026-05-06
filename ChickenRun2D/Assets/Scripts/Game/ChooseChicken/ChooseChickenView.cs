@@ -132,6 +132,8 @@ public class ChooseChickenView : View
         {
             chooseChickens[i].Show();
 
+            OnSetSoundOpen?.Invoke();
+
             yield return new WaitForSeconds(0.4f);
         }
     }
@@ -151,6 +153,7 @@ public class ChooseChickenView : View
     #region Output
 
     public event Action<ChickenType> OnChooseChicken;
+    public event Action OnSetSoundOpen;
 
     private void ChooseChicken(ChickenType type)
     {
