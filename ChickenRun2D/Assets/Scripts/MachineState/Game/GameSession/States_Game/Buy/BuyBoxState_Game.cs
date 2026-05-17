@@ -31,6 +31,8 @@ public class BuyBoxState_Game : IState
 
     public void ExitState()
     {
+        if (timer != null) Coroutines.Stop(timer);
+
         _sceneRoot.CloseBuyBoxPanel();
     }
 

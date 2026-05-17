@@ -3,6 +3,12 @@ using System;
 public class ChooseBuyBoxModel
 {
     private int _currentId = -1;
+    private readonly ISoundProvider _soundProvider;
+
+    public ChooseBuyBoxModel(ISoundProvider soundProvider)
+    {
+        _soundProvider = soundProvider;
+    }
 
     public void Choose(int id)
     {
@@ -10,6 +16,7 @@ public class ChooseBuyBoxModel
 
         OnUnchoose?.Invoke(_currentId);
 
+        _soundProvider.PlayOneShot("ChoosePack");
         _currentId = id;
         OnChoose?.Invoke(_currentId);
     }

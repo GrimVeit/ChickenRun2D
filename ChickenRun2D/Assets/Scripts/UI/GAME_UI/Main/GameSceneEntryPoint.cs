@@ -87,7 +87,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         maskEffectPresenter = new MaskEffectPresenter(new MaskEffectModel(), viewContainer.GetView<MaskEffectView>());
 
-        chooseBuyBoxPresenter = new ChooseBuyBoxPresenter(new ChooseBuyBoxModel(), viewContainer.GetView<ChooseBuyBoxView>());
+        chooseBuyBoxPresenter = new ChooseBuyBoxPresenter(new ChooseBuyBoxModel(soundPresenter), viewContainer.GetView<ChooseBuyBoxView>());
         buyBoxPresenter = new BuyBoxPresenter(new BuyBoxModel(chooseBuyBoxPresenter), viewContainer.GetView<BuyBoxView>());
         raceDesignPresenter = new RaceDesignPresenter(new RaceDesignModel(slotMachinePresenter), viewContainer.GetView<RaceDesignView>());
 
@@ -215,6 +215,7 @@ public class GameSceneEntryPoint : MonoBehaviour
 
         DeactivateEvents();
 
+        bankPresenter?.Dispose();
         videoPresenter?.Dispose();
 
         customSliderPresenter_Music?.Dispose();
@@ -263,7 +264,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     {
         if (pauseStatus)
         {
-            
+            bankPresenter?.Save();
         }
     }
 
@@ -271,7 +272,7 @@ public class GameSceneEntryPoint : MonoBehaviour
     {
         if (!focusStatus)
         {
-            
+            bankPresenter?.Save();
         }
     }
 

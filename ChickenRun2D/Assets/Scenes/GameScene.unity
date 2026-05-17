@@ -41485,6 +41485,38 @@ MonoBehaviour:
     isLoop: 0
     isPlayAwake: 0
     audioType: 0
+  - id: -------------------------------OTHER
+    audioSource: {fileID: 195081977}
+    audioClip: {fileID: 8300000, guid: 8ce660894a0b5e546bd8bb7c17b5e310, type: 3}
+    volume: 0
+    pitch: 0
+    isLoop: 0
+    isPlayAwake: 0
+    audioType: 0
+  - id: Buy
+    audioSource: {fileID: 1758925112}
+    audioClip: {fileID: 8300000, guid: 116a6caad2f1b9f448120dd8cc4f0fba, type: 3}
+    volume: 1
+    pitch: 1
+    isLoop: 0
+    isPlayAwake: 0
+    audioType: 0
+  - id: Error
+    audioSource: {fileID: 1758925112}
+    audioClip: {fileID: 8300000, guid: 9b53de47c91dc7943ae3f8f8d364ab48, type: 3}
+    volume: 1
+    pitch: 1
+    isLoop: 0
+    isPlayAwake: 0
+    audioType: 0
+  - id: ChoosePack
+    audioSource: {fileID: 1758925112}
+    audioClip: {fileID: 8300000, guid: f3704ed9e4bc51c43b6c72fec6b17ea3, type: 3}
+    volume: 1
+    pitch: 1
+    isLoop: 0
+    isPlayAwake: 0
+    audioType: 0
 --- !u!4 &2077423530
 Transform:
   m_ObjectHideFlags: 0

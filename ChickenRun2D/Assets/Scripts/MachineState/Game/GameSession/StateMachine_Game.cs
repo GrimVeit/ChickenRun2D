@@ -63,7 +63,7 @@ public class StateMachine_Game : IStateMachineProvider
         states[typeof(StartWinState_Game)] = new StartWinState_Game(this, videoProvider, sceneRoot, soundProvider);
         states[typeof(WinState_Game)] = new WinState_Game(this, sceneRoot);
 
-        states[typeof(ChooseBuyBoxState_Game)] = new ChooseBuyBoxState_Game(this, chooseBuyBoxProvider, sceneRoot, moneyProvider);
+        states[typeof(ChooseBuyBoxState_Game)] = new ChooseBuyBoxState_Game(this, chooseBuyBoxProvider, sceneRoot, moneyProvider, soundProvider);
         states[typeof(BuyBoxState_Game)] = new BuyBoxState_Game(this, sceneRoot, buyBoxProvider, buyPiecesProvider);
 
         states[typeof(CardsState_Game)] = new CardsState_Game(this, sceneRoot, visualChickenPictureListener, countChickenPictureProvider);
