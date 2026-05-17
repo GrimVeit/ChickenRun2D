@@ -37,7 +37,7 @@ public class GameEntryPoint
 
     private void Run()
     {
-        coroutines.StartCoroutine(LoadAndStartGame());
+        coroutines.StartCoroutine(LoadAndStartCheck());
     }
 
 
@@ -70,22 +70,11 @@ public class GameEntryPoint
         {
             sceneEntry.Run(rootView);
 
-            sceneEntry.GoToMainMenu -= HandleGoToMainMenu;
-            sceneEntry.GoToMainMenu += HandleGoToMainMenu;
+            sceneEntry.GoToGame -= HandleClickToGame;
+            sceneEntry.GoToGame += HandleClickToGame;
 
             sceneEntry.GoToOther -= HandleGoToOther;
             sceneEntry.GoToOther += HandleGoToOther;
-        });
-    }
-
-    private IEnumerator LoadAndStartMainMenu()
-    {
-        yield return LoadSceneAndRun<MenuEntryPoint>(Scenes.MAIN_MENU, true, sceneEntry =>
-        {
-            sceneEntry.Run(rootView);
-
-            sceneEntry.OnClickToGame -= HandleClickToGame;
-            sceneEntry.OnClickToGame += HandleClickToGame;
         });
     }
 
@@ -95,8 +84,8 @@ public class GameEntryPoint
         {
             sceneEntry.Run(rootView);
 
-            sceneEntry.OnGoToMainMenu -= HandleGoToMainMenu;
-            sceneEntry.OnGoToMainMenu += HandleGoToMainMenu;
+            sceneEntry.OnGoToGame -= HandleClickToGame;
+            sceneEntry.OnGoToGame += HandleClickToGame;
         });
     }
 
@@ -106,9 +95,6 @@ public class GameEntryPoint
         {
             sceneEntry.Run(rootView);
 
-            sceneEntry.OnClickToMenu -= HandleGoToMainMenu;
-            sceneEntry.OnClickToMenu += HandleGoToMainMenu;
-
             sceneEntry.OnClickToGame -= HandleClickToGame;
             sceneEntry.OnClickToGame += HandleClickToGame;
         });
@@ -117,11 +103,6 @@ public class GameEntryPoint
     #endregion
 
     #region Handlers
-
-    private void HandleGoToMainMenu()
-    {
-        coroutines.StartCoroutine(LoadAndStartMainMenu());
-    }
 
     private void HandleGoToOther()
     {
